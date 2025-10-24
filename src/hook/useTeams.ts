@@ -10,9 +10,12 @@ interface Team {
 export function useTeams() {
     const [teams, setTeams] = useState<Team[]>([]);
 
-    useEffect(async () => {
-        setTeams(await getAllTeams());
-    }, []);
+    useEffect(() => {
+        const fillTeams = (async() => {
+            setTeams(await getAllTeams())
+        })
+        fillTeams()
+    }, [])
 
     return { teams };
 }
