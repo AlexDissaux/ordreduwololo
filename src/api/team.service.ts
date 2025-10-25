@@ -33,6 +33,9 @@ export async function getAllTeams(): Promise<Team[]> {
         });
     }
 
+    // sorting teams by winrate (highest first)
+    teams.sort((a, b) => b.teamWinrate.winRate - a.teamWinrate.winRate);
+
     return teams;
 }
 

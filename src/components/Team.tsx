@@ -14,9 +14,8 @@ export default function Teams() {
     // for each team display a title
     // print the player[0].modes.rm_solo.rating for each player
     // return the html :
-    return <div className="min-h-screen bg-gray-900 flex items-center justify-center px-6 py-8">
-        <div className="w-full max-w-4xl space-y-8">
-            {teams.map((team, teamIndex) => (
+    return <div className="space-y-8">
+        {teams.map((team, teamIndex) => (
                 <div key={teamIndex} className="bg-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg">
                     <h2 className="text-3xl font-bold mb-6 text-white text-center border-b border-gray-600 pb-4">{team.name}</h2>
                     
@@ -69,6 +68,5 @@ export default function Teams() {
                     </div>
                 </div>
             ))}
-        </div>
     </div>
 } 
