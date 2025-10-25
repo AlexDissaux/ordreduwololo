@@ -17,7 +17,12 @@ export default function Teams() {
     return <div className="space-y-8">
         {teams.map((team, teamIndex) => (
                 <div key={teamIndex} className="bg-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg">
-                    <h2 className="text-3xl font-bold mb-6 text-white text-center border-b border-gray-600 pb-4">{team.name}</h2>
+                    <div className="text-center mb-6">
+                        <h2 className="text-4xl font-extrabold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500">
+                            {team.name}
+                        </h2>
+                        <div className="w-24 h-1 mx-auto rounded-full bg-gradient-to-r from-yellow-400 to-red-500"></div>
+                    </div>
                     
                     <div className="space-y-1">
                         {team.players.map((player: any, playerIndex: number) => (

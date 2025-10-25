@@ -64,10 +64,10 @@ export default function Podium() {
                                     {team.teamWinrate.winRate}%
                                 </span>
                                 <span className="text-gray-400 text-sm">
-                                    ({team.teamWinrate.win}W - {team.teamWinrate.lose}L)
-                                </span>
+                                        ({team.teamWinrate.win}W - {team.teamWinrate.lose}L)
+                                    </span>
+                                </div>
                             </div>
-                        </div>
                     </div>
                 ))}
             </div>
