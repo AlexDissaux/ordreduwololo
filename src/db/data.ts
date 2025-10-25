@@ -1,6 +1,14 @@
-export const teamsNameAndId = [
+export interface TeamsNameAndId {
+    name: string,
+    acronyme: string,
+    players : Array<{id: string}>
+}
+
+
+export const teamsNameAndId: TeamsNameAndId[] = [
     {    
         name: "Team du turfu",
+        acronyme: "TDT",
         players : [
             {id: "1712108"},
             {id: "8275065"},
@@ -11,6 +19,7 @@ export const teamsNameAndId = [
     },
     {    
         name: "Team du tard l'époque",
+        acronyme: "TDTL",
         players : [
             {id: "15289018"},
             {id: "3367604"},
@@ -21,6 +30,7 @@ export const teamsNameAndId = [
     },
     {    
         name: "Team du moment présent",
+        acronyme: "TDMP",
         players : [
             {id: "15289018"},
             {id: "3367604"},

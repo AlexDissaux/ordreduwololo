@@ -1,13 +1,18 @@
-import { usePlayers } from "../hook/usePlayer";
+import { usePlayers } from "../hook/usePlayers";
 
 
-export default function Player({playerId = "22321156-Gam3rLama"}) {
-    console.log("in Use player the value is : ")
-    console.log(playerId)
-    const player = usePlayers(playerId);
-    if (player.length) {
-        return player[0].modes.rm_solo.rating;
-    } else {
-        return <li>Loading....</li>
+export default function Player() {
+    const { players } = usePlayers()
+
+    if (!players) {
+        return <div>Loading....</div>
     }
-}
+
+    return (
+        <div>
+            {players.map((player, index) => (
+                <div key={index}>{player.name} {player.teamName} {player.acronyme} {player.modes.rm_solo.wins_count} {player.modes.rm_solo.losses_count} {player.modes.rm_solo.win_rate}%</div>
+            ))}
+        </div>
+    )
+} 

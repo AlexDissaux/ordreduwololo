@@ -1,6 +1,9 @@
 import './App.css'
 import Teams from './components/Team'
 import Podium from './components/Podium'
+import { Titre } from './components/Titre'
+import Separator from './components/Separator'
+import Player from './components/Player'
 
 
 function App() {
@@ -8,29 +11,10 @@ function App() {
   return (
     <div className="min-h-screen bg-black px-6 py-8">
       <div className="w-full space-y-8">
-        {/* Titre principal */}
-        <div className="text-center py-8">
-          <h1 className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 mb-6 pb-2">
-            Le Wololo Challenge !
-          </h1>
-          <div className="w-32 h-1 bg-gradient-to-r from-yellow-400 to-red-500 mx-auto rounded-full"></div>
-        </div>
-        
-        <div className="max-w-6xl mx-auto">
-          <Podium />
-        </div>
-        
-        {/* Séparateur entre podium et teams */}
-        <div className="flex items-center space-x-4 py-6">
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent"></div>
-          <div className="flex items-center space-x-3 px-4 py-2 bg-gray-900/80 backdrop-blur-sm rounded-lg border border-gray-700">
-            <span className="text-gray-300 font-medium text-lg">⚔️</span>
-            <span className="text-gray-300 font-bold text-lg">ÉQUIPES DÉTAILLÉES</span>
-            <span className="text-gray-300 font-medium text-lg">⚔️</span>
-          </div>
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent"></div>
-        </div>
-        
+        <Titre />  
+        <Podium />
+        <Separator />  
+        <Player/>        
         <Teams />
       </div>
     </div>
