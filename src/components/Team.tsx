@@ -35,16 +35,7 @@ export default function Teams() {
                             } hover:bg-gray-850 transition-colors`}>
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center space-x-4">
-                                        <span className={`text-lg font-bold ${
-                                            playerIndex === 0 ? 'text-orange-400' :
-                                            playerIndex === 1 ? 'text-pink-400' :
-                                            playerIndex === 2 ? 'text-blue-400' :
-                                            playerIndex === 3 ? 'text-green-400' :
-                                            'text-purple-400'
-                                        }`}>
-                                            {String(playerIndex + 1).padStart(2, '0')}.
-                                        </span>
-                                        <span className="text-white font-semibold text-lg">{player.name}</span>
+                                        <span className="text-white font-bold text-xl tracking-wide">{player.name}</span>
                                     </div>
                                     <div className="flex items-center space-x-4 text-sm font-medium">
                                         <span className="text-green-400 bg-green-900/30 px-2 py-1">{player.modes.rm_solo.wins_count}W</span>
