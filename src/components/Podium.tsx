@@ -11,6 +11,8 @@ export default function Podium() {
     }
 
     return (
+    <div className="max-w-6xl mx-auto">
+
         <div className="bg-gray-900/80 backdrop-blur-sm border-l-4 border-yellow-500 p-4 sm:p-6 lg:p-8">
             <div className="flex items-center justify-center space-x-3 mb-6 sm:mb-8">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-yellow-500 to-yellow-500"></div>
@@ -79,5 +81,6 @@ export default function Podium() {
                 ))}
             </div>
         </div>
+    </div>
     );
 }
