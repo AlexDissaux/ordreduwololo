@@ -22,7 +22,7 @@ export default function Teams() {
                     
                     <div className="space-y-1">
                         {team.players.map((player: any, playerIndex: number) => (
-                            <div key={playerIndex} className={`bg-gray-900 rounded-lg p-4 border-l-4 ${
+                            <div key={playerIndex} className={`bg-gray-900 p-4 border-l-4 ${
                                 playerIndex === 0 ? 'border-orange-500' :
                                 playerIndex === 1 ? 'border-pink-500' :
                                 playerIndex === 2 ? 'border-blue-500' :
@@ -43,26 +43,26 @@ export default function Teams() {
                                         <span className="text-white font-semibold text-lg">{player.name}</span>
                                     </div>
                                     <div className="flex items-center space-x-4 text-sm font-medium">
-                                        <span className="text-green-400 bg-green-900/30 px-2 py-1 rounded">{player.modes.rm_solo.wins_count}W</span>
-                                        <span className="text-red-400 bg-red-900/30 px-2 py-1 rounded">{player.modes.rm_solo.losses_count}L</span>
-                                        <span className="text-yellow-400 font-bold bg-yellow-900/30 px-2 py-1 rounded">WR: {player.modes.rm_solo.win_rate}%</span>
+                                        <span className="text-green-400 bg-green-900/30 px-2 py-1">{player.modes.rm_solo.wins_count}W</span>
+                                        <span className="text-red-400 bg-red-900/30 px-2 py-1">{player.modes.rm_solo.losses_count}L</span>
+                                        <span className="text-yellow-400 font-bold bg-yellow-900/30 px-2 py-1">WR: {player.modes.rm_solo.win_rate}%</span>
                                     </div>
                                 </div>
                             </div>
                         ))}
                         
                         {/* Team total stats */}
-                        <div className="bg-gradient-to-r from-blue-900 to-indigo-900 rounded-lg p-4 border border-blue-600 mt-4 shadow-lg">
+                        <div className="bg-gray-800 border-t-2 border-gray-600 p-4 mt-4">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center space-x-4">
-                                    <span className="text-blue-300 font-bold text-lg">🏆</span>
-                                    <span className="text-blue-100 font-bold text-lg">TEAM TOTAL</span>
+                                    <span className="text-gray-400 font-bold text-lg">🏆</span>
+                                    <span className="text-gray-200 font-bold text-lg">TEAM TOTAL</span>
                                 </div>
                                 <div className="flex items-center space-x-4 text-sm font-medium">
-                                    <span className="text-green-300 bg-green-800/50 px-3 py-1 rounded-lg">{team.teamWinrate.win}W</span>
-                                    <span className="text-red-300 bg-red-800/50 px-3 py-1 rounded-lg">{team.teamWinrate.lose}L</span>
-                                    <span className="text-yellow-300 font-bold bg-yellow-800/50 px-3 py-1 rounded-lg">WR: {team.teamWinrate.winRate}%</span>
-                                    <span className="text-blue-200 bg-blue-800/50 px-3 py-1 rounded-lg">({team.teamWinrate.win + team.teamWinrate.lose} games)</span>
+                                    <span className="text-gray-300 bg-gray-700/50 px-3 py-1">({team.teamWinrate.win + team.teamWinrate.lose} games)</span>
+                                    <span className="text-green-300 bg-green-900/30 px-3 py-1">{team.teamWinrate.win}W</span>
+                                    <span className="text-red-300 bg-red-900/30 px-3 py-1">{team.teamWinrate.lose}L</span>
+                                    <span className="text-yellow-300 font-bold bg-yellow-900/30 px-3 py-1">WR: {team.teamWinrate.winRate}%</span>
                                 </div>
                             </div>
                         </div>
