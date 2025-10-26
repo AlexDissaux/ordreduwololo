@@ -26,7 +26,16 @@ export default function Teams() {
             </div>
         </div>
 
-        {teams.map((team, teamIndex) => (
+        {teams.map((team, teamIndex) => {
+            // Définir une couleur par équipe
+            const teamColor = teamIndex === 0 ? 'bg-orange-500' :
+                            teamIndex === 1 ? 'bg-cyan-500' :
+                            teamIndex === 2 ? 'bg-purple-500' :
+                            teamIndex === 3 ? 'bg-pink-500' :
+                            teamIndex === 4 ? 'bg-green-500' :
+                            'bg-indigo-500';
+            
+            return (
                 <div key={teamIndex} className="w-full bg-gray-900/80 backdrop-blur-sm border-l-4 border-gradient-to-b from-yellow-400 to-orange-500 hover:bg-gray-900 transition-all duration-300">
                     <div className="flex flex-col lg:flex-row w-full">
                         {/* Titre de l'équipe à gauche (en haut sur mobile) */}
@@ -61,12 +70,7 @@ export default function Teams() {
                                         <div className="flex items-center justify-between gap-2">
                                             <div className="flex items-center space-x-2 sm:space-x-4 min-w-0 flex-1">
                                                 <div className={`w-1 h-8 sm:h-10 flex-shrink-0 ${
-                                                    player.isCap ? 'bg-yellow-500' :
-                                                    playerIndex === 0 ? 'bg-orange-500' :
-                                                    playerIndex === 1 ? 'bg-pink-500' :
-                                                    playerIndex === 2 ? 'bg-blue-500' :
-                                                    playerIndex === 3 ? 'bg-green-500' :
-                                                    'bg-purple-500'
+                                                    player.isCap ? 'bg-yellow-500' : teamColor
                                                 } group-hover:h-10 sm:group-hover:h-12 transition-all`}></div>
                                                 {player.isCap && (
                                                     <span className="text-yellow-400 text-lg sm:text-xl flex-shrink-0 animate-pulse-subtle">👑</span>
@@ -97,6 +101,7 @@ export default function Teams() {
                         </div>
                     </div>
                 </div>
-            ))}
+            );
+        })}
     </div>
 } 
