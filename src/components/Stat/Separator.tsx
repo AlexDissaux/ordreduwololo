@@ -32,16 +32,18 @@ export default function Separator({ showTeam, onToggle }: SeparatorProps) {
                     )}
                     
                     {/* Contenu du bouton */}
-                    <div className={`relative z-10 flex items-center justify-center h-full transition-all duration-700 ${
-                        showTeam 
-                            ? 'text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500' 
-                            : 'text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-400 to-red-400 group-hover:from-yellow-200 group-hover:via-orange-300 group-hover:to-red-300'
-                    }`}>
-                        <span className={`text-2xl sm:text-3xl lg:text-4xl transition-all duration-700 ${showTeam ? 'scale-110' : 'scale-100 group-hover:scale-110 animate-bounce'}`}>
-                            ⚔️
-                        </span>
-                        <span className={`ml-2 sm:ml-3 transition-all duration-700 ${
-                            showTeam ? 'opacity-100 max-w-full' : 'opacity-0 max-w-0 overflow-hidden sm:block'
+                    <div className={`relative z-10 flex items-center justify-center h-full transition-all duration-700`}>
+                        <svg className={`w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 transition-all duration-700 ${showTeam ? 'scale-110' : 'scale-100 group-hover:scale-110 animate-bounce'} ${
+                            showTeam 
+                                ? 'fill-yellow-400' 
+                                : 'fill-yellow-300 group-hover:fill-yellow-200'
+                        }`} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                        <span className={`ml-2 sm:ml-3 transition-all duration-700 font-black ${
+                            showTeam 
+                                ? 'opacity-100 max-w-full text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500' 
+                                : 'opacity-0 max-w-0 overflow-hidden sm:block text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-400 to-red-400'
                         }`}>
                             Équipes
                         </span>
@@ -81,16 +83,18 @@ export default function Separator({ showTeam, onToggle }: SeparatorProps) {
                     )}
                     
                     {/* Contenu du bouton */}
-                    <div className={`relative z-10 flex items-center justify-center h-full transition-all duration-700 ${
-                        !showTeam 
-                            ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500' 
-                            : 'text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-purple-400 to-pink-400 group-hover:from-blue-200 group-hover:via-purple-300 group-hover:to-pink-300'
-                    }`}>
-                        <span className={`text-2xl sm:text-3xl lg:text-4xl transition-all duration-700 ${!showTeam ? 'scale-110' : 'scale-100 group-hover:scale-110 animate-bounce'}`}>
-                            👥
-                        </span>
-                        <span className={`ml-2 sm:ml-3 transition-all duration-700 ${
-                            !showTeam ? 'opacity-100 max-w-full' : 'opacity-0 max-w-0 overflow-hidden sm:block'
+                    <div className={`relative z-10 flex items-center justify-center h-full transition-all duration-700`}>
+                        <svg className={`w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 transition-all duration-700 ${!showTeam ? 'scale-110' : 'scale-100 group-hover:scale-110 animate-bounce'} ${
+                            !showTeam 
+                                ? 'fill-blue-400' 
+                                : 'fill-blue-300 group-hover:fill-blue-200'
+                        }`} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                        <span className={`ml-2 sm:ml-3 transition-all duration-700 font-black ${
+                            !showTeam 
+                                ? 'opacity-100 max-w-full text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500' 
+                                : 'opacity-0 max-w-0 overflow-hidden sm:block text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-purple-400 to-pink-400'
                         }`}>
                             Joueurs
                         </span>
