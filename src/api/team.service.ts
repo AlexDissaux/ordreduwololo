@@ -22,7 +22,9 @@ export async function getAllTeams(): Promise<Team[]> {
 
     for (let team of teamsNameAndId) {
         const playersData = await Promise.all(
-            team.players.map(player => getPlayer(player.id))
+            team.players.map(async (player) => {
+                return {...await getPlayer(player.id), isCap: player.isCap}}
+            )
         );
         
 

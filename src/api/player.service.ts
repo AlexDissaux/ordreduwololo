@@ -15,7 +15,7 @@ export async function getPlayer(playerId: string): Promise<any> {
 
 export function getAllPlayer(players: any[], teamName: string, acronyme: string): Promise<any[]> {
     const promises = players.map(async(player) => {
-        return {...await getPlayer(player.id),teamName: teamName, acronyme: acronyme  }
+        return {...await getPlayer(player.id),teamName: teamName, acronyme: acronyme, isCap: player.isCap  }
     });
 
     return Promise.all(promises);

@@ -57,17 +57,32 @@ export default function Teams() {
                                 {team.players.map((player: any, playerIndex: number) => (
                                     <div key={playerIndex} className={`px-3 sm:px-4 lg:px-6 py-3 hover:bg-gray-800/40 transition-colors duration-150 group relative ${
                                         playerIndex % 2 === 0 ? 'bg-gradient-to-r from-gray-800/10 to-transparent' : 'bg-gradient-to-r from-gray-800/5 to-transparent'
-                                    }`}>
+                                    } ${player.isCap ? 'bg-gradient-to-r from-yellow-900/10 via-transparent to-transparent border-l-2 border-yellow-500/30' : ''}`}>
                                         <div className="flex items-center justify-between gap-2">
                                             <div className="flex items-center space-x-2 sm:space-x-4 min-w-0 flex-1">
                                                 <div className={`w-1 h-8 sm:h-10 flex-shrink-0 ${
+                                                    player.isCap ? 'bg-yellow-500' :
                                                     playerIndex === 0 ? 'bg-orange-500' :
                                                     playerIndex === 1 ? 'bg-pink-500' :
                                                     playerIndex === 2 ? 'bg-blue-500' :
                                                     playerIndex === 3 ? 'bg-green-500' :
                                                     'bg-purple-500'
                                                 } group-hover:h-10 sm:group-hover:h-12 transition-all`}></div>
-                                                <span className="text-white font-bold text-base sm:text-lg lg:text-xl tracking-wide truncate">{player.name}</span>
+                                                {player.isCap && (
+                                                    <span className="text-yellow-400 text-lg sm:text-xl flex-shrink-0 animate-pulse-subtle">👑</span>
+                                                )}
+                                                <div className="flex flex-col min-w-0 flex-1">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className={`font-bold text-base sm:text-lg lg:text-xl tracking-wide truncate ${
+                                                            player.isCap ? 'text-yellow-300' : 'text-white'
+                                                        }`}>{player.name}</span>
+                                                        {player.isCap && (
+                                                            <span className="text-xs font-bold px-2 py-0.5 bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 uppercase tracking-wider hidden sm:inline">
+                                                                Capitaine
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div className="flex items-center space-x-1 sm:space-x-2 lg:space-x-4 text-xs sm:text-sm font-semibold flex-shrink-0">
                                                 <span className="text-green-400 px-1.5 sm:px-2 lg:px-3 py-1">{player.modes.rm_solo.wins_count}W</span>

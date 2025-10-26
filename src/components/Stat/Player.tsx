@@ -34,30 +34,40 @@ export default function Player() {
             <div className="divide-y divide-gray-700/20">
                 {players.map((player, index) => {
                     // Couleurs en fonction du classement
-                    const rankColor = index === 0 ? 'text-yellow-400' :
-                                     index === 1 ? 'text-gray-300' :
-                                     index === 2 ? 'text-orange-400' :
-                                     index < 5 ? 'text-blue-400' :
-                                     index < 10 ? 'text-green-400' :
-                                     'text-gray-500';
+                    const rankColor = 'text-gray-500';
                     
-                    const nameBgGradient = index === 0 ? 'from-yellow-500/10' :
-                                          index === 1 ? 'from-gray-400/10' :
-                                          index === 2 ? 'from-orange-500/10' :
-                                          index < 5 ? 'from-blue-500/10' :
-                                          index < 10 ? 'from-green-500/10' :
-                                          'from-gray-600/10';
+                    // Couleur de fond par équipe
+                    const teamColors: Record<string, string> = {
+                        'Team du turfu': 'from-orange-500/10',
+                        'Team du tard l\'époque': 'from-cyan-500/10',
+                        'Team du moment présent': 'from-purple-500/10',
+                        'Team Alpha': 'from-pink-500/10',
+                        'Team Bravo': 'from-green-500/10',
+                        'Team Charlie': 'from-indigo-500/10',
+                    };
+                    
+                    const teamBgGradient = teamColors[player.teamName] || 'from-gray-600/10';
+                    
+                    // Si c'est un capitaine, on renforce la couleur de l'équipe
+                    const nameBgGradient = player.isCap 
+                        ? teamBgGradient.replace('/10', '/20')
+                        : teamBgGradient;
                     
                     return (
                         <div key={index} className={`px-3 sm:px-4 py-2 hover:bg-gray-800/40 transition-colors duration-150 group ${
                             index % 2 === 0 ? 'bg-gray-800/5' : 'bg-transparent'
-                        }`}>
+                        } ${player.isCap ? 'border-l-2 border-yellow-500/30' : ''}`}>
                             {/* Layout Mobile/Tablette */}
                             <div className="lg:hidden flex items-center justify-between gap-3">
                                 <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
                                     <span className={`${rankColor} font-bold text-sm sm:text-base flex-shrink-0 w-6`}>{index + 1}</span>
+                                    {player.isCap && (
+                                        <span className="text-yellow-400 text-base sm:text-lg flex-shrink-0 animate-pulse-subtle">👑</span>
+                                    )}
                                     <div className="min-w-0 flex-1">
-                                        <div className="font-bold text-sm sm:text-base text-white truncate">{player.name}</div>
+                                        <div className={`font-bold text-sm sm:text-base truncate ${
+                                            player.isCap ? 'text-yellow-300' : 'text-white'
+                                        }`}>{player.name}</div>
                                         <div className="text-xs text-blue-400 truncate">{player.teamName}</div>
                                     </div>
                                 </div>
@@ -73,8 +83,18 @@ export default function Player() {
                                 <div className="col-span-1">
                                     <span className={`${rankColor} font-bold text-lg`}>{index + 1}</span>
                                 </div>
-                                <div className={`col-span-3 bg-gradient-to-r ${nameBgGradient} to-transparent py-1 px-2 -mx-2`}>
-                                    <span className="text-white font-bold text-lg tracking-wide">{player.name}</span>
+                                <div className={`col-span-3 bg-gradient-to-r ${nameBgGradient} to-transparent py-1 px-2 -mx-2 flex items-center gap-2`}>
+                                    {player.isCap && (
+                                        <span className="text-yellow-400 text-xl flex-shrink-0 animate-pulse-subtle">👑</span>
+                                    )}
+                                    <span className={`font-bold text-lg tracking-wide ${
+                                        player.isCap ? 'text-yellow-300' : 'text-white'
+                                    }`}>{player.name}</span>
+                                    {player.isCap && (
+                                        <span className="text-xs font-bold px-2 py-0.5 bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 uppercase tracking-wider">
+                                            Cap
+                                        </span>
+                                    )}
                                 </div>
                                 <div className="col-span-2">
                                     <div className="text-blue-400 font-medium text-sm">{player.teamName}</div>
