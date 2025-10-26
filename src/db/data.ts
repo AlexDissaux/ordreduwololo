@@ -1,7 +1,7 @@
 export interface TeamsNameAndId {
     name: string,
     acronyme: string,
-    players : Array<{id: string}>
+    players : Array<{id: string, isCap? : boolean}>
 }
 
 
@@ -23,7 +23,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
         players : [
             {id: "15289018"},
             {id: "3367604"},
-            {id: "7219954"},
+            {id: "15624724-ODW-stay-frosty"},
             {id: "23160801"},
             {id: "358437"}
         ]
@@ -32,11 +32,11 @@ export const teamsNameAndId: TeamsNameAndId[] = [
         name: "Team du moment présent",
         acronyme: "TDMP",
         players : [
-            {id: "15289018"},
-            {id: "3367604"},
-            {id: "1712108"},
-            {id: "23160801"},
-            {id: "19206930"}
+            {id: "8250217"},
+            {id: "12170036"},
+            {id: "20304572"},
+            {id: "18798505-ODW-Rokart"},
+            {id: "22819911-ODW-ours-en-colere"}
         ]
     }
 ]
