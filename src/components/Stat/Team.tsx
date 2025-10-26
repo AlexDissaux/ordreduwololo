@@ -1,6 +1,6 @@
 
 
-import { useTeams } from '../hook/useTeams';
+import { useTeams } from '../../hook/useTeams';
 
 export default function Teams() {
     const { teams } = useTeams();

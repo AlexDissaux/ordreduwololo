@@ -1,9 +1,7 @@
 import './App.css'
-import Teams from './components/Team'
 import Podium from './components/Podium'
 import { Titre } from './components/Titre'
-import Separator from './components/Separator'
-import Player from './components/Player'
+import Stat from './components/Stat/Stat'
 
 
 function App() {
@@ -13,9 +11,7 @@ function App() {
       <div className="w-full space-y-8">
         <Titre />  
         <Podium />
-        <Separator />  
-        <Player/>        
-        <Teams />
+        <Stat/>
       </div>
     </div>
   )

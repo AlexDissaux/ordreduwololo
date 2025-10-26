@@ -1,4 +1,4 @@
-import { usePlayers } from "../hook/usePlayers";
+import { usePlayers } from "../../hook/usePlayers";
 
 
 export default function Player() {
