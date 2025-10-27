@@ -36,7 +36,7 @@ export default function Teams() {
                             'bg-indigo-500';
             
             return (
-                <div key={teamIndex} className="w-full bg-gray-900/80 backdrop-blur-sm border-l-4 border-gradient-to-b from-yellow-400 to-orange-500 hover:bg-gray-900 transition-all duration-300">
+                <div key={teamIndex} className="w-full bg-gray-900/80 backdrop-blur-sm hover:bg-gray-900 transition-all duration-300 shadow-lg border border-gray-700/30 hover:border-gray-600/50">
                     <div className="flex flex-col lg:flex-row w-full">
                         {/* Titre de l'équipe à gauche (en haut sur mobile) */}
                         <div className="w-full lg:w-1/3 flex flex-col justify-center p-4 sm:p-6 lg:p-8 lg:border-r border-b lg:border-b-0 border-gray-700/50">
@@ -69,9 +69,6 @@ export default function Teams() {
                                     } ${player.isCap ? 'bg-gradient-to-r from-yellow-900/10 via-transparent to-transparent border-l-2 border-yellow-500/30' : ''}`}>
                                         <div className="flex items-center justify-between gap-2">
                                             <div className="flex items-center space-x-2 sm:space-x-4 min-w-0 flex-1">
-                                                <div className={`w-1 h-8 sm:h-10 flex-shrink-0 ${
-                                                    player.isCap ? 'bg-yellow-500' : teamColor
-                                                } group-hover:h-10 sm:group-hover:h-12 transition-all`}></div>
                                                 {player.isCap && (
                                                     <span className="text-yellow-400 text-lg sm:text-xl flex-shrink-0 animate-pulse-subtle">👑</span>
                                                 )}
