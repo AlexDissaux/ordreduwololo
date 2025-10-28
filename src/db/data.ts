@@ -4,6 +4,8 @@ export interface TeamsNameAndId {
     players : Array<{id: string, isCap? : boolean}>
 }
 
+export const sinceDate = '2025/08/28'
+
 
 export const teamsNameAndId: TeamsNameAndId[] = [
     {    
@@ -23,7 +25,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
         players : [
             {id: "15289018", isCap: true},
             {id: "3367604"},
-            {id: "15624724-ODW-stay-frosty"},
+            {id: "15624724"},
             {id: "23160801"},
             {id: "358437"}
         ]
@@ -35,8 +37,8 @@ export const teamsNameAndId: TeamsNameAndId[] = [
             {id: "8250217", isCap: true},
             {id: "12170036"},
             {id: "20304572"},
-            {id: "18798505-ODW-Rokart"},
-            {id: "22819911-ODW-ours-en-colere"}
+            {id: "18798505"},
+            {id: "22819911"}
         ]
     }
 ]
