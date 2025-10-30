@@ -51,6 +51,7 @@ const transformPlayerData = async (playerData: any, playerId: string) => {
             wins_count: wins,
             losses_count: losses,
             mmrChange: getMmrChange(games, playerId),
+            nombreCivDiffJouer: getUniqueCivilizationsCount(games, playerId)
         }
     }
 
@@ -84,4 +85,16 @@ const getMmrChange = ((games: any, playerId: string) => {
     ODWPlayer = getOdwPlayer(games.at(-1), playerId)
     const mmrEnd = ODWPlayer.mmr + ODWPlayer.mmr_diff
     return mmrEnd - mmrBeg;  
+})
+
+const getUniqueCivilizationsCount = ((games: any, playerId: string) => {
+    // Récupère toutes les civilisations jouées par le joueur
+    const civilizations = games.map((game: any) => {
+        const player = getOdwPlayer(game, playerId);
+        return player.civilization;
+    });
+    
+    // Compte le nombre de civilisations uniques
+    const uniqueCivilizations = new Set(civilizations);
+    return uniqueCivilizations.size;
 })

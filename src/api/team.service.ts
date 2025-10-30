@@ -7,6 +7,10 @@ export interface Team {
     name: string;
     players: any[];
     teamWinrate : TeamWinrate;
+    totalGames: number;
+    bestMmrChange: number;
+    totalCivDiversity: number;
+    rankingPoints: number;
 }
 
 export interface TeamWinrate {
@@ -27,16 +31,25 @@ export async function getAllTeams(): Promise<Team[]> {
             )
         );
         
-
+        const teamWinrate = computeTeamWinrate(playersData);
+        const bestMmrChange = getBestMmrChange(playersData);
+        const totalCivDiversity = getTotalCivDiversity(playersData);
         teams.push({
             name: team.name,
             players: playersData,
-            teamWinrate: computeTeamWinrate(playersData)
+            teamWinrate: teamWinrate,
+            totalGames: teamWinrate.win + teamWinrate.lose,
+            bestMmrChange: bestMmrChange,
+            totalCivDiversity: totalCivDiversity,
+            rankingPoints: 0 // sera calculé après
         });
     }
 
-    // sorting teams by winrate (highest first)
-    teams.sort((a, b) => b.teamWinrate.winRate - a.teamWinrate.winRate);
+    // Calculer les points de classement
+    calculateRankingPoints(teams);
+
+    // Trier les équipes par points de classement (du plus haut au plus bas)
+    teams.sort((a, b) => b.rankingPoints - a.rankingPoints);
 
     return teams;
 }
@@ -52,4 +65,44 @@ const computeTeamWinrate = (playersData: any[]): TeamWinrate => {
         lose: totalLosses,
         winRate: winRate
     };
+}
+
+const getBestMmrChange = (playersData: any[]): number => {
+    // Trouve le meilleur mmrChange parmi tous les joueurs de l'équipe
+    const bestChange = Math.max(...playersData.map(player => player.modes.rm_solo.mmrChange || 0));
+    return bestChange;
+}
+
+const getTotalCivDiversity = (playersData: any[]): number => {
+    // Additionne le nombre de civilisations différentes jouées par chaque joueur de l'équipe
+    const totalCivs = playersData.reduce((sum, player) => sum + (player.modes.rm_solo.nombreCivDiffJouer || 0), 0);
+    return totalCivs;
+}
+
+const calculateRankingPoints = (teams: any[]) => {
+    const numberOfTeams = teams.length;
+    
+    // Classement par winrate
+    const teamsByWinrate = [...teams].sort((a, b) => b.teamWinrate.winRate - a.teamWinrate.winRate);
+    teamsByWinrate.forEach((team, index) => {
+        team.rankingPoints += numberOfTeams - index;
+    });
+    
+    // Classement par nombre de parties
+    const teamsByGames = [...teams].sort((a, b) => b.totalGames - a.totalGames);
+    teamsByGames.forEach((team, index) => {
+        team.rankingPoints += numberOfTeams - index;
+    });
+    
+    // Classement par meilleur MMR change
+    const teamsByMmrChange = [...teams].sort((a, b) => b.bestMmrChange - a.bestMmrChange);
+    teamsByMmrChange.forEach((team, index) => {
+        team.rankingPoints += numberOfTeams - index;
+    });
+    
+    // Classement par diversité de civilisations
+    const teamsByCivDiversity = [...teams].sort((a, b) => b.totalCivDiversity - a.totalCivDiversity);
+    teamsByCivDiversity.forEach((team, index) => {
+        team.rankingPoints += numberOfTeams - index;
+    });
 }
