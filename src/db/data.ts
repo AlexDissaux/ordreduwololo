@@ -1,5 +1,6 @@
-export interface TeamsNameAndId {
+export type TeamsNameAndId = {
     name: string,
+    points: number;
     acronyme: string,
     players : Array<{id: string, isCap? : boolean}>
 }
@@ -10,6 +11,7 @@ export const sinceDate = '2025/08/28'
 export const teamsNameAndId: TeamsNameAndId[] = [
     {    
         name: "Team du turfu",
+        points: 0,
         acronyme: "TDT",
         players : [
             {id: "1712108", isCap: true},
@@ -21,6 +23,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
     },
     {    
         name: "Team du tard l'époque",
+        points: 0,
         acronyme: "TDTL",
         players : [
             {id: "15289018", isCap: true},
@@ -32,6 +35,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
     },
     {    
         name: "Team du moment présent",
+        points: 0,
         acronyme: "TDMP",
         players : [
             {id: "8250217", isCap: true},

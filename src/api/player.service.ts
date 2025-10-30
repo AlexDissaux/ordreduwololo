@@ -30,6 +30,7 @@ const transformPlayerData = async (playerData: any, playerId: string) => {
             win_rate: 0,
             wins_count: 0,
             losses_count: 0,
+            mmrChange : 0,
         }
     } else {
         let games = playerGamesPage1.games;
@@ -41,27 +42,15 @@ const transformPlayerData = async (playerData: any, playerId: string) => {
             const playerGamesPage3 = await (await fetch(`https://aoe4world.com/api/v0/players/${playerId}/games?since=${sinceDate}&leaderboard=rm_solo&page=3`)).json();
             games.push(...playerGamesPage3.games)
         }
-        const [wins, losses] = games.reduce(([wins, losses]: [number, number], game: any): [number, number] => {
-            // console.log(game.teams)
-            const teamOdwPlayer = game.teams.find((players: any) => {
-                // console.log("playerId : " + playerId)
-                // console.log(players[0].player.profile_id)
-                return players[0].player.profile_id == playerId
-            })
-            // console.log(teamOdwPlayer)
-            const odwPlayer = teamOdwPlayer[0].player
+        // Wins and losses
+        const [wins, losses] = getWinsAndLosses(games, playerId)
 
-            if (odwPlayer.result == "win") {
-                return [wins + 1, losses]
-            } else {
-                return [wins, losses + 1]
-            }
-        }, [0, 0])
-
+        // RESULT
         playerData.modes.rm_solo = {
             win_rate: (wins / (wins + losses)) * 100,
             wins_count: wins,
             losses_count: losses,
+            mmrChange: getMmrChange(games, playerId),
         }
     }
 
@@ -76,3 +65,23 @@ export function getAllPlayer(players: any[], teamName: string, acronyme: string)
 
     return Promise.all(promises);
 }
+
+const getWinsAndLosses = ((games: any, playerId: string) => 
+    games.reduce(([wins, losses]: [number, number], game: any): [number, number] => {
+            if (getOdwPlayer(game, playerId).result == "win") {
+                return [wins + 1, losses]
+            } else {
+                return [wins, losses + 1]
+            }
+        }, [0, 0])
+)
+
+const getOdwPlayer = ((game: any, playerId: string) => game.teams.find((players: any) => players[0].player.profile_id == playerId)[0].player)
+
+const getMmrChange = ((games: any, playerId: string) => {
+    let ODWPlayer = getOdwPlayer(games.at(0), playerId)
+    const mmrBeg = ODWPlayer.mmr + ODWPlayer.mmr_diff
+    ODWPlayer = getOdwPlayer(games.at(-1), playerId)
+    const mmrEnd = ODWPlayer.mmr + ODWPlayer.mmr_diff
+    return mmrEnd - mmrBeg;  
+})
