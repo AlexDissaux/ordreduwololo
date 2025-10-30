@@ -30,7 +30,10 @@ const transformPlayerData = async (playerData: any, playerId: string) => {
             win_rate: 0,
             wins_count: 0,
             losses_count: 0,
-            mmrChange : 0,
+            mmrChange: 0,
+            mmrBeg: 0,
+            mmrEnd: 0,
+            nombreCivDiffJouer: 0
         }
     } else {
         let games = playerGamesPage1.games;
@@ -44,13 +47,16 @@ const transformPlayerData = async (playerData: any, playerId: string) => {
         }
         // Wins and losses
         const [wins, losses] = getWinsAndLosses(games, playerId)
+        const mmrData = getMmrChange(games, playerId)
 
         // RESULT
         playerData.modes.rm_solo = {
             win_rate: (wins / (wins + losses)) * 100,
             wins_count: wins,
             losses_count: losses,
-            mmrChange: getMmrChange(games, playerId),
+            mmrChange: mmrData.change,
+            mmrBeg: mmrData.mmrBeg,
+            mmrEnd: mmrData.mmrEnd,
             nombreCivDiffJouer: getUniqueCivilizationsCount(games, playerId)
         }
     }
@@ -84,7 +90,11 @@ const getMmrChange = ((games: any, playerId: string) => {
     const mmrBeg = ODWPlayer.mmr + ODWPlayer.mmr_diff
     ODWPlayer = getOdwPlayer(games.at(-1), playerId)
     const mmrEnd = ODWPlayer.mmr + ODWPlayer.mmr_diff
-    return mmrEnd - mmrBeg;  
+    return {
+        mmrBeg: mmrBeg,
+        mmrEnd: mmrEnd,
+        change: mmrEnd - mmrBeg
+    };
 })
 
 const getUniqueCivilizationsCount = ((games: any, playerId: string) => {

@@ -95,7 +95,7 @@ export default function Podium() {
                                 <div className="flex items-center gap-2 mt-2 text-xs font-semibold">
                                     <span className="text-green-400 px-2 py-0.5 bg-green-900/20">{team.teamWinrate.win}W</span>
                                     <span className="text-red-400 px-2 py-0.5 bg-red-900/20">{team.teamWinrate.lose}L</span>
-                                    <span className="text-blue-400 px-2 py-0.5 bg-blue-900/20">{team.totalGames}G</span>
+                                    <span className="text-blue-400 px-2 py-0.5 bg-blue-900/20">{team.totalGames} Games</span>
                                     <span className={`px-2 py-0.5 ${team.bestMmrChange >= 0 ? 'text-cyan-400 bg-cyan-900/20' : 'text-orange-400 bg-orange-900/20'}`}>
                                         {team.bestMmrChange >= 0 ? '+' : ''}{team.bestMmrChange} MMR
                                     </span>
@@ -137,7 +137,7 @@ export default function Podium() {
                             <div className="flex items-center space-x-2 sm:space-x-3 lg:space-x-4 text-xs sm:text-sm font-semibold flex-shrink-0">
                                 <span className="text-green-400 px-2 sm:px-3 py-1 bg-green-900/20">{team.teamWinrate.win}W</span>
                                 <span className="text-red-400 px-2 sm:px-3 py-1 bg-red-900/20">{team.teamWinrate.lose}L</span>
-                                <span className="text-blue-400 px-2 sm:px-3 py-1 bg-blue-900/20">{team.totalGames}G</span>
+                                <span className="text-blue-400 px-2 sm:px-3 py-1 bg-blue-900/20">{team.totalGames} Games</span>
                                 <span className={`px-2 sm:px-3 py-1 ${team.bestMmrChange >= 0 ? 'text-cyan-400 bg-cyan-900/20' : 'text-orange-400 bg-orange-900/20'}`}>
                                     {team.bestMmrChange >= 0 ? '+' : ''}{team.bestMmrChange} MMR
                                 </span>
