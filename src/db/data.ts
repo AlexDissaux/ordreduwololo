@@ -14,8 +14,8 @@ export const teamsNameAndId: TeamsNameAndId[] = [
         points: 0,
         acronyme: "TDT",
         players : [
-            {id: "1712108", isCap: true},
-            {id: "8275065"},
+            {id: "1712108"},
+            {id: "8275065", isCap: true},
             {id: "7219954"},
             {id: "11575115"},
             {id: "19206930"}
