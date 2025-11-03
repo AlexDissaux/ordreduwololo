@@ -11,6 +11,12 @@ export interface Team {
     bestMmrChange: number;
     totalCivDiversity: number;
     rankingPoints: number;
+    pointsByDiscipline: {
+        winrate: number;
+        games: number;
+        mmr: number;
+        civs: number;
+    };
 }
 
 export interface TeamWinrate {
@@ -41,7 +47,13 @@ export async function getAllTeams(): Promise<Team[]> {
             totalGames: teamWinrate.win + teamWinrate.lose,
             bestMmrChange: bestMmrChange,
             totalCivDiversity: totalCivDiversity,
-            rankingPoints: 0 // sera calculé après
+            rankingPoints: 0, // sera calculé après
+            pointsByDiscipline: {
+                winrate: 0,
+                games: 0,
+                mmr: 0,
+                civs: 0
+            }
         });
     }
 
@@ -87,24 +99,32 @@ const calculateRankingPoints = (teams: any[]) => {
     // Classement par winrate
     const teamsByWinrate = [...teams].sort((a, b) => b.teamWinrate.winRate - a.teamWinrate.winRate);
     teamsByWinrate.forEach((team, index) => {
-        team.rankingPoints += numberOfTeams - index;
+        const points = numberOfTeams - index;
+        team.rankingPoints += points;
+        team.pointsByDiscipline.winrate = points;
     });
     
     // Classement par nombre de parties
     const teamsByGames = [...teams].sort((a, b) => b.totalGames - a.totalGames);
     teamsByGames.forEach((team, index) => {
-        team.rankingPoints += numberOfTeams - index;
+        const points = numberOfTeams - index;
+        team.rankingPoints += points;
+        team.pointsByDiscipline.games = points;
     });
     
     // Classement par meilleur MMR change
     const teamsByMmrChange = [...teams].sort((a, b) => b.bestMmrChange - a.bestMmrChange);
     teamsByMmrChange.forEach((team, index) => {
-        team.rankingPoints += numberOfTeams - index;
+        const points = numberOfTeams - index;
+        team.rankingPoints += points;
+        team.pointsByDiscipline.mmr = points;
     });
     
     // Classement par diversité de civilisations
     const teamsByCivDiversity = [...teams].sort((a, b) => b.totalCivDiversity - a.totalCivDiversity);
     teamsByCivDiversity.forEach((team, index) => {
-        team.rankingPoints += numberOfTeams - index;
+        const points = numberOfTeams - index;
+        team.rankingPoints += points;
+        team.pointsByDiscipline.civs = points;
     });
 }

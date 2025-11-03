@@ -61,35 +61,50 @@ export default function Teams() {
                                     <div className="bg-yellow-900/20 border border-yellow-500/30 px-3 py-2">
                                         <div className="flex justify-between items-center">
                                             <span className="text-yellow-400 text-sm font-medium">Winrate</span>
-                                            <span className="text-yellow-400 font-bold text-lg">{team.teamWinrate.winRate}%</span>
-                                        </div>
-                                        <div className="flex gap-2 mt-1 text-xs">
-                                            <span className="text-green-400">{team.teamWinrate.win}W</span>
-                                            <span className="text-red-400">{team.teamWinrate.lose}L</span>
-                                            <span className="text-blue-400">{team.totalGames} Games</span>
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-yellow-400 font-bold text-lg">{team.teamWinrate.winRate}%</span>
+                                                <span className="text-purple-400 font-bold text-sm bg-purple-900/40 px-2 py-0.5 border border-purple-500/30">
+                                                    {team.pointsByDiscipline.winrate} pts
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                     
                                     <div className="bg-blue-900/20 border border-blue-500/30 px-3 py-2">
                                         <div className="flex justify-between items-center">
                                             <span className="text-blue-400 text-sm font-medium">Nombre de parties</span>
-                                            <span className="text-blue-400 font-bold text-lg">{team.totalGames}</span>
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-blue-400 font-bold text-lg">{team.totalGames}</span>
+                                                <span className="text-purple-400 font-bold text-sm bg-purple-900/40 px-2 py-0.5 border border-purple-500/30">
+                                                    {team.pointsByDiscipline.games} pts
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                     
                                     <div className={`border px-3 py-2 ${team.bestMmrChange >= 0 ? 'bg-cyan-900/20 border-cyan-500/30' : 'bg-orange-900/20 border-orange-500/30'}`}>
                                         <div className="flex justify-between items-center">
-                                            <span className={`text-sm font-medium ${team.bestMmrChange >= 0 ? 'text-cyan-400' : 'text-orange-400'}`}>Meilleur MMR</span>
-                                            <span className={`font-bold text-lg ${team.bestMmrChange >= 0 ? 'text-cyan-400' : 'text-orange-400'}`}>
-                                                {team.bestMmrChange >= 0 ? '+' : ''}{team.bestMmrChange}
-                                            </span>
+                                            <span className={`text-sm font-medium ${team.bestMmrChange >= 0 ? 'text-cyan-400' : 'text-orange-400'}`}>Meilleur évolution MMR</span>
+                                            <div className="flex items-center gap-2">
+                                                <span className={`font-bold text-lg ${team.bestMmrChange >= 0 ? 'text-cyan-400' : 'text-orange-400'}`}>
+                                                    {team.bestMmrChange >= 0 ? '+' : ''}{team.bestMmrChange}
+                                                </span>
+                                                <span className="text-purple-400 font-bold text-sm bg-purple-900/40 px-2 py-0.5 border border-purple-500/30">
+                                                    {team.pointsByDiscipline.mmr} pts
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                     
                                     <div className="bg-amber-900/20 border border-amber-500/30 px-3 py-2">
                                         <div className="flex justify-between items-center">
                                             <span className="text-amber-400 text-sm font-medium">Diversité Civs</span>
-                                            <span className="text-amber-400 font-bold text-lg">{team.totalCivDiversity}</span>
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-amber-400 font-bold text-lg">{team.totalCivDiversity}</span>
+                                                <span className="text-purple-400 font-bold text-sm bg-purple-900/40 px-2 py-0.5 border border-purple-500/30">
+                                                    {team.pointsByDiscipline.civs} pts
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
