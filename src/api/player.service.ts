@@ -87,9 +87,9 @@ const getOdwPlayer = ((game: any, playerId: string) => game.teams.find((players:
 
 const getMmrChange = ((games: any, playerId: string) => {
     let ODWPlayer = getOdwPlayer(games.at(0), playerId)
-    const mmrBeg = ODWPlayer.mmr + ODWPlayer.mmr_diff
-    ODWPlayer = getOdwPlayer(games.at(-1), playerId)
     const mmrEnd = ODWPlayer.mmr + ODWPlayer.mmr_diff
+    ODWPlayer = getOdwPlayer(games.at(-1), playerId)
+    const mmrBeg = ODWPlayer.mmr + ODWPlayer.mmr_diff
     return {
         mmrBeg: mmrBeg,
         mmrEnd: mmrEnd,
