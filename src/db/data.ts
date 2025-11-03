@@ -5,7 +5,7 @@ export type TeamsNameAndId = {
     players : Array<{id: string, isCap? : boolean}>
 }
 
-export const sinceDate = '2025/08/28'
+export const sinceDate = '2025/11/01'
 
 
 export const teamsNameAndId: TeamsNameAndId[] = [

@@ -57,8 +57,10 @@ export async function getAllTeams(): Promise<Team[]> {
 const computeTeamWinrate = (playersData: any[]): TeamWinrate => {
     const totalWins = playersData.reduce((sum, player) => sum + player.modes.rm_solo.wins_count, 0);
     const totalLosses = playersData.reduce((sum, player) => sum + player.modes.rm_solo.losses_count, 0);
-    const totalGames = totalWins + totalLosses;
-    const winRate = totalGames > 0 ? Number(((totalWins / totalGames) * 100).toFixed(1)) : 0;
+    
+    // Calculer la moyenne des winrates individuels
+    const averageWinRate = playersData.reduce((sum, player) => sum + parseFloat(player.modes.rm_solo.win_rate), 0) / playersData.length;
+    const winRate = Number(averageWinRate.toFixed(1));
 
     return {
         win: totalWins,
