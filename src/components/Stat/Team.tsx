@@ -19,7 +19,7 @@ export default function Teams() {
         <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 lg:p-8">
             <div className="flex items-center justify-center space-x-3">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-orange-500 to-orange-500"></div>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500">
+                <h2 className="pb-2 text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500">
                     ⚔️ Équipes Détaillées
                 </h2>
                 <div className="h-px flex-1 bg-gradient-to-l from-transparent via-orange-500 to-orange-500"></div>
