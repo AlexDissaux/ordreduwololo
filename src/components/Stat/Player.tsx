@@ -1,14 +1,34 @@
 import { usePlayers } from "../../hook/usePlayers";
+import { useState } from "react";
 
+type SortKey = 'winrate' | 'games' | 'mmr' | 'civs';
 
 export default function Player() {
     const { players } = usePlayers()
+    const [sortBy, setSortBy] = useState<SortKey>('winrate');
 
     if (!players) {
         return <div className="min-h-screen bg-black flex items-center justify-center">
             <div className="text-white text-xl font-medium">Loading players...</div>
         </div>;
     }
+
+    // Fonction de tri
+    const sortedPlayers = [...players].sort((a, b) => {
+        switch (sortBy) {
+            case 'winrate':
+                return parseFloat(b.modes.rm_solo.win_rate) - parseFloat(a.modes.rm_solo.win_rate);
+            case 'games':
+                return (b.modes.rm_solo.wins_count + b.modes.rm_solo.losses_count) - 
+                       (a.modes.rm_solo.wins_count + a.modes.rm_solo.losses_count);
+            case 'mmr':
+                return b.modes.rm_solo.mmrChange - a.modes.rm_solo.mmrChange;
+            case 'civs':
+                return b.modes.rm_solo.nombreCivDiffJouer - a.modes.rm_solo.nombreCivDiffJouer;
+            default:
+                return 0;
+        }
+    });
 
     return (
         <div className="bg-gray-900/80 backdrop-blur-sm p-4 sm:p-6 lg:p-8">
@@ -20,20 +40,84 @@ export default function Player() {
                 <div className="h-px flex-1 bg-gradient-to-l from-transparent via-blue-500 to-blue-500"></div>
             </div>
             
+            {/* Boutons de tri - Tous écrans */}
+            <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
+                <button
+                    onClick={() => setSortBy('winrate')}
+                    className={`px-4 py-2 rounded text-xs sm:text-sm font-bold uppercase tracking-wider transition-all whitespace-nowrap ${
+                        sortBy === 'winrate' 
+                            ? 'bg-yellow-500/30 text-yellow-400 border-2 border-yellow-500 shadow-lg shadow-yellow-500/20' 
+                            : 'bg-gray-800/50 text-gray-400 border border-gray-700 hover:bg-gray-800 hover:border-yellow-500/50'
+                    }`}
+                >
+                    📊 Winrate
+                </button>
+                <button
+                    onClick={() => setSortBy('games')}
+                    className={`px-4 py-2 rounded text-xs sm:text-sm font-bold uppercase tracking-wider transition-all whitespace-nowrap ${
+                        sortBy === 'games' 
+                            ? 'bg-blue-500/30 text-blue-400 border-2 border-blue-500 shadow-lg shadow-blue-500/20' 
+                            : 'bg-gray-800/50 text-gray-400 border border-gray-700 hover:bg-gray-800 hover:border-blue-500/50'
+                    }`}
+                >
+                    🎮 Games
+                </button>
+                <button
+                    onClick={() => setSortBy('mmr')}
+                    className={`px-4 py-2 rounded text-xs sm:text-sm font-bold uppercase tracking-wider transition-all whitespace-nowrap ${
+                        sortBy === 'mmr' 
+                            ? 'bg-cyan-500/30 text-cyan-400 border-2 border-cyan-500 shadow-lg shadow-cyan-500/20' 
+                            : 'bg-gray-800/50 text-gray-400 border border-gray-700 hover:bg-gray-800 hover:border-cyan-500/50'
+                    }`}
+                >
+                    📈 MMR
+                </button>
+                <button
+                    onClick={() => setSortBy('civs')}
+                    className={`px-4 py-2 rounded text-xs sm:text-sm font-bold uppercase tracking-wider transition-all whitespace-nowrap ${
+                        sortBy === 'civs' 
+                            ? 'bg-amber-500/30 text-amber-400 border-2 border-amber-500 shadow-lg shadow-amber-500/20' 
+                            : 'bg-gray-800/50 text-gray-400 border border-gray-700 hover:bg-gray-800 hover:border-amber-500/50'
+                    }`}
+                >
+                    🏛️ Civs
+                </button>
+            </div>
+            
             {/* En-têtes du tableau - Visible uniquement sur desktop */}
             <div className="hidden lg:grid lg:grid-cols-12 gap-4 px-4 py-2 border-b border-gray-700/50 text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">
                 <div className="col-span-1">#</div>
                 <div className="col-span-2">Joueur</div>
                 <div className="col-span-2">Équipe</div>
-                <div className="col-span-1 text-center">Win Rate</div>
-                <div className="col-span-1 text-center">Games</div>
+                <button
+                    onClick={() => setSortBy('winrate')}
+                    className={`col-span-1 text-center hover:text-yellow-400 transition-colors ${sortBy === 'winrate' ? 'text-yellow-400' : ''}`}
+                >
+                    Win Rate {sortBy === 'winrate' && '▼'}
+                </button>
+                <button
+                    onClick={() => setSortBy('games')}
+                    className={`col-span-1 text-center hover:text-blue-400 transition-colors ${sortBy === 'games' ? 'text-blue-400' : ''}`}
+                >
+                    Games {sortBy === 'games' && '▼'}
+                </button>
                 <div className="col-span-2 text-center">Victoires / Défaites</div>
-                <div className="col-span-2 text-center">MMR</div>
-                <div className="col-span-1 text-center">Civs</div>
+                <button
+                    onClick={() => setSortBy('mmr')}
+                    className={`col-span-2 text-center hover:text-cyan-400 transition-colors ${sortBy === 'mmr' ? 'text-cyan-400' : ''}`}
+                >
+                    MMR {sortBy === 'mmr' && '▼'}
+                </button>
+                <button
+                    onClick={() => setSortBy('civs')}
+                    className={`col-span-1 text-center hover:text-amber-400 transition-colors ${sortBy === 'civs' ? 'text-amber-400' : ''}`}
+                >
+                    Civs {sortBy === 'civs' && '▼'}
+                </button>
             </div>
             
             <div className="divide-y divide-gray-700/20">
-                {players.map((player, index) => {
+                {sortedPlayers.map((player, index) => {
                     // Couleurs en fonction du classement
                     const rankColor = 'text-gray-500';
                     
