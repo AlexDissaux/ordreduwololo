@@ -136,43 +136,43 @@ export default function Podium() {
                         
                         {/* Disciplines en mobile */}
                         <div className="md:hidden mt-3">
-                            {/* Disciplines en grille */}
-                            <div className="grid grid-cols-2 gap-2 text-xs">
+                            {/* Disciplines en liste */}
+                            <div className="space-y-1.5 text-xs">
                                 {/* Winrate */}
-                                <div className="bg-yellow-900/20 border border-yellow-500/30 p-2 rounded">
-                                    <div className="text-yellow-400 uppercase font-bold mb-1 text-[10px]">Winrate</div>
-                                    <div className="flex items-center justify-between">
-                                        <div className="text-yellow-400 font-bold text-base">{team.teamWinrate.winRate}%</div>
-                                        <div className="text-purple-400 font-bold">{team.pointsByDiscipline?.winrate || 0}pt</div>
+                                <div className="bg-yellow-900/20 border border-yellow-500/30 px-3 py-1.5 rounded flex items-center justify-between">
+                                    <span className="text-yellow-400 uppercase font-bold text-[11px]">Winrate</span>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-yellow-400 font-bold text-sm">{team.teamWinrate.winRate}%</span>
+                                        <span className="text-purple-400 font-bold text-xs">{team.pointsByDiscipline?.winrate || 0}pt</span>
                                     </div>
                                 </div>
                                 
                                 {/* Games */}
-                                <div className="bg-blue-900/20 border border-blue-500/30 p-2 rounded">
-                                    <div className="text-blue-400 uppercase font-bold mb-1 text-[10px]">Games</div>
-                                    <div className="flex items-center justify-between">
-                                        <div className="text-blue-400 font-bold text-base">{team.totalGames}</div>
-                                        <div className="text-purple-400 font-bold">{team.pointsByDiscipline?.games || 0}pt</div>
+                                <div className="bg-blue-900/20 border border-blue-500/30 px-3 py-1.5 rounded flex items-center justify-between">
+                                    <span className="text-blue-400 uppercase font-bold text-[11px]">Games</span>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-blue-400 font-bold text-sm">{team.totalGames}</span>
+                                        <span className="text-purple-400 font-bold text-xs">{team.pointsByDiscipline?.games || 0}pt</span>
                                     </div>
                                 </div>
                                 
                                 {/* MMR */}
-                                <div className={`border p-2 rounded ${team.bestMmrChange >= 0 ? 'bg-cyan-900/20 border-cyan-500/30' : 'bg-orange-900/20 border-orange-500/30'}`}>
-                                    <div className={`uppercase font-bold mb-1 text-[10px] ${team.bestMmrChange >= 0 ? 'text-cyan-400' : 'text-orange-400'}`}>MMR</div>
-                                    <div className="flex items-center justify-between">
-                                        <div className={`font-bold text-base ${team.bestMmrChange >= 0 ? 'text-cyan-400' : 'text-orange-400'}`}>
+                                <div className={`border px-3 py-1.5 rounded flex items-center justify-between ${team.bestMmrChange >= 0 ? 'bg-cyan-900/20 border-cyan-500/30' : 'bg-orange-900/20 border-orange-500/30'}`}>
+                                    <span className={`uppercase font-bold text-[11px] ${team.bestMmrChange >= 0 ? 'text-cyan-400' : 'text-orange-400'}`}>MMR</span>
+                                    <div className="flex items-center gap-2">
+                                        <span className={`font-bold text-sm ${team.bestMmrChange >= 0 ? 'text-cyan-400' : 'text-orange-400'}`}>
                                             {team.bestMmrChange >= 0 ? '+' : ''}{team.bestMmrChange}
-                                        </div>
-                                        <div className="text-purple-400 font-bold">{team.pointsByDiscipline?.mmr || 0}pt</div>
+                                        </span>
+                                        <span className="text-purple-400 font-bold text-xs">{team.pointsByDiscipline?.mmr || 0}pt</span>
                                     </div>
                                 </div>
                                 
                                 {/* Civs */}
-                                <div className="bg-amber-900/20 border border-amber-500/30 p-2 rounded">
-                                    <div className="text-amber-400 uppercase font-bold mb-1 text-[10px]">Civs</div>
-                                    <div className="flex items-center justify-between">
-                                        <div className="text-amber-400 font-bold text-base">{team.totalCivDiversity}</div>
-                                        <div className="text-purple-400 font-bold">{team.pointsByDiscipline?.civs || 0}pt</div>
+                                <div className="bg-amber-900/20 border border-amber-500/30 px-3 py-1.5 rounded flex items-center justify-between">
+                                    <span className="text-amber-400 uppercase font-bold text-[11px]">Civs</span>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-amber-400 font-bold text-sm">{team.totalCivDiversity}</span>
+                                        <span className="text-purple-400 font-bold text-xs">{team.pointsByDiscipline?.civs || 0}pt</span>
                                     </div>
                                 </div>
                             </div>

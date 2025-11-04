@@ -138,38 +138,53 @@ export default function Teams() {
                                             
                                             {/* Statistiques à droite */}
                                             <div className="flex-1">
-                                                <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-xs">
+                                                <div className="flex flex-col sm:grid sm:grid-cols-4 gap-1.5 text-xs">
                                                     {/* Winrate */}
-                                                    <div className="bg-yellow-900/20 border border-yellow-500/30 px-2 py-1.5 text-center">
-                                                        <div className="text-yellow-400 font-bold text-sm sm:text-base">{player.modes.rm_solo.win_rate}%</div>
-                                                        <div className="text-gray-400 text-xs uppercase">Winrate</div>
-                                                        <div className="flex justify-center gap-1 mt-0.5">
+                                                    <div className="bg-yellow-900/20 border border-yellow-500/30 px-2 sm:px-2 py-1.5 sm:text-center flex sm:block items-center justify-between sm:justify-center">
+                                                        <span className="text-gray-400 text-xs uppercase sm:hidden">Winrate</span>
+                                                        <div className="flex items-center gap-2 sm:block">
+                                                            <div className="flex gap-1 sm:hidden">
+                                                                <span className="text-green-400 text-xs">{player.modes.rm_solo.wins_count}W</span>
+                                                                <span className="text-red-400 text-xs">{player.modes.rm_solo.losses_count}L</span>
+                                                            </div>
+                                                            <span className="text-yellow-400 font-bold text-sm sm:text-base">{player.modes.rm_solo.win_rate}%</span>
+                                                        </div>
+                                                        <div className="text-gray-400 text-xs uppercase hidden sm:block">Winrate</div>
+                                                        <div className="hidden sm:flex justify-center gap-1 mt-0.5">
                                                             <span className="text-green-400 text-xs">{player.modes.rm_solo.wins_count}W</span>
                                                             <span className="text-red-400 text-xs">{player.modes.rm_solo.losses_count}L</span>
                                                         </div>
                                                     </div>
                                                     
                                                     {/* Parties jouées */}
-                                                    <div className="bg-blue-900/20 border border-blue-500/30 px-2 py-1.5 text-center">
-                                                        <div className="text-blue-400 font-bold text-sm sm:text-base">{player.modes.rm_solo.wins_count + player.modes.rm_solo.losses_count}</div>
-                                                        <div className="text-gray-400 text-xs uppercase">Games</div>
+                                                    <div className="bg-blue-900/20 border border-blue-500/30 px-2 sm:px-2 py-1.5 sm:text-center flex sm:block items-center justify-between sm:justify-center">
+                                                        <span className="text-gray-400 text-xs uppercase sm:hidden">Games</span>
+                                                        <span className="text-blue-400 font-bold text-sm sm:text-base">{player.modes.rm_solo.wins_count + player.modes.rm_solo.losses_count}</span>
+                                                        <div className="text-gray-400 text-xs uppercase hidden sm:block">Games</div>
                                                     </div>
                                                     
                                                     {/* MMR Change */}
-                                                    <div className={`border px-2 py-1.5 text-center ${player.modes.rm_solo.mmrChange >= 0 ? 'bg-cyan-900/20 border-cyan-500/30' : 'bg-orange-900/20 border-orange-500/30'}`}>
-                                                        <div className={`font-bold text-sm sm:text-base ${player.modes.rm_solo.mmrChange >= 0 ? 'text-cyan-400' : 'text-orange-400'}`}>
-                                                            {player.modes.rm_solo.mmrChange >= 0 ? '+' : ''}{player.modes.rm_solo.mmrChange}
+                                                    <div className={`border px-2 sm:px-2 py-1.5 sm:text-center flex sm:block items-center justify-between sm:justify-center ${player.modes.rm_solo.mmrChange >= 0 ? 'bg-cyan-900/20 border-cyan-500/30' : 'bg-orange-900/20 border-orange-500/30'}`}>
+                                                        <span className={`text-xs uppercase sm:hidden ${player.modes.rm_solo.mmrChange >= 0 ? 'text-cyan-400' : 'text-orange-400'}`}>MMR</span>
+                                                        <div className="flex items-center gap-1.5 sm:block">
+                                                            <span className="text-gray-500 text-xs sm:hidden">
+                                                                {player.modes.rm_solo.mmrBeg} → {player.modes.rm_solo.mmrEnd}
+                                                            </span>
+                                                            <span className={`font-bold text-sm sm:text-base ${player.modes.rm_solo.mmrChange >= 0 ? 'text-cyan-400' : 'text-orange-400'}`}>
+                                                                {player.modes.rm_solo.mmrChange >= 0 ? '+' : ''}{player.modes.rm_solo.mmrChange}
+                                                            </span>
                                                         </div>
-                                                        <div className="text-gray-400 text-xs uppercase">MMR</div>
-                                                        <div className="text-gray-500 text-xs mt-0.5">
+                                                        <div className="text-gray-400 text-xs uppercase hidden sm:block">MMR</div>
+                                                        <div className="hidden sm:block text-gray-500 text-xs mt-0.5">
                                                             {player.modes.rm_solo.mmrBeg} → {player.modes.rm_solo.mmrEnd}
                                                         </div>
                                                     </div>
                                                     
                                                     {/* Civilisations */}
-                                                    <div className="bg-amber-900/20 border border-amber-500/30 px-2 py-1.5 text-center">
-                                                        <div className="text-amber-400 font-bold text-sm sm:text-base">{player.modes.rm_solo.nombreCivDiffJouer}</div>
-                                                        <div className="text-gray-400 text-xs uppercase">Civs</div>
+                                                    <div className="bg-amber-900/20 border border-amber-500/30 px-2 sm:px-2 py-1.5 sm:text-center flex sm:block items-center justify-between sm:justify-center">
+                                                        <span className="text-gray-400 text-xs uppercase sm:hidden">Civs</span>
+                                                        <span className="text-amber-400 font-bold text-sm sm:text-base">{player.modes.rm_solo.nombreCivDiffJouer}</span>
+                                                        <div className="text-gray-400 text-xs uppercase hidden sm:block">Civs</div>
                                                     </div>
                                                 </div>
                                             </div>
