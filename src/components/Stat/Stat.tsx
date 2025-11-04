@@ -2,15 +2,18 @@ import { useState } from "react";
 import Separator from "./Separator";
 import Teams from "./Team";
 import Player from "./Player";
+import Podium from "../Podium";
 
 
 export default function Stat() {
-    const [showTeam, setShowTeam] = useState(true);
+    const [view, setView] = useState<'podium' | 'teams' | 'players'>('podium');
 
     return (
         <>
-            <Separator showTeam={showTeam} onToggle={setShowTeam} />
-            {showTeam ? <Teams/> : <Player/>}
+            <Separator view={view} onViewChange={setView} />
+            {view === 'podium' && <Podium />}
+            {view === 'teams' && <Teams />}
+            {view === 'players' && <Player />}
         </>
     )
 
