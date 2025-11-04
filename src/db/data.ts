@@ -5,7 +5,7 @@ export type TeamsNameAndId = {
     players : Array<{id: string, isCap? : boolean}>
 }
 
-export const sinceDate = '2025/11/02'
+export const sinceDate = '2025/09/01'
 
 
 export const teamsNameAndId: TeamsNameAndId[] = [
@@ -100,6 +100,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
         players : [
             {id: "19206930", isCap : true}, // Cosmos
             {id: "18963110", isCap : false}, // Rollos
+            {id: "23800459", isCap : false}, // nicolas
         ]
     }
 ]

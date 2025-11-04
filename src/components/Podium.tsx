@@ -39,7 +39,7 @@ export default function Podium() {
             </div>
             
             <div className="space-y-2">
-                {teams.slice(0, 6).map((team, index) => {
+                {teams.slice(0, 8).map((team, index) => {
                     const captain = team.players.find((p: any) => p.isCap);
                     
                     // Couleurs et styles par position
@@ -62,7 +62,7 @@ export default function Podium() {
                         bgGradient: 'bg-gradient-to-r from-gray-700/10 to-transparent',
                         textColor: 'text-gray-300',
                         scoreColor: 'text-gray-400',
-                        medal: `#${index + 1}`
+                        medal: `${index + 1}`
                     };
                     
                     return (
@@ -71,7 +71,7 @@ export default function Podium() {
                             {/* Position + Nom */}
                             <div className="flex items-center gap-2 sm:gap-3 w-full md:flex-1">
                                 {/* Position */}
-                                <div className="text-xl sm:text-2xl flex-shrink-0 w-10 text-center">
+                                <div className={`flex-shrink-0 w-10 text-center ${index > 2 ? 'text-base sm:text-lg font-bold bg-gray-800/50 rounded-full w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center border border-gray-600/50 text-gray-300' : 'text-xl sm:text-2xl'}`}>
                                     {positionStyles.medal}
                                 </div>
                                 
