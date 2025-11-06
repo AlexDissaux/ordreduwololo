@@ -1,9 +1,11 @@
 
 
 import { useTeams } from '../../hook/useTeams';
+import { useState } from 'react';
 
 export default function Teams() {
     const { teams } = useTeams();
+    const [openTooltipIndex, setOpenTooltipIndex] = useState<string | null>(null);
 
     if (!teams) {
         return <div className="min-h-screen bg-black flex items-center justify-center">
@@ -204,14 +206,20 @@ export default function Teams() {
                                                     </div>
                                                     
                                                     {/* Civilisations */}
-                                                    <div className="bg-amber-900/20 border border-amber-500/30 px-2 sm:px-2 py-1.5 sm:text-center flex sm:block items-center justify-between sm:justify-center relative group">
+                                                    <div 
+                                                        className="bg-amber-900/20 border border-amber-500/30 px-2 sm:px-2 py-1.5 sm:text-center flex sm:block items-center justify-between sm:justify-center relative group cursor-pointer"
+                                                        onClick={() => {
+                                                            const tooltipKey = `${teamIndex}-${playerIndex}`;
+                                                            setOpenTooltipIndex(openTooltipIndex === tooltipKey ? null : tooltipKey);
+                                                        }}
+                                                    >
                                                         <span className="text-gray-400 text-xs uppercase sm:hidden">Civs</span>
                                                         <span className="text-amber-400 font-bold text-sm sm:text-base">{player.modes.rm_solo.nombreCivDiffJouer}</span>
                                                         <div className="text-gray-400 text-xs uppercase hidden sm:block">Civs</div>
                                                         
                                                         {/* Tooltip */}
                                                         {player.modes.rm_solo.civilizations && player.modes.rm_solo.civilizations.length > 0 && (
-                                                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block z-50 w-48">
+                                                            <div className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 z-50 w-48 ${openTooltipIndex === `${teamIndex}-${playerIndex}` ? 'block' : 'hidden'} lg:hidden lg:group-hover:block`}>
                                                                 <div className="bg-gray-900 border-2 border-amber-500/50 rounded-lg shadow-xl p-3">
                                                                     <div className="text-amber-400 font-bold text-xs uppercase mb-2 text-center">Civilisations jouées</div>
                                                                     <div className="space-y-1 max-h-64 overflow-y-auto">
