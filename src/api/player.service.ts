@@ -25,7 +25,7 @@ const transformPlayerData = async (playerData: any, playerId: string) => {
     const playerGamesPage1 = await (await fetch(`https://aoe4world.com/api/v0/players/${playerId}/games?since=${sinceDate}&leaderboard=rm_solo&page=1`)).json();
     if (!playerData.modes) playerData.modes = {}
     // Remove [ODW] prefix from player name if present
-    if (playerData.name.startsWith('[ODW] ') || playerData.name.startsWith('[ODW ]')) {
+    if (playerData.name.startsWith('[ODW] ') || playerData.name.startsWith('[ODW ]')  || playerData.name.startsWith('[ODG] ')) {
         playerData.name = playerData.name.substring(6);
     } else if (playerData.name.startsWith('[ODW]')) {
         playerData.name = playerData.name.substring(5);
@@ -54,8 +54,6 @@ const transformPlayerData = async (playerData: any, playerId: string) => {
         // Wins and losses
         const [wins, losses] = getWinsAndLosses(games, playerId)
         const mmrData = getMmrChange(games, playerId)
-        
-
 
         // RESULT
         playerData.modes.rm_solo = {
