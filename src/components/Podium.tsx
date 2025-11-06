@@ -82,7 +82,7 @@ export default function Podium() {
                                         {team.name}
                                     </div>
                                     {captain && (
-                                        <div className="text-xs text-gray-500 truncate hidden sm:block">
+                                        <div className="text-xs text-gray-500 truncate">
                                             <span className="text-yellow-400">👑</span> {captain.name}
                                         </div>
                                     )}

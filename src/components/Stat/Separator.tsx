@@ -14,8 +14,8 @@ export default function Separator({ view, onViewChange }: SeparatorProps) {
                     onClick={() => onViewChange('teams')}
                     className={`relative overflow-hidden font-black text-base sm:text-lg md:text-xl lg:text-2xl transition-all duration-700 ease-in-out group ${
                         view === 'teams'
-                            ? 'flex-[0.80] bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-red-500/20' 
-                            : 'flex-[0.10] bg-gradient-to-r from-yellow-600/30 via-orange-600/30 to-red-600/30 hover:from-yellow-500/40 hover:via-orange-500/40 hover:to-red-500/40 hover:scale-[1.02] cursor-pointer'
+                            ? 'flex-[0.70] bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-red-500/20' 
+                            : 'flex-[0.15] bg-gradient-to-r from-yellow-600/30 via-orange-600/30 to-red-600/30 hover:from-yellow-500/40 hover:via-orange-500/40 hover:to-red-500/40 hover:scale-[1.02] cursor-pointer'
                     }`}
                 >
                     {/* Effet de brillance au survol */}
@@ -65,8 +65,8 @@ export default function Separator({ view, onViewChange }: SeparatorProps) {
                     onClick={() => onViewChange('podium')}
                     className={`relative overflow-hidden font-black text-base sm:text-lg md:text-xl lg:text-2xl transition-all duration-700 ease-in-out group ${
                         view === 'podium'
-                            ? 'flex-[0.80] bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-rose-500/20' 
-                            : 'flex-[0.10] bg-gradient-to-r from-purple-600/30 via-pink-600/30 to-rose-600/30 hover:from-purple-500/40 hover:via-pink-500/40 hover:to-rose-500/40 hover:scale-[1.02] cursor-pointer'
+                            ? 'flex-[0.70] bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-rose-500/20' 
+                            : 'flex-[0.15] bg-gradient-to-r from-purple-600/30 via-pink-600/30 to-rose-600/30 hover:from-purple-500/40 hover:via-pink-500/40 hover:to-rose-500/40 hover:scale-[1.02] cursor-pointer'
                     }`}
                 >
                     {/* Effet de brillance au survol */}
@@ -115,8 +115,8 @@ export default function Separator({ view, onViewChange }: SeparatorProps) {
                     onClick={() => onViewChange('players')}
                     className={`relative overflow-hidden font-black text-base sm:text-lg md:text-xl lg:text-2xl transition-all duration-700 ease-in-out group ${
                         view === 'players'
-                            ? 'flex-[0.80] bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20' 
-                            : 'flex-[0.10] bg-gradient-to-r from-blue-600/30 via-purple-600/30 to-pink-600/30 hover:from-blue-500/40 hover:via-purple-500/40 hover:to-pink-500/40 hover:scale-[1.02] cursor-pointer'
+                            ? 'flex-[0.70] bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20' 
+                            : 'flex-[0.15] bg-gradient-to-r from-blue-600/30 via-purple-600/30 to-pink-600/30 hover:from-blue-500/40 hover:via-purple-500/40 hover:to-pink-500/40 hover:scale-[1.02] cursor-pointer'
                     }`}
                 >
                     {/* Effet de brillance au survol */}

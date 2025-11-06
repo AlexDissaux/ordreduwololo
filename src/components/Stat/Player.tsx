@@ -41,7 +41,7 @@ export default function Player() {
             </div>
             
             {/* Boutons de tri - Tous écrans */}
-            <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
+            <div className="flex gap-2 mb-4 overflow-x-auto pb-2 justify-center">
                 <button
                     onClick={() => setSortBy('winrate')}
                     className={`px-4 py-2 rounded text-xs sm:text-sm font-bold uppercase tracking-wider transition-all whitespace-nowrap ${
