@@ -11,29 +11,37 @@ export default function BelgianLeaderboard() {
 
     return (
         <div 
-            className="fixed bottom-4 right-4 z-50"
+            className="fixed top-4 right-4 z-50"
             onMouseEnter={() => setIsExpanded(true)}
             onMouseLeave={() => setIsExpanded(false)}
         >
             {/* Drapeau flottant permanent */}
             <div className={`transition-all duration-300 ${isExpanded ? 'scale-110' : 'scale-100 animate-bounce-slow'}`}>
                 <div className="bg-gradient-to-br from-red-600 via-yellow-500 to-black border-2 border-yellow-500/70 rounded-full w-16 h-16 flex items-center justify-center shadow-2xl shadow-yellow-500/30 cursor-pointer">
-                    <span className="text-4xl">🇧🇪</span>
+                    <div className="flex h-8 w-12 overflow-hidden rounded-sm">
+                        <div className="w-1/3 bg-black"></div>
+                        <div className="w-1/3 bg-yellow-400"></div>
+                        <div className="w-1/3 bg-red-600"></div>
+                    </div>
                 </div>
             </div>
 
             {/* Section déployable */}
-            <div className={`absolute bottom-0 right-0 transition-all duration-500 ease-out ${
+            <div className={`absolute top-0 right-0 transition-all duration-500 ease-out ${
                 isExpanded 
                     ? 'opacity-100 translate-x-0 pointer-events-auto' 
                     : 'opacity-0 translate-x-8 pointer-events-none'
             }`}>
-                <div className="w-80 sm:w-96 mb-2">
+                <div className="w-80 sm:w-96 mt-20">
                     <div className="bg-gradient-to-br from-red-900/95 via-yellow-900/95 to-black/95 backdrop-blur-md border-2 border-yellow-500/50 rounded-lg shadow-2xl shadow-yellow-500/20 overflow-hidden">
                         {/* Header */}
                         <div className="bg-gradient-to-r from-black via-yellow-500/30 to-red-600/30 px-4 py-3 border-b border-yellow-500/50">
                             <div className="flex items-center gap-3">
-                                <span className="text-3xl">🇧🇪</span>
+                                <div className="flex h-6 w-8 overflow-hidden rounded-sm">
+                                    <div className="w-1/3 bg-black"></div>
+                                    <div className="w-1/3 bg-yellow-400"></div>
+                                    <div className="w-1/3 bg-red-600"></div>
+                                </div>
                                 <div>
                                     <h3 className="text-lg font-black text-yellow-400 uppercase tracking-wider">
                                         TOP 3 Belgique
