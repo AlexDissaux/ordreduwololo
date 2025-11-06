@@ -127,7 +127,7 @@ export default function Teams() {
                         <div className="w-full lg:w-2/3 py-2">
                             <div className="divide-y divide-gray-700/30">
                                 {team.players.map((player: any, playerIndex: number) => (
-                                    <div key={playerIndex} className={`px-3 sm:px-4 lg:px-6 py-2 hover:bg-gray-800/40 transition-colors duration-150 group relative ${
+                                    <div key={playerIndex} className={`px-3 sm:px-4 lg:px-6 py-2 hover:bg-gray-800/40 transition-colors duration-150 relative ${
                                         playerIndex % 2 === 0 ? 'bg-gradient-to-r from-gray-800/10 to-transparent' : 'bg-gradient-to-r from-gray-800/5 to-transparent'
                                     } ${player.isCap ? 'bg-gradient-to-r from-yellow-900/10 via-transparent to-transparent border-l-2 border-yellow-500/30' : ''}`}>
                                         <div className="flex flex-col sm:flex-row sm:items-center gap-2">
@@ -193,10 +193,30 @@ export default function Teams() {
                                                     </div>
                                                     
                                                     {/* Civilisations */}
-                                                    <div className="bg-amber-900/20 border border-amber-500/30 px-2 sm:px-2 py-1.5 sm:text-center flex sm:block items-center justify-between sm:justify-center">
+                                                    <div className="bg-amber-900/20 border border-amber-500/30 px-2 sm:px-2 py-1.5 sm:text-center flex sm:block items-center justify-between sm:justify-center relative group">
                                                         <span className="text-gray-400 text-xs uppercase sm:hidden">Civs</span>
                                                         <span className="text-amber-400 font-bold text-sm sm:text-base">{player.modes.rm_solo.nombreCivDiffJouer}</span>
                                                         <div className="text-gray-400 text-xs uppercase hidden sm:block">Civs</div>
+                                                        
+                                                        {/* Tooltip */}
+                                                        {player.modes.rm_solo.civilizations && player.modes.rm_solo.civilizations.length > 0 && (
+                                                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block z-50 w-48 pointer-events-none">
+                                                                <div className="bg-gray-900 border-2 border-amber-500/50 rounded-lg shadow-xl p-3">
+                                                                    <div className="text-amber-400 font-bold text-xs uppercase mb-2 text-center">Civilisations jouées</div>
+                                                                    <div className="space-y-1 max-h-64 overflow-y-auto">
+                                                                        {player.modes.rm_solo.civilizations.map((civ: string, idx: number) => (
+                                                                            <div key={idx} className="text-gray-300 text-xs py-0.5 px-2 bg-gray-800/50 rounded">
+                                                                                {civ}
+                                                                            </div>
+                                                                        ))}
+                                                                    </div>
+                                                                </div>
+                                                                {/* Flèche du tooltip */}
+                                                                <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1">
+                                                                    <div className="border-8 border-transparent border-t-amber-500/50"></div>
+                                                                </div>
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>

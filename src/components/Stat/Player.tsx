@@ -139,7 +139,7 @@ export default function Player() {
                         : teamBgGradient;
                     
                     return (
-                        <div key={index} className={`px-3 sm:px-4 py-2 hover:bg-gray-800/40 transition-colors duration-150 group ${
+                        <div key={index} className={`px-3 sm:px-4 py-2 hover:bg-gray-800/40 transition-colors duration-150 ${
                             index % 2 === 0 ? 'bg-gray-800/5' : 'bg-transparent'
                         } ${player.isCap ? 'border-l-2 border-yellow-500/30' : ''}`}>
                             {/* Layout Mobile/Tablette */}
@@ -173,9 +173,29 @@ export default function Player() {
                                         </div>
                                         <div className="text-gray-400 text-xs">MMR</div>
                                     </div>
-                                    <div className="bg-amber-900/20 border border-amber-500/30 px-2 py-1 text-center">
+                                    <div className="bg-amber-900/20 border border-amber-500/30 px-2 py-1 text-center relative group">
                                         <div className="text-amber-400 font-bold text-sm">{player.modes.rm_solo.nombreCivDiffJouer}</div>
                                         <div className="text-gray-400 text-xs">Civs</div>
+                                        
+                                        {/* Tooltip */}
+                                        {player.modes.rm_solo.civilizations && player.modes.rm_solo.civilizations.length > 0 && (
+                                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block z-50 w-48 pointer-events-none">
+                                                <div className="bg-gray-900 border-2 border-amber-500/50 rounded-lg shadow-xl p-3">
+                                                    <div className="text-amber-400 font-bold text-xs uppercase mb-2 text-center">Civilisations jouées</div>
+                                                    <div className="space-y-1 max-h-64 overflow-y-auto">
+                                                        {player.modes.rm_solo.civilizations.map((civ: string, idx: number) => (
+                                                            <div key={idx} className="text-gray-300 text-xs py-0.5 px-2 bg-gray-800/50 rounded">
+                                                                {civ}
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                                {/* Flèche du tooltip */}
+                                                <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1">
+                                                    <div className="border-8 border-transparent border-t-amber-500/50"></div>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -223,8 +243,28 @@ export default function Player() {
                                         {player.modes.rm_solo.mmrBeg} → {player.modes.rm_solo.mmrEnd}
                                     </div>
                                 </div>
-                                <div className="col-span-1 text-center">
+                                <div className="col-span-1 text-center relative group">
                                     <span className="text-amber-400 font-bold text-base">{player.modes.rm_solo.nombreCivDiffJouer}</span>
+                                    
+                                    {/* Tooltip */}
+                                    {player.modes.rm_solo.civilizations && player.modes.rm_solo.civilizations.length > 0 && (
+                                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block z-50 w-48 pointer-events-none">
+                                            <div className="bg-gray-900 border-2 border-amber-500/50 rounded-lg shadow-xl p-3">
+                                                <div className="text-amber-400 font-bold text-xs uppercase mb-2 text-center">Civilisations jouées</div>
+                                                <div className="space-y-1 max-h-64 overflow-y-auto">
+                                                    {player.modes.rm_solo.civilizations.map((civ: string, idx: number) => (
+                                                        <div key={idx} className="text-gray-300 text-xs py-0.5 px-2 bg-gray-800/50 rounded">
+                                                            {civ}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            {/* Flèche du tooltip */}
+                                            <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1">
+                                                <div className="border-8 border-transparent border-t-amber-500/50"></div>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
