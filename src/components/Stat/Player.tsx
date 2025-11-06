@@ -147,6 +147,20 @@ export default function Player() {
                                 <div className="flex items-center justify-between gap-3 mb-2">
                                     <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
                                         <span className={`${rankColor} font-bold text-sm sm:text-base flex-shrink-0 w-6`}>{index + 1}</span>
+                                        
+                                        {/* Avatar */}
+                                        {player.avatars?.small ? (
+                                            <img 
+                                                src={player.avatars.small} 
+                                                alt={player.name}
+                                                className="w-8 h-8 rounded-full border border-gray-600 flex-shrink-0"
+                                            />
+                                        ) : (
+                                            <div className="w-8 h-8 rounded-full border border-gray-600 bg-gray-800 flex items-center justify-center flex-shrink-0">
+                                                <span className="text-yellow-400 font-black text-[9px]">ODW</span>
+                                            </div>
+                                        )}
+                                        
                                         {player.isCap && (
                                             <span className="text-yellow-400 text-base sm:text-lg flex-shrink-0 animate-pulse-subtle">👑</span>
                                         )}
@@ -206,6 +220,19 @@ export default function Player() {
                                     <span className={`${rankColor} font-bold text-lg`}>{index + 1}</span>
                                 </div>
                                 <div className={`col-span-2 bg-gradient-to-r ${nameBgGradient} to-transparent py-1 px-2 -mx-2 flex items-center gap-2`}>
+                                    {/* Avatar */}
+                                    {player.avatars?.small ? (
+                                        <img 
+                                            src={player.avatars.small} 
+                                            alt={player.name}
+                                            className="w-8 h-8 rounded-full border border-gray-600 flex-shrink-0"
+                                        />
+                                    ) : (
+                                        <div className="w-8 h-8 rounded-full border border-gray-600 bg-gray-800 flex items-center justify-center flex-shrink-0">
+                                            <span className="text-yellow-400 font-black text-[9px]">ODW</span>
+                                        </div>
+                                    )}
+                                    
                                     {player.isCap && (
                                         <span className="text-yellow-400 text-lg flex-shrink-0">👑</span>
                                     )}
