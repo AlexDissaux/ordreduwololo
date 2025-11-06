@@ -10,12 +10,14 @@ export interface Team {
     totalGames: number;
     bestMmrChange: number;
     totalCivDiversity: number;
+    challengePoints: number;
     rankingPoints: number;
     pointsByDiscipline: {
         winrate: number;
         games: number;
         mmr: number;
         civs: number;
+        challenges: number;
     };
 }
 
@@ -47,12 +49,14 @@ export async function getAllTeams(): Promise<Team[]> {
             totalGames: teamWinrate.win + teamWinrate.lose,
             bestMmrChange: bestMmrChange,
             totalCivDiversity: totalCivDiversity,
+            challengePoints: team.points, // Points de défis depuis data.ts
             rankingPoints: 0, // sera calculé après
             pointsByDiscipline: {
                 winrate: 0,
                 games: 0,
                 mmr: 0,
-                civs: 0
+                civs: 0,
+                challenges: team.points
             }
         });
     }
@@ -126,5 +130,10 @@ const calculateRankingPoints = (teams: any[]) => {
         const points = numberOfTeams - index;
         team.rankingPoints += points;
         team.pointsByDiscipline.civs = points;
+    });
+    
+    // Ajouter les points de défis au score total
+    teams.forEach(team => {
+        team.rankingPoints += team.challengePoints;
     });
 }

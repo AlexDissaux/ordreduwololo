@@ -32,7 +32,8 @@ export default function Podium() {
                     <div className="text-center w-[60px] text-xs text-yellow-400 uppercase font-bold">Winrate</div>
                     <div className="text-center w-[50px] text-xs text-blue-400 uppercase font-bold">Games</div>
                     <div className="text-center w-[60px] text-xs text-cyan-400 uppercase font-bold">MMR</div>
-                    <div className="text-center w-[40px] text-xs text-amber-400 uppercase font-bold">Civs</div>
+                    <div className="text-center w-[45px] text-xs text-amber-400 uppercase font-bold">Civs</div>
+                    <div className="text-center w-[45px] text-xs text-green-400 uppercase font-bold">Défis</div>
                 </div>
                 <div className="w-px h-6 bg-gray-600 mx-2"></div>
                 <div className="text-center w-[67px] text-xs text-purple-400 uppercase font-bold">Total</div>
@@ -123,6 +124,12 @@ export default function Podium() {
                                     <div className="text-amber-400 font-bold text-sm">{team.totalCivDiversity}</div>
                                     <div className="text-purple-400 font-bold text-xs">{team.pointsByDiscipline?.civs || 0}pt</div>
                                 </div>
+                                
+                                {/* Défis */}
+                                <div className="text-center py-1 bg-green-900/20 border border-green-500/30 w-[55px]">
+                                    <div className="text-green-400 font-bold text-sm">{team.challengePoints}</div>
+                                    <div className="text-purple-400 font-bold text-xs">{team.pointsByDiscipline?.challenges || 0}pt</div>
+                                </div>
                             </div>
                             
                             {/* Séparateur + Score Total */}
@@ -173,6 +180,15 @@ export default function Podium() {
                                     <div className="flex items-center gap-2">
                                         <span className="text-amber-400 font-bold text-sm">{team.totalCivDiversity}</span>
                                         <span className="text-purple-400 font-bold text-xs">{team.pointsByDiscipline?.civs || 0}pt</span>
+                                    </div>
+                                </div>
+                                
+                                {/* Défis */}
+                                <div className="bg-green-900/20 border border-green-500/30 px-3 py-1.5 rounded flex items-center justify-between">
+                                    <span className="text-green-400 uppercase font-bold text-[11px]">Défis</span>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-green-400 font-bold text-sm">{team.challengePoints}</span>
+                                        <span className="text-purple-400 font-bold text-xs">{team.pointsByDiscipline?.challenges || 0}pt</span>
                                     </div>
                                 </div>
                             </div>

@@ -107,6 +107,18 @@ export default function Teams() {
                                             </div>
                                         </div>
                                     </div>
+                                    
+                                    <div className="bg-green-900/20 border border-green-500/30 px-3 py-2">
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-green-400 text-sm font-medium">Défis</span>
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-green-400 font-bold text-lg">{team.challengePoints}</span>
+                                                <span className="text-purple-400 font-bold text-sm bg-purple-900/40 px-2 py-0.5 border border-purple-500/30">
+                                                    {team.pointsByDiscipline.challenges} pts
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
