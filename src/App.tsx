@@ -7,12 +7,20 @@ import BelgianLeaderboard from './components/BelgianLeaderboard'
 function App() {
 
   return (
-    <div className="min-h-screen bg-black px-0 sm:px-3 py-8">
-      <div className="w-full space-y-8">
-        <Titre />  
-        <Stat/>
+    <div className="min-h-screen bg-black">
+      <div className="banner-container">
+        <img src="Banniere_ODW.jpg" alt="Bannière ODW" className="banner-image" />
       </div>
-      <BelgianLeaderboard />
+      <div className="px-0 sm:px-3 py-8">
+        <div className="w-full space-y-8">
+          <Titre />  
+          <Stat/>
+        </div>
+        <BelgianLeaderboard />
+      </div>
+        <div className="banner-container-footer">
+        <img src="Banniere_ODW.jpg" alt="Bannière ODW" className="banner-image-footer" />
+      </div>
     </div>
   )
 }
