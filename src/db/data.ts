@@ -10,9 +10,9 @@ export const sinceDate = '2025/11/08'
 
 export const teamsNameAndId: TeamsNameAndId[] = [
     {    
-        name: "Equipe 1",
+        name: "L'Ordre des Carnivaures",
         points: 0,
-        acronyme: "Eq1",
+        acronyme: "ODC",
         players : [
             {id: "8953699", isCap : true}, // Ours
             {id: "15624724", isCap : false}, // Stay_Frosty
@@ -22,9 +22,9 @@ export const teamsNameAndId: TeamsNameAndId[] = [
         ]
     },
     {    
-        name: "Equipe 2",
+        name: "La Harde D'Argent",
         points: 0,
-        acronyme: "Eq2",
+        acronyme: "LHA",
         players : [
             {id: "22658829", isCap : true}, // Eleva
             {id: "15289018", isCap : false}, // Tarlanors
@@ -34,9 +34,9 @@ export const teamsNameAndId: TeamsNameAndId[] = [
         ]
     },
     {    
-        name: "Equipe 3",
+        name: "Super Sayan",
         points: 0,
-        acronyme: "Eq3",
+        acronyme: "SS",
         players : [
             {id: "5556271", isCap : true}, // Joepescie
             {id: "6550325", isCap : false}, // Bob
@@ -46,9 +46,9 @@ export const teamsNameAndId: TeamsNameAndId[] = [
         ]
     },
     {    
-        name: "Equipe 4",
+        name: "Les Traktors (Vroum Vroum...)",
         points: 0,
-        acronyme: "Eq4",
+        acronyme: "Best",
         players : [
             {id: "1712108", isCap : true}, // Trakor
             {id: "23800459", isCap : false}, // nicolas
@@ -58,9 +58,9 @@ export const teamsNameAndId: TeamsNameAndId[] = [
         ]
     },
     {    
-        name: "Equipe 5",
+        name: "La Wololhorde",
         points: 0,
-        acronyme: "Eq5",
+        acronyme: "HDW",
         players : [
             {id: "9754661", isCap : true}, // The_Tost
             {id: "2866310", isCap : false}, // Monster
@@ -70,9 +70,9 @@ export const teamsNameAndId: TeamsNameAndId[] = [
         ]
     },
     {    
-        name: "Equipe 6",
+        name: "Wololo de L'Ordre",
         points: 0,
-        acronyme: "Eq6",
+        acronyme: "WDO",
         players : [
             {id: "22598716", isCap : true}, // Vegeta
             {id: "23866592", isCap : false}, // Druss
@@ -83,9 +83,9 @@ export const teamsNameAndId: TeamsNameAndId[] = [
         ]
     },
     {    
-        name: "Equipe 7",
+        name: "Le Culte du Cosmos",
         points: 0,
-        acronyme: "Eq7",
+        acronyme: "CDC",
         players : [
             {id: "19206930", isCap : true}, // Cosmos
             {id: "12170036", isCap : false}, // Vox
@@ -95,9 +95,9 @@ export const teamsNameAndId: TeamsNameAndId[] = [
         ]
     },
     {    
-        name: "Equipe 8",
+        name: "Rollos Swag",
         points: 0,
-        acronyme: "Eq8",
+        acronyme: "SWAG",
         players : [
             {id: "18963110", isCap : true}, // Rollos
             {id: "11575115", isCap : false}, // Coco
