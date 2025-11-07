@@ -135,20 +135,6 @@ export default function Teams() {
                                         <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                                             {/* Nom du joueur à gauche */}
                                             <div className="flex items-center space-x-2 sm:w-48 lg:w-56 flex-shrink-0">
-                                                {/* Avatar */}
-                                                {player.avatars?.small ? (
-                                                    <img 
-                                                        src={player.avatars.small} 
-                                                        alt={player.name}
-                                                        className="w-8 h-8 rounded-full border border-gray-600 flex-shrink-0"
-                                                    />
-                                                    ) : (
-                                                        <div className="w-8 h-8 rounded-full border border-gray-600 bg-gray-800 flex items-center justify-center flex-shrink-0">
-                                                            <span className="text-yellow-400 font-black text-[9px]">ODW</span>
-                                                        </div>
-                                                    )}                                                {player.isCap && (
-                                                    <span className="text-yellow-400 text-base sm:text-lg flex-shrink-0">👑</span>
-                                                )}
                                                 <div className="flex items-center gap-2">
                                                     <span className={`font-bold text-sm sm:text-base lg:text-lg ${
                                                         player.isCap ? 'text-yellow-300' : 'text-white'
