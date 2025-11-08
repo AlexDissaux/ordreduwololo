@@ -25,7 +25,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
         points: 0,
         acronyme: "LHA",
         players : [
-            {id: "22658829", isCap : true}, // Eleva
+            {id: "22751220", isCap : true}, // Eleva
             {id: "15289018", isCap : false}, // Tarlanors
             {id: "14400153", isCap : false}, // The_Vegas
             {id: "1421448", isCap : false}, // Xelforce
@@ -104,7 +104,19 @@ export const teamsNameAndId: TeamsNameAndId[] = [
             {id: "23387649", isCap : false}, // Niwaj
             {id: "4314006", isCap : false}, // Raptor
         ]
-    }
+    },
+    {    
+        name: "Inflation",
+        points: 0,
+        acronyme: "INF",
+        players : [
+            {id: "8201966", isCap : true}, // Nicnic
+            {id: "22599330", isCap : false}, // Kirri
+            {id: "3402532", isCap : false}, // Kiwoh
+            {id: "21242620", isCap : false}, // Narkoo
+            {id: "3421866", isCap : false}, // Kassirus
+        ]
+    },
 ]
 
 

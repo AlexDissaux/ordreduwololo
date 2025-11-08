@@ -40,7 +40,7 @@ export default function Podium() {
             </div>
             
             <div className="space-y-2">
-                {teams.slice(0, 8).map((team, index) => {
+                {teams.map((team, index) => {
                     const captain = team.players.find((p: any) => p.isCap);
                     
                     // Couleurs et styles par position
