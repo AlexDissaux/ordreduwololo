@@ -40,12 +40,12 @@ export const teamsNameAndId: TeamsNameAndId[] = [
             {id: "5556271", isCap : true}, // Joepescie
             {id: "6550325", isCap : false}, // Bob
             {id: "790039", isCap : false}, // Marin_Deaudouce
-            {id: "8989366", isCap : false}, // Mascro
+            {id: "2103888", isCap : false}, // Horgeek
             {id: "20704115", isCap : false}, // Manishax_Calni
         ]
     },
     {    
-        name: "Les Traktors (Vroum Vroum...)",
+        name: "Les Traqueurs de Relique",
         points: 0,
         acronyme: "Best",
         players : [
@@ -94,7 +94,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
         ]
     },
     {    
-        name: "Rollos Swag",
+        name: "Les Wolozors",
         points: 0,
         acronyme: "SWAG",
         players : [
@@ -114,7 +114,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
             {id: "22599330", isCap : false}, // Kirri
             {id: "3402532", isCap : false}, // Kiwoh
             {id: "21242620", isCap : false}, // Narkoo
-            {id: "3421866", isCap : false}, // Kassirus
+            {id: "8989366", isCap : false}, // Mascro
         ]
     },
 ]
