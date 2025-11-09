@@ -96,7 +96,7 @@ const getMmrChange = ((games: any, playerId: string) => {
     let ODWPlayer = getOdwPlayer(games.at(0), playerId)
     const mmrEnd = ODWPlayer.mmr + ODWPlayer.mmr_diff
     ODWPlayer = getOdwPlayer(games.at(-1), playerId)
-    const mmrBeg = ODWPlayer.mmr
+    const mmrBeg = playerId === "11667821" ? 1172 : ODWPlayer.mmr
     return {
         mmrBeg: mmrBeg,
         mmrEnd: mmrEnd,

@@ -35,7 +35,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
     {    
         name: "Super Sayan",
         points: 0,
-        acronyme: "SS",
+        acronyme: "SSJ",
         players : [
             {id: "5556271", isCap : true}, // Joepescie
             {id: "6550325", isCap : false}, // Bob
@@ -47,7 +47,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
     {    
         name: "Les Traqueurs de Relique",
         points: 0,
-        acronyme: "Best",
+        acronyme: "LTDR",
         players : [
             {id: "1712108", isCap : true}, // Trakor
             {id: "23800459", isCap : false}, // nicolas
@@ -96,7 +96,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
     {    
         name: "Les Wolozors",
         points: 0,
-        acronyme: "SWAG",
+        acronyme: "WLRS",
         players : [
             {id: "18963110", isCap : true}, // Rollos
             {id: "11575115", isCap : false}, // Coco
