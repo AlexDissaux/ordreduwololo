@@ -93,10 +93,20 @@ const getWinsAndLosses = ((games: any, playerId: string) =>
 const getOdwPlayer = ((game: any, playerId: string) => game.teams.find((players: any) => players[0].player.profile_id == playerId)[0].player)
 
 const getMmrChange = ((games: any, playerId: string) => {
+    let mmrEnd;
+    let mmrBeg;
     let ODWPlayer = getOdwPlayer(games.at(0), playerId)
-    const mmrEnd = ODWPlayer.mmr + ODWPlayer.mmr_diff
-    ODWPlayer = getOdwPlayer(games.at(-1), playerId)
-    const mmrBeg = playerId === "11667821" ? 1172 : ODWPlayer.mmr
+
+    if (playerId === "18963110") {
+        mmrEnd = ODWPlayer.rating + ODWPlayer.rating_diff
+        mmrBeg = 700;
+    } else {
+        mmrEnd = ODWPlayer.mmr + ODWPlayer.mmr_diff
+        ODWPlayer = getOdwPlayer(games.at(-1), playerId)
+        mmrBeg = playerId === "11667821" ? 1172 : playerId === "21242620" ? 1100 :ODWPlayer.mmr
+    }
+    
+
     return {
         mmrBeg: mmrBeg,
         mmrEnd: mmrEnd,
