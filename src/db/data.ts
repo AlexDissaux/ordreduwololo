@@ -22,7 +22,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
     },
     {    
         name: "La Harde D'Argent",
-        points: 0,
+        points: 1,
         acronyme: "LHA",
         players : [
             {id: "22751220", isCap : true}, // Eleva
@@ -46,7 +46,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
     },
     {    
         name: "Les Traqueurs de Relique",
-        points: 0,
+        points: 1,
         acronyme: "LTDR",
         players : [
             {id: "1712108", isCap : true}, // Trakor
