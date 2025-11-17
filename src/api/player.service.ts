@@ -51,6 +51,35 @@ const transformPlayerData = async (playerData: any, playerId: string) => {
             const playerGamesPage3 = await (await fetch(`https://aoe4world.com/api/v0/players/${playerId}/games?since=${sinceDate}&leaderboard=rm_solo&page=3`)).json();
             games.push(...playerGamesPage3.games)
         }
+        
+        // Filter out Bulky's cheat games before calculating civilizations
+        let filteredGames = games;
+        if (playerId === "8250217") {
+            const cheatCivs = [
+                'abbasid_dynasty', 'byzantines', 'chinese', 'delhi_sultanate', 'french',
+                'golden_horde', 'house_of_lancaster', 'japanese', 'jeanne_darc', 'knights_templar',
+                'macedonian_dynasty', 'malians', 'order_of_the_dragon', 'ottomans', 'rus',
+                'sengoku_daimyo', 'tughlaq_dynasty', 'zhu_xis_legacy'
+            ];
+            
+            let cheatGamesRemoved = 0;
+            const remainingCheatCivs = [...cheatCivs];
+            
+            filteredGames = games.filter((game: any) => {
+                const player = getOdwPlayer(game, playerId);
+                const civIndex = remainingCheatCivs.indexOf(player.civilization);
+                const isCheatGame = cheatGamesRemoved < 18 && 
+                                   player.result === 'loss' && 
+                                   civIndex !== -1;
+                if (isCheatGame) {
+                    cheatGamesRemoved++;
+                    remainingCheatCivs.splice(civIndex, 1); // Remove this civ so it's only counted once
+                    return false;
+                }
+                return true;
+            });
+        }
+        
         // Wins and losses
         const [wins, losses] = getWinsAndLosses(games, playerId)
         const mmrData = getMmrChange(games, playerId)
@@ -63,9 +92,14 @@ const transformPlayerData = async (playerData: any, playerId: string) => {
             mmrChange: mmrData.change,
             mmrBeg: mmrData.mmrBeg,
             mmrEnd: mmrData.mmrEnd,
-            nombreCivDiffJouer: getUniqueCivilizationsCount(games, playerId),
-            civilizations: getUniqueCivilizations(games, playerId)
+            nombreCivDiffJouer: getUniqueCivilizationsCount(filteredGames, playerId),
+            civilizations: getUniqueCivilizations(filteredGames, playerId)
         }
+    }
+
+    // Adjustment for Bulky (ID: 8250217) - subtract 18 losses
+    if (playerId === "8250217") {
+        playerData.modes.rm_solo.losses_count = Math.max(0, playerData.modes.rm_solo.losses_count - 18);
     }
 
     playerData.modes.rm_solo.win_rate = Number(playerData.modes.rm_solo.win_rate).toFixed(1);
