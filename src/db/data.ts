@@ -58,14 +58,14 @@ export const teamsNameAndId: TeamsNameAndId[] = [
     },
     {    
         name: "La Wololhorde",
-        points: 0,
+        points: 1,
         acronyme: "HDW",
         players : [
             {id: "9754661", isCap : true}, // The_Tost
             {id: "2866310", isCap : false}, // Monster
             {id: "358437", isCap : false}, // Epiviosi
             {id: "12029658", isCap : false}, // Alyce
-            {id: "11667821", isCap : false}, // Force
+            {id: "1336862", isCap : false}, // Oie de cajou
         ]
     },
     {    
@@ -107,7 +107,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
     },
     {    
         name: "Inflation",
-        points: 0,
+        points: 1,
         acronyme: "INF",
         players : [
             {id: "8201966", isCap : true}, // Nicnic
