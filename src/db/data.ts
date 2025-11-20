@@ -6,6 +6,7 @@ export type TeamsNameAndId = {
 }
 
 export const sinceDate = '2025-11-07T23:00:00.000Z'
+export const endDate = '2025-11-23T21:00:00.000Z'
 
 export const teamsNameAndId: TeamsNameAndId[] = [
     {    

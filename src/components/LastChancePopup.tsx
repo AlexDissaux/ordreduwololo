@@ -5,35 +5,28 @@ export default function LastChancePopup() {
     const { teams, loading } = useLastChance();
     const [isExpanded, setIsExpanded] = useState(false);
 
+    const toggleExpanded = () => {
+        setIsExpanded(!isExpanded);
+    };
+
     if (loading || !teams || teams.length === 0) {
         return null;
     }
 
     return (
         <div 
-            className="fixed top-4 left-4 z-50"
-            onMouseEnter={() => setIsExpanded(true)}
-            onMouseLeave={() => setIsExpanded(false)}
+            className="fixed top-4 right-4 z-50"
         >
-            {/* Badge flottant permanent */}
-            <div className={`transition-all duration-300 ${isExpanded ? 'scale-110' : 'scale-100 animate-pulse-slow'}`}>
-                <div className="bg-gradient-to-br from-orange-600 via-red-600 to-purple-900 border-2 border-orange-500/70 rounded-full px-4 py-3 flex items-center justify-center shadow-2xl shadow-orange-500/30 cursor-pointer relative">
-                    <div className="text-center">
-                        <div className="text-base font-black text-white whitespace-nowrap">Last Chance</div>
-                    </div>
-                    {/* Badge pulsant "NOUVEAU" */}
-                    <div className="absolute -top-1 -right-1 bg-red-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded-full border border-white animate-pulse">
-                        NEW
-                    </div>
-                </div>
-            </div>
-
-            {/* Section déployable */}
-            <div className={`absolute top-0 left-0 transition-all duration-500 ease-out ${
-                isExpanded 
-                    ? 'opacity-100 translate-x-0 pointer-events-auto' 
-                    : 'opacity-0 -translate-x-8 pointer-events-none'
-            }`}>
+            {/* Section déployable - placée en premier pour être derrière */}
+            <div 
+                className={`absolute top-0 right-0 transition-all duration-500 ease-out ${
+                    isExpanded 
+                        ? 'opacity-100 translate-x-0 pointer-events-auto' 
+                        : 'opacity-0 translate-x-8 pointer-events-none'
+                }`}
+                onMouseEnter={() => setIsExpanded(true)}
+                onMouseLeave={() => setIsExpanded(false)}
+            >
                 <div className="w-96 sm:w-[28rem] mt-20">
                     <div className="bg-gradient-to-br from-orange-900/95 via-red-900/95 to-purple-900/95 backdrop-blur-md border-2 border-orange-500/50 rounded-lg shadow-2xl shadow-orange-500/20 overflow-hidden">
                         {/* Header */}
@@ -146,6 +139,24 @@ export default function LastChancePopup() {
                                 🔥 3 jours pour tout donner ! 🔥
                             </p>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Badge flottant permanent - placé en dernier pour être au-dessus */}
+            <div 
+                className={`relative z-10 transition-all duration-300 ${isExpanded ? 'scale-110' : 'scale-100 animate-pulse-slow'}`}
+                onClick={toggleExpanded}
+                onMouseEnter={() => setIsExpanded(true)}
+                onMouseLeave={() => setIsExpanded(false)}
+            >
+                <div className="bg-gradient-to-br from-orange-600 via-red-600 to-purple-900 border-2 border-orange-500/70 rounded-full px-4 py-3 flex items-center justify-center shadow-2xl shadow-orange-500/30 cursor-pointer relative">
+                    <div className="text-center">
+                        <div className="text-base font-black text-white whitespace-nowrap">Last Chance</div>
+                    </div>
+                    {/* Badge pulsant "NOUVEAU" */}
+                    <div className="absolute -top-1 -right-1 bg-red-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded-full border border-white animate-pulse">
+                        NEW
                     </div>
                 </div>
             </div>

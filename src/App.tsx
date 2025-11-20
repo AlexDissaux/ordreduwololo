@@ -3,6 +3,7 @@ import { Titre } from './components/Titre'
 import Stat from './components/Stat/Stat'
 import BelgianLeaderboard from './components/BelgianLeaderboard'
 import LastChancePopup from './components/LastChancePopup'
+import Countdown from './components/Countdown'
 
 
 function App() {
@@ -14,7 +15,8 @@ function App() {
       </div>
       <div className="px-0 sm:px-3 py-8">
         <div className="w-full space-y-8">
-          <Titre />  
+          <Titre />
+          <Countdown />
           <Stat/>
         </div>
         {/* <BelgianLeaderboard /> */}
