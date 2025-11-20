@@ -57,7 +57,7 @@ export default function Countdown() {
                         <span className="text-2xl">⏱️</span>
                         <span>Temps restant</span>
                     </h2>
-                    <p className="text-gray-500 text-xs sm:text-sm">Fin du challenge • 23 Nov. 2025 à 23h00</p>
+                    <p className="text-gray-500 text-xs sm:text-sm">Fin du challenge • 23 Nov. 2025 à 22h00</p>
                 </div>
                 
                 <div className="grid grid-cols-4 gap-2 sm:gap-4">

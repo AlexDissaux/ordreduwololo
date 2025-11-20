@@ -66,7 +66,6 @@ export const teamsNameAndId: TeamsNameAndId[] = [
             {id: "2866310", isCap : false}, // Monster
             {id: "358437", isCap : false}, // Epiviosi
             {id: "12029658", isCap : false}, // Alyce
-            {id: "1336862", isCap : false}, // Oie de cajou
         ]
     },
     {    
@@ -84,7 +83,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
     },
     {    
         name: "Le Culte du Cosmos",
-        points: 0,
+        points: 1,
         acronyme: "CDC",
         players : [
             {id: "19206930", isCap : true}, // Cosmos
