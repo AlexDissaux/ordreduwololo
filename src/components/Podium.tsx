@@ -34,6 +34,7 @@ export default function Podium() {
                     <div className="text-center w-[60px] text-xs text-cyan-400 uppercase font-bold">MMR</div>
                     <div className="text-center w-[45px] text-xs text-amber-400 uppercase font-bold">Civs</div>
                     <div className="text-center w-[45px] text-xs text-green-400 uppercase font-bold">Défis</div>
+                    <div className="text-center w-[50px] text-xs text-orange-400 uppercase font-bold">Last C.</div>
                 </div>
                 <div className="w-px h-6 bg-gray-600 mx-2"></div>
                 <div className="text-center w-[67px] text-xs text-purple-400 uppercase font-bold">Total</div>
@@ -126,9 +127,15 @@ export default function Podium() {
                                 </div>
                                 
                                 {/* Défis */}
-                                <div className="text-center py-1 bg-green-900/20 border border-green-500/30 w-[55px]">
+                                <div className="text-center py-1 bg-green-900/20 border border-green-500/30 w-[45px]">
                                     <div className="text-green-400 font-bold text-sm">{team.challengePoints}</div>
                                     <div className="text-purple-400 font-bold text-xs">{team.pointsByDiscipline?.challenges || 0}pt</div>
+                                </div>
+                                
+                                {/* Last Chance */}
+                                <div className="text-center py-1 bg-orange-900/20 border border-orange-500/30 w-[50px]">
+                                    <div className="text-orange-400 font-bold text-sm">{team.lastChancePoints || 0}</div>
+                                    <div className="text-purple-400 font-bold text-xs">{team.pointsByDiscipline?.lastChance || 0}pt</div>
                                 </div>
                             </div>
                             
@@ -189,6 +196,15 @@ export default function Podium() {
                                     <div className="flex items-center gap-2">
                                         <span className="text-green-400 font-bold text-sm">{team.challengePoints}</span>
                                         <span className="text-purple-400 font-bold text-xs">{team.pointsByDiscipline?.challenges || 0}pt</span>
+                                    </div>
+                                </div>
+                                
+                                {/* Last Chance */}
+                                <div className="bg-orange-900/20 border border-orange-500/30 px-3 py-1.5 rounded flex items-center justify-between">
+                                    <span className="text-orange-400 uppercase font-bold text-[11px]">Last Chance</span>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-orange-400 font-bold text-sm">{team.lastChancePoints || 0}</span>
+                                        <span className="text-purple-400 font-bold text-xs">{team.pointsByDiscipline?.lastChance || 0}pt</span>
                                     </div>
                                 </div>
                             </div>

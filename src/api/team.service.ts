@@ -1,5 +1,6 @@
 import { teamsNameAndId } from "../db/data";
 import { getPlayer } from "./player.service"
+import { getLastChanceData } from "./lastChance.service"
 
 
 
@@ -11,6 +12,7 @@ export interface Team {
     bestMmrChange: number;
     totalCivDiversity: number;
     challengePoints: number;
+    lastChancePoints: number;
     rankingPoints: number;
     pointsByDiscipline: {
         winrate: number;
@@ -18,6 +20,7 @@ export interface Team {
         mmr: number;
         civs: number;
         challenges: number;
+        lastChance: number;
     };
 }
 
@@ -32,6 +35,10 @@ export interface TeamWinrate {
 export async function getAllTeams(): Promise<Team[]> {
     const teams = [];
 
+    // Récupérer les données Last Chance
+    const lastChanceData = await getLastChanceData();
+    const lastChanceMap = new Map(lastChanceData.map(lc => [lc.acronyme, lc.points]));
+
     for (let team of teamsNameAndId) {
         const playersData = await Promise.all(
             team.players.map(async (player) => {
@@ -42,6 +49,7 @@ export async function getAllTeams(): Promise<Team[]> {
         const teamWinrate = computeTeamWinrate(playersData);
         const bestMmrChange = getBestMmrChange(playersData);
         const totalCivDiversity = getTotalCivDiversity(playersData);
+        const lastChancePoints = lastChanceMap.get(team.acronyme) || 0;
         teams.push({
             name: team.name,
             players: playersData,
@@ -50,13 +58,15 @@ export async function getAllTeams(): Promise<Team[]> {
             bestMmrChange: bestMmrChange,
             totalCivDiversity: totalCivDiversity,
             challengePoints: team.points, // Points de défis depuis data.ts
+            lastChancePoints: lastChancePoints,
             rankingPoints: 0, // sera calculé après
             pointsByDiscipline: {
                 winrate: 0,
                 games: 0,
                 mmr: 0,
                 civs: 0,
-                challenges: team.points
+                challenges: team.points,
+                lastChance: lastChancePoints
             }
         });
     }
@@ -132,8 +142,9 @@ const calculateRankingPoints = (teams: any[]) => {
         team.pointsByDiscipline.civs = points;
     });
     
-    // Ajouter les points de défis au score total
+    // Ajouter les points de défis et Last Chance au score total
     teams.forEach(team => {
         team.rankingPoints += team.challengePoints;
+        team.rankingPoints += team.lastChancePoints;
     });
 }

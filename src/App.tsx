@@ -2,6 +2,7 @@ import './App.css'
 import { Titre } from './components/Titre'
 import Stat from './components/Stat/Stat'
 import BelgianLeaderboard from './components/BelgianLeaderboard'
+import LastChancePopup from './components/LastChancePopup'
 
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
           <Titre />  
           <Stat/>
         </div>
-        <BelgianLeaderboard />
+        {/* <BelgianLeaderboard /> */}
+        <LastChancePopup />
       </div>
         <div className="banner-container-footer">
         <img src="Banniere_ODW.jpg" alt="Bannière ODW" className="banner-image-footer" />
