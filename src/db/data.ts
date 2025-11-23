@@ -11,7 +11,7 @@ export const endDate = '2025-11-23T21:00:00.000Z'
 export const teamsNameAndId: TeamsNameAndId[] = [
     {    
         name: "L'Ordre des Carnivaures",
-        points: 0,
+        points: 2,
         acronyme: "ODC",
         players : [
             {id: "8953699", isCap : true}, // Ours
@@ -23,7 +23,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
     },
     {    
         name: "La Harde D'Argent",
-        points: 1,
+        points: 2,
         acronyme: "LHA",
         players : [
             {id: "22751220", isCap : true}, // Eleva
@@ -35,7 +35,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
     },
     {    
         name: "Super Sayan",
-        points: 0,
+        points: 1,
         acronyme: "SSJ",
         players : [
             {id: "5556271", isCap : true}, // Joepescie
@@ -47,7 +47,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
     },
     {    
         name: "Les Traqueurs de Relique",
-        points: 1,
+        points: 2,
         acronyme: "LTDR",
         players : [
             {id: "1712108", isCap : true}, // Trakor
@@ -83,7 +83,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
     },
     {    
         name: "Le Culte du Cosmos",
-        points: 1,
+        points: 2,
         acronyme: "CDC",
         players : [
             {id: "19206930", isCap : true}, // Cosmos
@@ -95,7 +95,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
     },
     {    
         name: "Les Wolozors",
-        points: 0,
+        points: 1,
         acronyme: "WLRS",
         players : [
             {id: "18963110", isCap : true}, // Rollos
@@ -107,7 +107,7 @@ export const teamsNameAndId: TeamsNameAndId[] = [
     },
     {    
         name: "Inflation",
-        points: 1,
+        points: 2,
         acronyme: "INF",
         players : [
             {id: "8201966", isCap : true}, // Nicnic
