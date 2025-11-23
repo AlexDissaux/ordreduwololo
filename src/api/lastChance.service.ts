@@ -168,7 +168,7 @@ function calculateLastChancePoints(teams: LastChanceTeam[]) {
         // Palier 100 games
         if (team.totalGames >= 100) {
             team.milestones.milestone100 = true;
-            points += 2;
+            points += 1;
             if (team.acronyme === firstAt100) {
                 team.milestones.firstAt100 = true;
                 points += 1;
@@ -178,7 +178,7 @@ function calculateLastChancePoints(teams: LastChanceTeam[]) {
         // Palier 150 games
         if (team.totalGames >= 150) {
             team.milestones.milestone150 = true;
-            points += 3;
+            points += 1;
             if (team.acronyme === firstAt150) {
                 team.milestones.firstAt150 = true;
                 points += 1;
