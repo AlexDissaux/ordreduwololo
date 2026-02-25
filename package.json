@@ -7,7 +7,7 @@
     "build": "nx build frontend --prod",
     "build:backend": "nx build backend",
     "serve:backend": "nx serve backend",
-    "start:backend:dev": "cd apps/backend && webpack --config webpack-hmr.config.js --watch",
+    "start:back:dev": "cd apps/backend && webpack --config webpack-hmr.config.js --watch",
     "test": "nx test",
     "lint": "nx lint",
     "deploy": "nx build frontend --prod && gh-pages -d dist/apps/frontend"
@@ -16,9 +16,13 @@
   "dependencies": {
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
+    "@nestjs/microservices": "^11.1.14",
     "@nestjs/platform-express": "^11.0.0",
+    "@nestjs/websockets": "^11.1.14",
     "@tailwindcss/vite": "^4.1.18",
     "axios": "^1.6.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^6.29.0",
