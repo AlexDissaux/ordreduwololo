@@ -21,6 +21,10 @@ declare const module: any;
 async function bootstrap() {
   try {
     const app = await NestFactory.create(AppModule);
+    const allowedOrigin = process.env.CORS_ORIGIN ?? 'http://localhost:4200';
+    app.enableCors({
+      origin: allowedOrigin,
+    });
     // const globalPrefix = 'api';
     // app.setGlobalPrefix(globalPrefix);
     const port = process.env.PORT || 3000;

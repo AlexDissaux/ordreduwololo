@@ -1,7 +1,7 @@
 import './App.css'
 import { Titre } from './components/Titre'
 import Stat from './components/Stat/Stat'
-import BelgianLeaderboard from './components/BelgianLeaderboard'
+// import BelgianLeaderboard from './components/BelgianLeaderboard'
 import LastChancePopup from './components/LastChancePopup'
 import Countdown from './components/Countdown'
 
