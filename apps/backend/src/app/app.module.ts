@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PlayerModule } from '../player';
 import { SchedulerModule } from '../scheduler';
+import { LeaderboardModule } from '../leaderboard';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { SchedulerModule } from '../scheduler';
       ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
     }),
     PlayerModule,
+    LeaderboardModule,
     SchedulerModule,
   ],
   controllers: [AppController],

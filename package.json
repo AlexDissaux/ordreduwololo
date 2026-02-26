@@ -7,7 +7,7 @@
     "build": "nx build frontend --prod",
     "build:backend": "nx build backend",
     "serve:backend": "nx serve backend",
-    "start:back:dev": "cd apps/backend && webpack --config webpack-hmr.config.js --watch",
+    "serve:back:dev": "cd apps/backend && webpack --config webpack-hmr.config.js --watch",
     "test": "nx test",
     "lint": "nx lint",
     "deploy": "nx build frontend --prod && gh-pages -d dist/apps/frontend"
