@@ -4,7 +4,6 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PlayerModule } from '../player';
-import { SchedulerModule } from '../scheduler';
 import { LeaderboardModule } from '../leaderboard';
 
 @Module({
@@ -27,7 +26,6 @@ import { LeaderboardModule } from '../leaderboard';
     }),
     PlayerModule,
     LeaderboardModule,
-    SchedulerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
