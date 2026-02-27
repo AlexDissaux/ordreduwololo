@@ -73,6 +73,13 @@ export class PlayerService {
     });
   }
 
+  async findAllProfileIds(): Promise<number[]> {
+    const players = await this.playerRepository.find({
+      select: ['profileId'],
+    });
+    return players.map(player => player.profileId);
+  }
+
   async findOne(profileId: number): Promise<Player | null> {
     return this.playerRepository.findOne({
       where: { profileId },

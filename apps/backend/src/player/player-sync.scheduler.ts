@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression, Timeout } from '@nestjs/schedule';
-import { PlayerService } from '.';
+import { PlayerService } from './player.service';
 
 @Injectable()
 export class PlayerSyncScheduler {
