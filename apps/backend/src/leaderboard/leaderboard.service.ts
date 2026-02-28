@@ -11,9 +11,8 @@ export class LeaderboardService {
         private readonly leaderboardCacheService: LeaderboardCacheService,
         private readonly playerService: PlayerService) {}
     
-
     public async updateLeaderboard(): Promise<LeaderboardDto[]> {
-        const allPLayers = await this.playerService.findAll();
+        const allPLayers = await this.playerService.findLeaderboardSolo();
         const leaderboardDto = this.mapToDto(allPLayers);
         this.leaderboardCacheService.setLeaderboard(leaderboardDto);
         return leaderboardDto;
@@ -28,7 +27,7 @@ export class LeaderboardService {
     }
 
     public mapToDto(player: Player[]): LeaderboardDto[] {
-        return player.map((player) =>  ({
+        return player.map((player) => ({
             "id": player.profileId,
             "name": player.name,
             "rm_solo_rating": player.rmSoloRating,

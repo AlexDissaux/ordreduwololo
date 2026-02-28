@@ -1,2 +1,5 @@
-export * from './lib/shared-types';
-export * from './lib/api.types';
+export * from './lib/common';
+export * from './lib/games';
+export * from './lib/leaderboard';
+export * from './lib/player';
+export * from './lib/sync';

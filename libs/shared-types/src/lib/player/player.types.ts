@@ -1,17 +1,3 @@
-// ===================================
-// API Response Types
-// ===================================
-
-export interface ApiResponse<T> {
-  success: boolean;
-  data: T;
-  message?: string;
-}
-
-// ===================================
-// Player Types (AoE4 World API)
-// ===================================
-
 export interface IPlayerAvatars {
   small: string | null;
   medium: string | null;
@@ -47,7 +33,7 @@ export interface IPlayer {
   updatedAt: string;
 }
 
-// Flat version matching database entity (for internal use)
+/** Flat version matching database entity */
 export interface IPlayerFlat {
   profileId: number;
   name: string;
@@ -75,31 +61,4 @@ export interface IPlayerFlat {
   rmTeamWinRate: number | null;
   createdAt: string;
   updatedAt: string;
-}
-
-// ===================================
-// Leaderboard Types
-// ===================================
-
-export interface ILeaderboardEntry {
-  rank: number;
-  profileId: number;
-  name: string;
-  country: string | null;
-  rating: number;
-  rankLevel: string;
-  gamesCount: number;
-  winRate: number;
-}
-
-// ===================================
-// Sync Status Types
-// ===================================
-
-export interface ISyncResult {
-  added: number;
-  updated: number;
-  unchanged: number;
-  total: number;
-  syncedAt: string;
 }

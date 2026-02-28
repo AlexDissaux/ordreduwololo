@@ -1,11 +1,4 @@
-export interface CurrentGamePlayerDto {
-    name: string;
-    civilization: string;
-    rating: number | null;
-}
+import { ICurrentGame, ICurrentGamePlayer } from '@ordreduwololo-nx/shared-types';
 
-export interface CurrentGameDto {
-    map: string;
-    leaderboard: string;
-    teams: CurrentGamePlayerDto[][];
-}
+export type CurrentGamePlayerDto = ICurrentGamePlayer;
+export type CurrentGameDto = ICurrentGame;

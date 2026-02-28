@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Not, IsNull, Repository } from 'typeorm';
 import { Player } from './entities';
 
 export interface SyncResult {
@@ -69,6 +69,14 @@ export class PlayerService {
 
   async findAll(): Promise<Player[]> {
     return this.playerRepository.find({
+      order: { rmSoloRating: 'DESC' },
+    });
+  }
+
+    async findLeaderboardSolo(): Promise<Player[]> {
+    return this.playerRepository.find({
+      select: ['profileId', 'name', 'rmSoloRating', 'rmSoloRankLevel', 'rmSoloGamesCount', 'rmSoloWinsCount', 'rmSoloLossesCount'],
+      where: { rmSoloRating: Not(IsNull()) },
       order: { rmSoloRating: 'DESC' },
     });
   }
