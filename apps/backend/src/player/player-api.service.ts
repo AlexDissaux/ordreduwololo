@@ -1,57 +1,74 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Aoe4WorldPlayer, Aoe4WorldResponse } from './player.types';
+import {
+  Aoe4WorldLeaderboardPlayer,
+  Aoe4WorldLeaderboardResponse,
+  FRENCH_SPEAKING_COUNTRIES,
+  LEADERBOARDS,
+  LeaderboardType,
+  MergedPlayer,
+} from './player.types';
 import { Player } from './entities';
 
 @Injectable()
 export class PlayerApiService {
   private readonly logger = new Logger(PlayerApiService.name);
   private readonly API_BASE_URL = 'https://aoe4world.com/api/v0';
-  private readonly SEARCH_QUERY = '[ODW]';
 
-  async fetchAllPlayers(): Promise<Aoe4WorldPlayer[]> {
-    const allPlayers: Aoe4WorldPlayer[] = [];
-    let page = 1;
-    let hasMore = true;
+  async fetchAllPlayers(): Promise<MergedPlayer[]> {
+    const playerMap = new Map<number, MergedPlayer>();
 
-    while (hasMore) {
-      const url = `${this.API_BASE_URL}/players/search?query=${encodeURIComponent(this.SEARCH_QUERY)}&page=${page}`;
-      this.logger.debug(`Fetching page ${page}: ${url}`);
+    for (const leaderboard of LEADERBOARDS) {
+      for (const country of FRENCH_SPEAKING_COUNTRIES) {
+        const players = await this.fetchLeaderboard(leaderboard, country);
+        this.logger.log(
+          `Fetched ${players.length} players from ${leaderboard} leaderboard for country ${country}`,
+        );
 
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
-      }
-
-      const data = (await response.json()) as Aoe4WorldResponse;
-      allPlayers.push(...data.players);
-
-      const totalFetched = (page - 1) * data.per_page + data.count;
-      hasMore = totalFetched < data.total_count;
-      page++;
-
-      if (hasMore) {
-        await this.delay(200);
+        for (const player of players) {
+          const existing = playerMap.get(player.profile_id);
+          if (existing) {
+            existing[leaderboard] = this.extractStats(player);
+            // Keep the most recent last_game_at
+            if (player.last_game_at > existing.last_game_at) {
+              existing.last_game_at = player.last_game_at;
+              existing.name = player.name;
+              existing.avatars = player.avatars;
+              existing.social = player.social;
+            }
+          } else {
+            playerMap.set(player.profile_id, {
+              profile_id: player.profile_id,
+              name: player.name,
+              steam_id: player.steam_id,
+              country: player.country,
+              avatars: player.avatars,
+              social: player.social,
+              last_game_at: player.last_game_at,
+              [leaderboard]: this.extractStats(player),
+            });
+          }
+        }
       }
     }
 
-    return allPlayers;
+    return Array.from(playerMap.values());
   }
 
-  mapToEntity(apiPlayer: Aoe4WorldPlayer): Partial<Player> {
-    const rmSolo = apiPlayer.leaderboards?.rm_solo;
-    const rmTeam = apiPlayer.leaderboards?.rm_team;
+  mapToEntity(player: MergedPlayer): Partial<Player> {
+    const rmSolo = player.rm_solo;
+    const rmTeam = player.rm_team;
 
     return {
-      profileId: apiPlayer.profile_id,
-      name: apiPlayer.name,
-      steamId: apiPlayer.steam_id,
-      country: apiPlayer.country,
-      avatarSmall: apiPlayer.avatars?.small,
-      avatarMedium: apiPlayer.avatars?.medium,
-      avatarFull: apiPlayer.avatars?.full,
-      twitchUrl: apiPlayer.social?.twitch,
-      youtubeUrl: apiPlayer.social?.youtube,
-      lastGameAt: apiPlayer.last_game_at ? new Date(apiPlayer.last_game_at) : null,
+      profileId: player.profile_id,
+      name: player.name,
+      steamId: player.steam_id,
+      country: player.country,
+      avatarSmall: player.avatars?.small,
+      avatarMedium: player.avatars?.medium,
+      avatarFull: player.avatars?.full,
+      twitchUrl: player.social?.twitch,
+      youtubeUrl: player.social?.youtube,
+      lastGameAt: player.last_game_at ? new Date(player.last_game_at) : null,
       rmSoloRating: rmSolo?.rating,
       rmSoloRank: rmSolo?.rank,
       rmSoloRankLevel: rmSolo?.rank_level,
@@ -66,6 +83,50 @@ export class PlayerApiService {
       rmTeamWinsCount: rmTeam?.wins_count,
       rmTeamLossesCount: rmTeam?.losses_count,
       rmTeamWinRate: rmTeam?.win_rate,
+    };
+  }
+
+  private async fetchLeaderboard(
+    leaderboard: LeaderboardType,
+    country: string,
+  ): Promise<Aoe4WorldLeaderboardPlayer[]> {
+    const allPlayers: Aoe4WorldLeaderboardPlayer[] = [];
+    let page = 1;
+    let hasMore = true;
+
+    while (hasMore) {
+      const url = `${this.API_BASE_URL}/leaderboards/${leaderboard}?country=${encodeURIComponent(country)}&page=${page}`;
+      this.logger.debug(`Fetching page ${page}: ${url}`);
+
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+      }
+
+      const data = (await response.json()) as Aoe4WorldLeaderboardResponse;
+      allPlayers.push(...data.players);
+
+      const totalFetched = (page - 1) * data.per_page + data.count;
+      hasMore = totalFetched < data.total_count;
+      page++;
+
+      if (hasMore) {
+        await this.delay(200);
+      }
+    }
+
+    return allPlayers;
+  }
+
+  private extractStats(player: Aoe4WorldLeaderboardPlayer) {
+    return {
+      rating: player.rating,
+      rank: player.rank,
+      rank_level: player.rank_level,
+      games_count: player.games_count,
+      wins_count: player.wins_count,
+      losses_count: player.losses_count,
+      win_rate: player.win_rate,
     };
   }
 
