@@ -28,7 +28,6 @@ export class PlayerApiService {
           const existing = playerMap.get(player.profile_id);
           if (existing) {
             existing[leaderboard] = this.extractStats(player);
-            // Keep the most recent last_game_at
             if (player.last_game_at > existing.last_game_at) {
               existing.last_game_at = player.last_game_at;
               existing.name = player.name;
@@ -91,12 +90,13 @@ export class PlayerApiService {
     country: string,
   ): Promise<Aoe4WorldLeaderboardPlayer[]> {
     const allPlayers: Aoe4WorldLeaderboardPlayer[] = [];
+    const MAX_PAGES = 1000; // Safety limit to prevent infinite loops
     let page = 1;
     let hasMore = true;
-
-    while (hasMore) {
+    this.logger.debug(`Starting to fetch leaderboard ${leaderboard} for country ${country}`);
+    while (hasMore && page <= MAX_PAGES) {
       const url = `${this.API_BASE_URL}/leaderboards/${leaderboard}?country=${encodeURIComponent(country)}&page=${page}`;
-      this.logger.debug(`Fetching page ${page}: ${url}`);
+      // this.logger.debug(`Fetching page ${page}: ${url}`);
 
       const response = await fetch(url);
       if (!response.ok) {

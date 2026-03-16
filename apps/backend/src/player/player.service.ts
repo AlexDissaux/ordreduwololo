@@ -56,27 +56,33 @@ export class PlayerService {
       this.logger.log(`Fetched ${allPlayers.length} players from API`);
       result.total = allPlayers.length;
 
+      // Only load the fields needed to detect changes
+      const existingPlayers = await this.playerRepository.find({
+        select: ['profileId', 'lastGameAt'],
+      });
+      const existingPlayersMap = new Map(existingPlayers.map(p => [p.profileId, p]));
+
+      const toUpsert: Partial<Player>[] = [];
+
       for (const apiPlayer of allPlayers) {
-        const existingPlayer = await this.playerRepository.findOne({
-          where: { profileId: apiPlayer.profile_id },
-        });
+        const existing = existingPlayersMap.get(apiPlayer.profile_id);
+        const updatedTime = apiPlayer.last_game_at ? new Date(apiPlayer.last_game_at).getTime() : 0;
 
-        const playerData = this.playerApiService.mapToEntity(apiPlayer);
-
-        if (!existingPlayer) {
-          await this.playerRepository.save(playerData);
+        if (!existing) {
+          toUpsert.push(this.playerApiService.mapToEntity(apiPlayer));
           result.added++;
-          this.logger.log(`Added new player: ${apiPlayer.name} (${apiPlayer.profile_id})`);
-        } else if (this.hasPlayerChanged(existingPlayer, playerData)) {
-          await this.playerRepository.update(
-            { profileId: apiPlayer.profile_id },
-            playerData,
-          );
+        } else if (existing?.lastGameAt?.getTime() ?? 0 !== updatedTime) {
+          toUpsert.push(this.playerApiService.mapToEntity(apiPlayer));
           result.updated++;
-          this.logger.log(`Updated player: ${apiPlayer.name} (${apiPlayer.profile_id})`);
         } else {
           result.unchanged++;
         }
+      }
+
+      // Batch upsert all new/changed players
+      if (toUpsert.length > 0) {
+        await this.playerRepository.upsert(toUpsert, ['profileId']);
+        this.logger.log(`Upserted ${toUpsert.length} players`);
       }
 
       this.logger.log(
@@ -89,31 +95,4 @@ export class PlayerService {
     }
   }
 
-  private hasPlayerChanged(existing: Player, updated: Partial<Player>): boolean {
-    const fieldsToCompare: (keyof Player)[] = [
-      'name', 'steamId', 'country',
-      'avatarSmall', 'avatarMedium', 'avatarFull',
-      'twitchUrl', 'youtubeUrl',
-      'rmSoloRating', 'rmSoloRank', 'rmSoloRankLevel',
-      'rmSoloGamesCount', 'rmSoloWinsCount', 'rmSoloLossesCount',
-      'rmTeamRating', 'rmTeamRank', 'rmTeamRankLevel',
-      'rmTeamGamesCount', 'rmTeamWinsCount', 'rmTeamLossesCount',
-    ];
-
-    for (const field of fieldsToCompare) {
-      if (existing[field] !== updated[field]) {
-        return true;
-      }
-    }
-
-    if (updated.lastGameAt) {
-      const existingTime = existing.lastGameAt?.getTime() || 0;
-      const updatedTime = updated.lastGameAt.getTime();
-      if (existingTime !== updatedTime) {
-        return true;
-      }
-    }
-
-    return false;
-  }
 }
