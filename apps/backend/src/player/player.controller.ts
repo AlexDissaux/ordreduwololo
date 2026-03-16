@@ -1,5 +1,6 @@
 import { Controller, Get, Param, Post, ParseIntPipe, HttpCode, HttpStatus } from '@nestjs/common';
-import { PlayerService, SyncResult } from './player.service';
+import { PlayerService } from './player.service';
+import { SyncResult } from './player.types';
 import { Player } from './entities';
 
 @Controller('players')
