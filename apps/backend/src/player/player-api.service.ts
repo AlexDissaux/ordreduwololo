@@ -8,6 +8,7 @@ import {
   MergedPlayer,
 } from './player.types';
 import { Player } from './entities';
+import { delay } from '../common/utils/delay.service';
 
 @Injectable()
 export class PlayerApiService {
@@ -106,7 +107,7 @@ export class PlayerApiService {
       page++;
 
       if (hasMore) {
-        await this.delay(200);
+        await delay(200);
       }
     }
 
@@ -123,9 +124,5 @@ export class PlayerApiService {
       losses_count: player.losses_count,
       win_rate: player.win_rate,
     };
-  }
-
-  private delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }

@@ -1,6 +1,8 @@
 export interface ICurrentGamePlayer {
   name: string;
   civilization: string;
+  civilization_randomized: boolean;
+  country: string;
   rating: number | null;
 }
 

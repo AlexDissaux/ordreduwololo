@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Not, IsNull, Repository } from 'typeorm';
+import { Not, IsNull, MoreThan, Repository } from 'typeorm';
 import { Player } from './entities';
 import { PlayerApiService } from './player-api.service';
 import { SyncResult } from './player.types';
@@ -27,6 +27,15 @@ export class PlayerService {
       where: { rmSoloRating: Not(IsNull()) },
       order: { rmSoloRating: 'DESC' },
     });
+  }
+
+  async findAllProfileIdsFromActivePlayers(): Promise<number[]> {
+    const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const players = await this.playerRepository.find({
+      select: ['profileId'],
+      where: { lastGameAt: MoreThan(since) },
+    });
+    return players.map(player => player.profileId);
   }
 
   async findAllProfileIds(): Promise<number[]> {

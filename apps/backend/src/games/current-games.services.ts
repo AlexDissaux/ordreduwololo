@@ -8,11 +8,19 @@ import { CurrentGameDto, CurrentGamePlayerDto } from "./current-games.dto";
 export class CurrentGamesService {
     constructor(private readonly playerService: PlayerService) {}
 
-    public async getCurrentGames(): Promise<CurrentGameDto[]> {
-        const profileIds = await this.playerService.findAllProfileIds();
+    private currentGamesCache: CurrentGameDto[] = [];
 
-        return (await fetchCurrentGames(profileIds))
-            .filter((game: any) => game.ongoing)
+    public async getCurrentGames(): Promise<CurrentGameDto[]> {
+        if (this.currentGamesCache.length === 0) {
+            await this.setCurrentGamesFromActivePlayers();
+        }
+        return this.currentGamesCache;
+    }
+
+    public async setCurrentGamesFromActivePlayers(): Promise<void> {
+        const profileIds = await this.playerService.findAllProfileIdsFromActivePlayers();
+
+        this.currentGamesCache =  (await fetchCurrentGames(profileIds))
             .map((game: any) => this.toCurrentGameDto(game));
     }
 
@@ -30,6 +38,8 @@ export class CurrentGamesService {
         return {
             name: player.name,
             civilization: player.civilization,
+            civilization_randomized: player.civilization_randomized,
+            country: player.country,
             rating: player.rating,
         };
     }

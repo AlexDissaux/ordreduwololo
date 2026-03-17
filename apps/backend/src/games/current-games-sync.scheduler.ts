@@ -1,20 +1,23 @@
 
 
 
-import { Injectable } from "@nestjs/common";
-import { Cron, Timeout } from "@nestjs/schedule";
+import { Injectable, OnApplicationBootstrap } from "@nestjs/common";
+import { Cron } from "@nestjs/schedule";
+import { CurrentGamesService } from "./current-games.services";
 
 @Injectable()
-export class CurrentGamesSyncScheduler {
+export class CurrentGamesSyncScheduler implements OnApplicationBootstrap {
+
+    constructor(private readonly currentGamesService: CurrentGamesService) {}
     
-    @Cron('0 */2 * * * *')
+    @Cron('0 */3 * * * *')
     async handleCurrentGamesSync() {
         console.log('Syncing current games...');
+        await this.currentGamesService.setCurrentGamesFromActivePlayers();
     }
 
-    @Timeout(20000)
-    async handleInitialSync() {
-        console.log('Running initial current games sync on startup...');
-        await this.handleCurrentGamesSync();
+    async onApplicationBootstrap() {
+        // console.log('Running initial current games sync on startup...');
+        // this.handleCurrentGamesSync();
     }
 }

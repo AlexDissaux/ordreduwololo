@@ -24,7 +24,7 @@ export class PlayerSyncScheduler implements OnApplicationBootstrap {
   }
 
   async onApplicationBootstrap() {
-    this.logger.log('Running initial player sync on startup...');
-    await this.handlePlayerSync();
+    // this.logger.log('Running initial player sync on startup...');
+    // this.handlePlayerSync();
   }
 }
