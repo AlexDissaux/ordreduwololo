@@ -51,11 +51,6 @@ export interface MergedPlayer {
   name: string;
   steam_id: string;
   country: string;
-  avatars: {
-    small: string | null;
-    medium: string | null;
-    full: string | null;
-  };
   social: {
     twitch?: string;
     youtube?: string;

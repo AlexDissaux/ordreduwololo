@@ -31,7 +31,6 @@ export class PlayerApiService {
             if (player.last_game_at > existing.last_game_at) {
               existing.last_game_at = player.last_game_at;
               existing.name = player.name;
-              existing.avatars = player.avatars;
               existing.social = player.social;
             }
           } else {
@@ -40,7 +39,6 @@ export class PlayerApiService {
               name: player.name,
               steam_id: player.steam_id,
               country: player.country,
-              avatars: player.avatars,
               social: player.social,
               last_game_at: player.last_game_at,
               [leaderboard]: this.extractStats(player),
@@ -62,9 +60,6 @@ export class PlayerApiService {
       name: player.name,
       steamId: player.steam_id,
       country: player.country,
-      avatarSmall: player.avatars?.small,
-      avatarMedium: player.avatars?.medium,
-      avatarFull: player.avatars?.full,
       twitchUrl: player.social?.twitch,
       youtubeUrl: player.social?.youtube,
       lastGameAt: player.last_game_at ? new Date(player.last_game_at) : null,
