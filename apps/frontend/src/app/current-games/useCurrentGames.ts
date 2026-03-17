@@ -1,11 +1,10 @@
-import { useState, useEffect, useCallback } from 'react';
-import { fetchCurrentGames, CurrentGame } from './current-games.api';
+import { useState, useEffect } from 'react';
+import { subscribeToCurrentGames, CurrentGame } from './current-games.api';
 
 interface UseCurrentGamesResult {
   games: CurrentGame[];
   isLoading: boolean;
   error: string | null;
-  refetch: () => void;
 }
 
 export function useCurrentGames(): UseCurrentGamesResult {
@@ -13,22 +12,18 @@ export function useCurrentGames(): UseCurrentGamesResult {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const load = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const data = await fetchCurrentGames();
-      setGames(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error');
-    } finally {
-      setIsLoading(false);
-    }
+  useEffect(() => {
+    const source = subscribeToCurrentGames(
+      (data) => {
+        setGames(data);
+        setIsLoading(false);
+        console.log('Received current games update:', data);
+      },
+      () => setError('Lost connection to server'),
+    );
+
+    return () => source.close();
   }, []);
 
-  useEffect(() => {
-    void load();
-  }, [load]);
-
-  return { games, isLoading, error, refetch: load };
+  return { games, isLoading, error };
 }

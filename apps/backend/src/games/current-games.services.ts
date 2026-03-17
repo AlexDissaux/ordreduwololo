@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { BehaviorSubject, Observable } from "rxjs";
 import { PlayerService } from "../player";
 import { fetchCurrentGames } from "./games.api";
 import { CurrentGameDto, CurrentGamePlayerDto } from "./current-games.dto";
@@ -8,20 +9,25 @@ import { CurrentGameDto, CurrentGamePlayerDto } from "./current-games.dto";
 export class CurrentGamesService {
     constructor(private readonly playerService: PlayerService) {}
 
-    private currentGamesCache: CurrentGameDto[] = [];
+    private readonly gamesSubject = new BehaviorSubject<CurrentGameDto[]>([]);
+
+    public get games$(): Observable<CurrentGameDto[]> {
+        return this.gamesSubject.asObservable();
+    }
 
     public async getCurrentGames(): Promise<CurrentGameDto[]> {
-        if (this.currentGamesCache.length === 0) {
+        if (this.gamesSubject.value.length === 0) {
             await this.setCurrentGamesFromActivePlayers();
         }
-        return this.currentGamesCache;
+        return this.gamesSubject.value;
     }
 
     public async setCurrentGamesFromActivePlayers(): Promise<void> {
         const profileIds = await this.playerService.findAllProfileIdsFromActivePlayers();
 
-        this.currentGamesCache =  (await fetchCurrentGames(profileIds))
+        const games = (await fetchCurrentGames(profileIds))
             .map((game: any) => this.toCurrentGameDto(game));
+        this.gamesSubject.next(games);
     }
 
     private toCurrentGameDto(game: any): CurrentGameDto {
