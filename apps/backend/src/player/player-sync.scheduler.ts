@@ -1,17 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Cron, CronExpression, Timeout } from '@nestjs/schedule';
+import { OnApplicationBootstrap } from '@nestjs/common';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { PlayerService } from './player.service';
 
 @Injectable()
-export class PlayerSyncScheduler {
+export class PlayerSyncScheduler implements OnApplicationBootstrap {
   private readonly logger = new Logger(PlayerSyncScheduler.name);
 
   constructor(private readonly playerService: PlayerService) {}
 
-  /**
-   * Sync players from aoe4world API every hour
-   * This will check for new players and update existing ones
-   */
   @Cron(CronExpression.EVERY_HOUR)
   async handlePlayerSync() {
     this.logger.log('Starting scheduled player sync...');
@@ -26,11 +23,7 @@ export class PlayerSyncScheduler {
     }
   }
 
-  /**
-   * Run sync on application startup (after 10 seconds delay to let app initialize)
-   */
-  @Timeout(10000)
-  async handleInitialSync() {
+  async onApplicationBootstrap() {
     this.logger.log('Running initial player sync on startup...');
     await this.handlePlayerSync();
   }
