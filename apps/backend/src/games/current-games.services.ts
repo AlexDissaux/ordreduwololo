@@ -26,15 +26,21 @@ export class CurrentGamesService {
         const profileIds = await this.playerService.findAllProfileIdsFromActivePlayers();
 
         const games = (await fetchCurrentGames(profileIds))
-            .map((game: any) => this.toCurrentGameDto(game));
+            .map(({ game, profileId }) => this.toCurrentGameDto(game, profileId));
         this.gamesSubject.next(games);
     }
 
-    private toCurrentGameDto(game: any): CurrentGameDto {
+    private toCurrentGameDto(game: any, profileId?: number): CurrentGameDto {
+        const teams: any[][] = game?.teams ?? [];
+        const orderedTeams = profileId
+            ? [...teams].sort((a) =>
+                a.some(({ player }: any) => player.profile_id === profileId) ? -1 : 1
+              )
+            : teams;
         return {
             map: game.map,
             leaderboard: game.leaderboard,
-            teams: game.teams.map((team: any) =>
+            teams: orderedTeams.map((team: any) =>
                 team.map(({ player }: any) => this.toCurrentGamePlayerDto(player))
             ),
         };

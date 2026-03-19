@@ -1,0 +1,221 @@
+.section {
+  background: linear-gradient(135deg, #0f0c29 0%, #1a1040 50%, #0d1b2a 100%);
+  padding: 2.5rem 2rem;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 50%, rgba(234, 179, 8, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 80% 50%, rgba(239, 68, 68, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.container {
+  max-width: 72rem;
+  margin: 0 auto;
+  position: relative;
+}
+
+.title {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #eab308;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.title::before {
+  content: '';
+  display: inline-block;
+  width: 0.25rem;
+  height: 1rem;
+  background: #eab308;
+  border-radius: 2px;
+  box-shadow: 0 0 8px #eab308aa;
+}
+
+.empty,
+.loading {
+  opacity: 0.5;
+  font-style: italic;
+  font-size: 0.875rem;
+}
+
+.tableWrapper {
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(234, 179, 8, 0.2);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.4),
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.table {
+  width: 100%;
+  font-size: 0.875rem;
+  border-collapse: collapse;
+}
+
+.tableHead {
+  background: rgba(234, 179, 8, 0.08);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #a16207;
+}
+
+.tableHead th {
+  padding: 0.65rem 1rem;
+  font-weight: 700;
+  text-align: left;
+  border-bottom: 1px solid rgba(234, 179, 8, 0.15);
+}
+
+.tableHead .thVs,
+.tableHead .thRating {
+  text-align: center;
+}
+
+/* Separator between games */
+.gameFirstRow td {
+  border-top: 2px solid rgba(234, 179, 8, 0.18);
+}
+
+.gameRow td {
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Row hover */
+.gameFirstRow:hover td,
+.gameRow:hover td {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* MAP / MODE cell */
+.mapCell {
+  padding: 0.85rem 1rem;
+  vertical-align: middle;
+  min-width: 9rem;
+  max-width: 12rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mapName {
+  font-weight: 700;
+  color: #fde68a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.875rem;
+}
+
+.mapMode {
+  font-size: 0.7rem;
+  color: #78716c;
+  margin-top: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Player cells (team 1 — left side) */
+.playerCell {
+  padding: 0.5rem 0.75rem;
+  vertical-align: middle;
+}
+
+.playerInner {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.playerName {
+  color: #60a5fa;
+  white-space: nowrap;
+  font-weight: 500;
+  text-shadow: 0 0 12px rgba(96, 165, 250, 0.4);
+}
+
+/* Opponent cells (team 2 — right side, reversed) */
+.opponentCell {
+  padding: 0.5rem 0.75rem;
+  vertical-align: middle;
+}
+
+.opponentInner {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  justify-content: flex-end;
+}
+
+.opponentName {
+  color: #f87171;
+  white-space: nowrap;
+  font-weight: 500;
+  text-shadow: 0 0 12px rgba(248, 113, 113, 0.4);
+}
+
+/* Rating cells */
+.ratingCell {
+  padding: 0.5rem 0.75rem;
+  vertical-align: middle;
+  text-align: center;
+  font-weight: 700;
+  color: #e2e8f0;
+  min-width: 4rem;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9rem;
+}
+
+.ratingEmpty {
+  color: #374151;
+}
+
+/* VS cell */
+.vsCell {
+  padding: 0.5rem 0.75rem;
+  vertical-align: middle;
+  text-align: center;
+  color: #ef4444;
+  font-weight: 900;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+}
+
+/* Civilization flag */
+.civFlag {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 3px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
+}
+
+/* Country flag */
+.countryFlag {
+  width: 18px;
+  height: 13px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border-radius: 2px;
+  opacity: 0.9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
