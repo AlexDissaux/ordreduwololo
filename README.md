@@ -1,121 +1,118 @@
-# L'Ordre du Wololo - Monorepo
+# aoe4.fr
 
-Monorepo NX contenant le site vitrine et l'application de challenge de l'Ordre du Wololo.
+**aoe4.fr** est le site de la communauté française d'Age of Empires IV.
 
-## 🏗️ Structure du Projet
+Retrouvez en un seul endroit le classement des joueurs français, le suivi des parties en cours, et tout le contenu autour de la scène compétitive AoE4 France.
+
+---
+
+## ✨ Fonctionnalités
+
+- **Leaderboard** — Classement des joueurs français avec leurs stats (ELO, victoires, ratio W/L, etc.), synchronisé depuis l'API officielle AoE4.
+- **Parties en cours** — Suivi en temps réel des games actives des joueurs de la communauté.
+- **Contenu communautaire** — Informations et actualités autour de la scène française.
+- **Autres évènements** — Application dédiée aux événements et challenges organisés par la communauté.
+
+---
+
+## 🏗️ Architecture
+
+Monorepo NX structuré en applications et librairies :
 
 ```
-ordreduwololo/
+aoe4.fr/
 ├── apps/
-│   ├── frontend/          # Application React principale (site vitrine + routing)
-│   └── backend/           # API NestJS
+│   ├── frontend/          # Application React (site vitrine + routing)
+│   └── backend/           # API NestJS (leaderboard, parties en cours, joueurs)
 ├── libs/
-│   ├── wololo-challenge/  # Lib React de l'app événement (réutilisable)
-│   └── shared-types/      # Types partagés entre front et back
+│   ├── wololo-challenge/  # Lib React pour les événements/challenges (réutilisable)
+│   └── shared-types/      # Types TypeScript partagés front/back
 ```
 
-## 🚀 Commandes
+### Backend — modules principaux
 
-### Développement
+| Module | Rôle |
+|---|---|
+| `leaderboard` | Récupération et mise en cache du classement joueurs |
+| `current-games` | Synchronisation et exposition des parties en cours |
+| `player` | Gestion des profils joueurs et synchronisation |
+
+### Frontend — routes
+
+| Route | Contenu |
+|---|---|
+| `/` | Page d'accueil — présentation de la communauté |
+| `/leaderboard` | Classement des joueurs français |
+| `/current-games` | Parties en cours |
+| `/event/*` | Application Wololo Challenge |
+
+---
+
+## 🔧 Stack technique
+
+| Couche | Technologies |
+|---|---|
+| Frontend | React 19, React Router, Tailwind CSS, Vite |
+| Backend | NestJS 11, TypeScript |
+| Monorepo | NX 22, npm workspaces |
+| Tests | Jest, Playwright |
+| Linting | ESLint, Prettier |
+
+---
+
+## 🚀 Lancer le projet en local
+
+**Prérequis** : Node.js ≥ 18, npm
 
 ```bash
-# Lancer le frontend (site vitrine + app événement)
+# Installer les dépendances
+npm install
+
+# Lancer le frontend
 npm run dev
-# ou
-nx serve frontend
+# ou : nx serve frontend
 
 # Lancer le backend
 npm run serve:backend
-# ou
-nx serve backend
+# ou : nx serve backend
 ```
 
-### Build & Déploiement
+### Build & déploiement
 
 ```bash
-# Build du frontend pour production
+# Build frontend (production)
 npm run build
 
 # Déployer sur GitHub Pages
 npm run deploy
 
-# Build du backend
+# Build backend
 npm run build:backend
 ```
 
-### Tests & Linting
+### Tests & lint
 
 ```bash
-# Tester tous les projets
+# Tous les projets
 npm test
-
-# Linter tous les projets
 npm lint
 
-# Tester un projet spécifique
+# Par projet
 nx test frontend
 nx test backend
 nx test wololo-challenge
 ```
 
-## 📦 Applications
+---
 
-### Frontend (`apps/frontend`)
+## 📦 La lib Wololo Challenge
 
-Application React principale avec routing :
-- **`/`** : Page d'accueil du site vitrine
-- **`/event`** : Application de challenge (wololo-challenge lib)
-
-Stack : React 19, React Router, Tailwind CSS, Vite
-
-### Backend (`apps/backend`)
-
-API REST NestJS pour le site vitrine et les futurs besoins.
-
-Stack : NestJS, TypeScript
-
-## 📚 Librairies
-
-### Wololo Challenge (`libs/wololo-challenge`)
-
-Librairie React contenant toute l'application de challenge de l'événement. **Réutilisable** pour les prochaines éditions.
-
-Contient :
-- Composants (Leaderboard, Stats, Countdown, etc.)
-- Hooks custom (usePlayers, useTeams, etc.)
-- Services API
-- Styles
-
-### Shared Types (`libs/shared-types`)
-
-Types TypeScript partagés entre le frontend et le backend pour garantir la cohérence des données.
-
-## 🎯 Utilisation de la Lib Wololo Challenge
+`libs/wololo-challenge` est une librairie React **autonome et réutilisable** pour les événements organisés par la communauté. Elle embarque ses propres composants, hooks, et services.
 
 ```tsx
 import { WololoChallengeApp } from '@ordreduwololo-nx/wololo-challenge';
 
-// Dans votre app
-<Route path="/event" element={<WololoChallengeApp />} />
+<Route path="/event/*" element={<WololoChallengeApp />} />
 ```
 
-## 🌐 GitHub Pages
-
-Le frontend est configuré pour être déployé sur GitHub Pages avec le script `npm run deploy`.
-
-Le fichier `public/CNAME` est préservé pour le domaine personnalisé.
-
-## 🔧 Technologies
-
-- **Monorepo** : NX 22
-- **Frontend** : React 19, React Router, Tailwind CSS, Vite
-- **Backend** : NestJS 11
-- **TypeScript** : 5.9
-- **Tests** : Jest, Playwright
-- **Linting** : ESLint, Prettier
-
-## 📝 Notes
-
-- Le projet utilise npm workspaces
-- Les builds sont centralisés dans `dist/apps/`
-- La lib wololo-challenge est indépendante et peut être réutilisée dans d'autres projets
+---
