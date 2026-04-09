@@ -27,24 +27,6 @@ export async function fetchCurrentGames(profileIds: number[]): Promise<{ game: a
                 .find((id) => batchSet.has(id)) ?? batch[0];
             allGames.push({ game, profileId });
         }
-
-        // const res = await fetch(url);
-        // if (!res.ok) {
-        //     continue;
-        // }
-        // const text = await res.text();
-        // if (!text?.trim()) {
-        //     continue;
-        // }
-        // let response: GamesResponse;
-        // try {
-        //     response = JSON.parse(text) as GamesResponse;
-        // } catch {
-        //     continue;
-        // }
-        // if (response.games) {
-        //     allGames.push(...response.games.filter(game => game.ongoing));
-        // }
     }
 
     return allGames;
