@@ -141,11 +141,40 @@ libs/
 
 ## Key Domain Concepts
 
-- **French-speaking countries** (`FRENCH_SPEAKING_COUNTRIES`): the set of country codes used to filter aoe4world leaderboard data.
-- **Leaderboards tracked**: `rm_solo` and `rm_team` (Ranked Match Solo and Team).
-- **Player sync**: hourly cron pulls all French-speaking players from aoe4world API and upserts into PostgreSQL.
-- **Current games**: polls active players' ongoing games from aoe4world, streamed to client via SSE.
-- **Leaderboard**: served from in-memory cache, refreshed after each player sync.
+- **French-speaking countries** (`FRENCH_SPEAKING_COUNTRIES`): `['fr', 'be', 'lu']` — used to filter aoe4world leaderboard data. Defined in `player/player.types.ts`.
+- **Leaderboards tracked**: `rm_solo` and `rm_team` (Ranked Match Solo and Team). Defined as `LEADERBOARDS` constant in `player/player.types.ts`.
+- **Player sync**: hourly cron (`CronExpression.EVERY_HOUR`) in `PlayerSyncScheduler` pulls all French-speaking players from aoe4world API and upserts into PostgreSQL. The actual sync is done via `PlayerApiService.fetchAllPlayers()` which iterates over all leaderboards × all countries.
+- **Current games**: `CurrentGamesSyncScheduler` runs every 3 minutes (`'0 */3 * * * *'`) and calls `CurrentGamesService.setCurrentGamesFromActivePlayers()`. Active players are those with `lastGameAt` within the last 7 days.
+- **Leaderboard**: served from `LeaderboardCacheService` (plain in-memory array). Cache is populated lazily on first request and refreshed after each player sync via `LeaderboardService.updateLeaderboard()`.
+
+## Data Flow & Caching
+
+### Player Sync Flow
+1. `PlayerSyncScheduler` (`@Cron(EVERY_HOUR)`) triggers `PlayerService.syncPlayers()`
+2. `PlayerService.syncPlayers()` calls `PlayerApiService.fetchAllPlayers()`
+3. `PlayerApiService` iterates `LEADERBOARDS × FRENCH_SPEAKING_COUNTRIES`, paginating each combination until all pages are consumed
+4. Between each page request within a leaderboard+country combo, `delay(200ms)` is applied
+5. Players are merged by `profile_id` into a `Map<number, MergedPlayer>` then bulk-upserted into PostgreSQL
+6. After sync, `LeaderboardCacheService` is updated with fresh data
+
+### Leaderboard Cache
+- `LeaderboardCacheService` holds a plain `LeaderboardDto[]` array in memory (no TTL/expiry)
+- `LeaderboardService.getLeaderboard()` returns cache if non-empty, otherwise triggers `updateLeaderboard()`
+- Query: only `rm_solo`-rated players, ordered by `rmSoloRating DESC`, selecting only the leaderboard-relevant columns
+
+### Current Games Cache & SSE
+- `CurrentGamesService` holds a RxJS `BehaviorSubject<CurrentGameDto[]>` as the in-memory store
+- `CurrentGamesSyncScheduler` (`@Cron('0 */3 * * * *')`) calls `setCurrentGamesFromActivePlayers()` every 3 min
+- `setCurrentGamesFromActivePlayers()` fetches profile IDs of players active in the last 7 days, then calls `fetchCurrentGames(profileIds)` in batches of 50 with `delay(1000ms)` between batches
+- The `games$` observable is exposed via SSE (`@Sse('stream')`), pushing every `BehaviorSubject.next()` to subscribed clients
+- The `GET /current-games` REST endpoint resolves the current value, triggering a fresh fetch if the subject is empty
+
+## Rate Limiting Strategy
+
+- **`delay()` utility**: a single helper in `apps/backend/src/common/utils/delay.service.ts` — `export function delay(ms: number): Promise<void>`
+- **Leaderboard pagination** (`PlayerApiService`): `delay(200ms)` between each page of a given leaderboard+country combination
+- **Current games batching** (`current-games.api.ts`): profile IDs split into batches of 50 (`PROFILE_IDS_BATCH_SIZE = 50`); `delay(1000ms)` before each batch request
+- Always apply `delay()` before or between external API batch calls — never fire parallel requests to aoe4world
 
 ## Common Commands
 
