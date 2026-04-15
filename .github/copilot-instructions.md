@@ -54,3 +54,23 @@ import { RankIcon } from '@ordreduwololo-nx/ui';
 - **Types first:** define or reuse types from `@ordreduwololo-nx/shared-types` before writing component props.
 - **Workspace resolution:** the monorepo uses `"@ordreduwololo-nx/source"` as a custom condition so Vite resolves libs directly from `src/` in dev without a build step.
 - **Nx** is used for task orchestration (`nx serve`, `nx build`, `nx test`, etc.). Use `nx affected` when possible to only run tasks impacted by a change.
+
+---
+
+## Backend separation of responsibilities (NestJS)
+
+Each feature module must split responsibilities across dedicated files:
+
+| File | Responsibility |
+|---|---|
+| `<feature>.controller.ts` | HTTP routing, request/response handling only |
+| `<feature>.service.ts` | Business logic and orchestration only |
+| `<feature>.repository.ts` | All TypeORM data access (`find*`, `upsert`, etc.) |
+| `<feature>.mapper.ts` | Mapping between API/external shapes and DB entities (plain functions, no `@Injectable`) |
+| `<feature>-api.service.ts` | External HTTP API calls only (no DB access, no mapping to entity) |
+
+### Rules
+- **Services** must not inject TypeORM `Repository<T>` directly — use the feature's `<feature>.repository.ts` instead.
+- **Mappers** are plain functions (not injectable classes), imported directly where needed.
+- **API services** must not contain entity mapping logic — that belongs in the mapper.
+- **Repositories** are `@Injectable()` classes registered in the module's `providers` array.

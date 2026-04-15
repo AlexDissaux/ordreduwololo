@@ -1,55 +1,18 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Not, IsNull, MoreThan, Repository } from 'typeorm';
-import { Player } from './entities';
 import { PlayerApiService } from './player-api.service';
+import { mapPlayerToEntity } from './player.mapper';
+import { PlayerRepository } from './player.repository';
 import { SyncResult } from './player.types';
+import { Player } from './entities/player.entity';
 
 @Injectable()
 export class PlayerService {
   private readonly logger = new Logger(PlayerService.name);
 
   constructor(
-    @InjectRepository(Player)
-    private readonly playerRepository: Repository<Player>,
+    private readonly playerRepository: PlayerRepository,
     private readonly playerApiService: PlayerApiService,
   ) {}
-
-  async findAll(): Promise<Player[]> {
-    return this.playerRepository.find({
-      order: { rmSoloRating: 'DESC' },
-    });
-  }
-
-  async findLeaderboardSolo(): Promise<Player[]> {
-    return this.playerRepository.find({
-      select: ['profileId', 'name', 'rmSoloRating', 'rmSoloRankLevel', 'rmSoloGamesCount', 'rmSoloWinsCount', 'rmSoloLossesCount'],
-      where: { rmSoloRating: Not(IsNull()) },
-      order: { rmSoloRating: 'DESC' },
-    });
-  }
-
-  async findAllProfileIdsFromActivePlayers(): Promise<number[]> {
-    const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    const players = await this.playerRepository.find({
-      select: ['profileId'],
-      where: { lastGameAt: MoreThan(since) },
-    });
-    return players.map(player => player.profileId);
-  }
-
-  async findAllProfileIds(): Promise<number[]> {
-    const players = await this.playerRepository.find({
-      select: ['profileId'],
-    });
-    return players.map(player => player.profileId);
-  }
-
-  async findOne(profileId: number): Promise<Player | null> {
-    return this.playerRepository.findOne({
-      where: { profileId },
-    });
-  }
 
   async syncPlayers(): Promise<SyncResult> {
     const result: SyncResult = {
@@ -66,9 +29,7 @@ export class PlayerService {
       result.total = allPlayers.length;
 
       // Only load the fields needed to detect changes
-      const existingPlayers = await this.playerRepository.find({
-        select: ['profileId', 'lastGameAt'],
-      });
+      const existingPlayers = await this.playerRepository.findForSync();
       const existingPlayersMap = new Map(existingPlayers.map(p => [p.profileId, p]));
 
       const toUpsert: Partial<Player>[] = [];
@@ -78,10 +39,10 @@ export class PlayerService {
         const updatedTime = apiPlayer.last_game_at ? new Date(apiPlayer.last_game_at).getTime() : 0;
 
         if (!existing) {
-          toUpsert.push(this.playerApiService.mapToEntity(apiPlayer));
+          toUpsert.push(mapPlayerToEntity(apiPlayer));
           result.added++;
         } else if (existing?.lastGameAt?.getTime() ?? 0 !== updatedTime) {
-          toUpsert.push(this.playerApiService.mapToEntity(apiPlayer));
+          toUpsert.push(mapPlayerToEntity(apiPlayer));
           result.updated++;
         } else {
           result.unchanged++;
@@ -90,7 +51,7 @@ export class PlayerService {
 
       // Batch upsert all new/changed players
       if (toUpsert.length > 0) {
-        await this.playerRepository.upsert(toUpsert, ['profileId']);
+        await this.playerRepository.upsert(toUpsert);
         this.logger.log(`Upserted ${toUpsert.length} players`);
       }
 
