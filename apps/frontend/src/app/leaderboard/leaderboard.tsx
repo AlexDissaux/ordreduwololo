@@ -2,6 +2,7 @@
 
 import styles from './leaderboard.module.css';
 import { useLeaderboard } from './useLeaderboard';
+import { RankIcon } from '@ordreduwololo-nx/ui';
 
 export function Leaderboard() {
   const { players } = useLeaderboard();
@@ -27,7 +28,7 @@ export function Leaderboard() {
                   <tr key={player.id} className={styles.tableRow}>
                     <td>{player.name}</td>
                     <td>{player.rm_solo_rating ?? '-'}</td>
-                    <td>{player.rm_solo_rank_level ?? '-'}</td>
+                    <td><RankIcon rankLevel={player.rm_solo_rank_level} size={28} /></td>
                     <td>{player.rm_solo_wins_count ?? '-'} / {player.rm_solo_losses_count ?? '-'}</td>
                   </tr>
                 ))}
