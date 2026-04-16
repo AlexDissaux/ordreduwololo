@@ -1,4 +1,4 @@
-import { PLayerLeaderboard } from '@ordreduwololo-nx/shared-types';
+import { PLayerLeaderboard } from '@aoe4.fr/shared-types';
 
 const API_BASE = 'http://localhost:3000';
 

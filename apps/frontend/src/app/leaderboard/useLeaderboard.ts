@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { fetchLeaderboard } from './leaderboard.api';
-import { PLayerLeaderboard } from '@ordreduwololo-nx/shared-types';
+import { PLayerLeaderboard } from '@aoe4.fr/shared-types';
 
 interface UseLeaderboardResult {
   players: PLayerLeaderboard[];

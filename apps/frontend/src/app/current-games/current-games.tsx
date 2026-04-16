@@ -1,4 +1,4 @@
-import { ICurrentGame, ICurrentGamePlayer } from '@ordreduwololo-nx/shared-types';
+import { ICurrentGame, ICurrentGamePlayer } from '@aoe4.fr/shared-types';
 import { useCurrentGames } from './useCurrentGames';
 import styles from './current-games.module.css';
 import { CIV_FLAG_URLS } from './civ-flags';

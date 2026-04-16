@@ -1,5 +1,5 @@
 {
-  "name": "@ordreduwololo-nx/ui",
+  "name": "@aoe4.fr/ui",
   "version": "0.0.1",
   "type": "module",
   "main": "./dist/index.js",
@@ -8,7 +8,7 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "@ordreduwololo-nx/source": "./src/index.ts",
+      "@aoe4.fr/source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"

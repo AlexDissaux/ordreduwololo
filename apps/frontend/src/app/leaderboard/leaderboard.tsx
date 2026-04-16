@@ -1,8 +1,8 @@
 
 
+import { RankIcon } from '@aoe4.fr/ui';
 import styles from './leaderboard.module.css';
 import { useLeaderboard } from './useLeaderboard';
-import { RankIcon } from '@ordreduwololo-nx/ui';
 
 export function Leaderboard() {
   const { players } = useLeaderboard();

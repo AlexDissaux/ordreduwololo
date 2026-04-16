@@ -17,6 +17,6 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
-    "customConditions": ["@ordreduwololo-nx/source"]
+    "customConditions": ["@aoe4.fr/source"]
   }
 }

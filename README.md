@@ -110,7 +110,7 @@ nx test wololo-challenge
 `libs/wololo-challenge` est une librairie React **autonome et réutilisable** pour les événements organisés par la communauté. Elle embarque ses propres composants, hooks, et services.
 
 ```tsx
-import { WololoChallengeApp } from '@ordreduwololo-nx/wololo-challenge';
+import { WololoChallengeApp } from '@aoe4.fr/wololo-challenge';
 
 <Route path="/event/*" element={<WololoChallengeApp />} />
 ```

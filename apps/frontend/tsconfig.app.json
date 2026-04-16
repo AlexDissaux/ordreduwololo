@@ -36,6 +36,9 @@
       "path": "../../libs/shared-types/tsconfig.lib.json"
     },
     {
+      "path": "../../libs/ui/tsconfig.lib.json"
+    },
+    {
       "path": "../../libs/wololo-challenge/tsconfig.lib.json"
     }
   ]

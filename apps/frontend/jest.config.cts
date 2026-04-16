@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: '@ordreduwololo-nx/frontend',
+  displayName: '@aoe4.fr/frontend',
   preset: '../../jest.preset.js',
   transform: {
     '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nx/react/plugins/jest',

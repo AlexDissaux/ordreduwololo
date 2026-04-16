@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { PLayerLeaderboard } from "@ordreduwololo-nx/shared-types";
+import { PLayerLeaderboard } from "@aoe4.fr/shared-types";
 
 @Injectable() 
 export class LeaderboardCacheService {

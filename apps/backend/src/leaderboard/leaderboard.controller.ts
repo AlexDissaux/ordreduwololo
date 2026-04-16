@@ -1,6 +1,6 @@
 import { Controller, Get } from "@nestjs/common";
 import { LeaderboardService } from "./leaderboard.service";
-import { PLayerLeaderboard } from "@ordreduwololo-nx/shared-types";
+import { PLayerLeaderboard } from "@aoe4.fr/shared-types";
 
 @Controller('leaderboard')
 export class LeaderboardController {

@@ -8,7 +8,7 @@
 
 ## Monorepo Architecture
 
-This project is an **Nx monorepo** (Nx 22) using npm workspaces. All packages share the scope `@ordreduwololo-nx`.
+This project is an **Nx monorepo** (Nx 22) using npm workspaces. All packages share the scope `@aoe4.fr`.
 
 ```
 apps/
@@ -25,8 +25,8 @@ libs/
 **Tech:** TypeScript throughout. Jest (unit), Playwright (e2e), `@testing-library/react`.
 
 **Key conventions:**
-- **Types first:** define or reuse types from `@ordreduwololo-nx/shared-types` before writing component props.
-- **Workspace resolution:** the monorepo uses `"@ordreduwololo-nx/source"` as a custom condition so Vite resolves libs directly from `src/` in dev without a build step.
+- **Types first:** define or reuse types from `@aoe4.fr/shared-types` before writing component props.
+- **Workspace resolution:** the monorepo uses `"@aoe4.fr/source"` as a custom condition so Vite resolves libs directly from `src/` in dev without a build step.
 - **Nx tasks:** use `nx serve`, `nx build`, `nx test`, `nx lint`. Prefer `nx affected` to only run tasks impacted by a change.
 
 ---
@@ -67,12 +67,12 @@ Each feature has its own folder (`player/`, `leaderboard/`, `current-games/`) wi
 - **Data fetching**: custom hooks using `fetch`/`EventSource` — no React Query or SWR.
 - **Styling**: Tailwind CSS v4 utility classes + CSS Modules for component-specific styles. No CSS-in-JS.
 - **Routing**: React Router v6 `<Routes>/<Route>`. The `/event/*` route renders `WololoChallengeApp` from the lib.
-- **Shared types**: import from `@ordreduwololo-nx/shared-types` (alias in `tsconfig.base.json`).
+- **Shared types**: import from `@aoe4.fr/shared-types` (alias in `tsconfig.base.json`).
 - **Component granularity**: small presentational components, co-located with their feature folder.
 
 ---
 
-## `@ordreduwololo-nx/ui` — Shared UI Library
+## `@aoe4.fr/ui` — Shared UI Library
 
 **Location:** `libs/ui/` — reusable React components and assets shared across apps.
 
@@ -84,7 +84,7 @@ Each feature has its own folder (`player/`, `leaderboard/`, `current-games/`) wi
 - `RankIcon` — renders the AoE4 rank icon SVG for a given `rm_solo_rank_level` string (e.g. `"diamond_2"`, `"conqueror_3"`). Assets live in `libs/ui/src/assets/rank_icon/` as `solo_<rank>_<level>.svg`.
 
 ```tsx
-import { RankIcon } from '@ordreduwololo-nx/ui';
+import { RankIcon } from '@aoe4.fr/ui';
 <RankIcon rankLevel={player.rm_solo_rank_level} size={28} />
 ```
 
@@ -92,7 +92,7 @@ import { RankIcon } from '@ordreduwololo-nx/ui';
 
 ## Shared Types (`libs/shared-types`)
 
-Interfaces: `IPlayer`, `IRankedStats`, `IPlayerAvatars`, `IPlayerSocial`, `ICurrentGame`, `ICurrentGamePlayer`. Imported on both frontend and backend via the `@ordreduwololo-nx/shared-types` alias. **Never add runtime logic here.**
+Interfaces: `IPlayer`, `IRankedStats`, `IPlayerAvatars`, `IPlayerSocial`, `ICurrentGame`, `ICurrentGamePlayer`. Imported on both frontend and backend via the `@aoe4.fr/shared-types` alias. **Never add runtime logic here.**
 
 ---
 

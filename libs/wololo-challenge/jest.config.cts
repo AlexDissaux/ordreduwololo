@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: '@ordreduwololo-nx/wololo-challenge',
+  displayName: '@aoe4.fr/wololo-challenge',
   preset: '../../jest.preset.js',
   transform: {
     '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nx/react/plugins/jest',

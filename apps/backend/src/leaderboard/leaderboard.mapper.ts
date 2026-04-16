@@ -1,5 +1,5 @@
 import { Player } from '../player/entities';
-import { PLayerLeaderboard } from '@ordreduwololo-nx/shared-types';
+import { PLayerLeaderboard } from '@aoe4.fr/shared-types';
 
 export function mapPlayersToPLayerLeaderboard(players: Player[]): PLayerLeaderboard[] {
   return players.map((player) => ({

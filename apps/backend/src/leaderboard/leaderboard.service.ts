@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { LeaderboardCacheService } from "./leaderboard-cache.service";
-import { PLayerLeaderboard } from "@ordreduwololo-nx/shared-types";
+import { PLayerLeaderboard } from "@aoe4.fr/shared-types";
 import { mapPlayersToPLayerLeaderboard } from "./leaderboard.mapper";
 import { PlayerRepository } from "src/player/player.repository";
 

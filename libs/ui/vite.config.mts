@@ -23,7 +23,7 @@ export default defineConfig(() => ({
     },
     lib: {
       entry: 'src/index.ts',
-      name: '@ordreduwololo-nx/ui',
+      name: '@aoe4.fr/ui',
       fileName: 'index',
       formats: ['es' as const],
     },

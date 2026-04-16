@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { WololoChallengeApp } from '@ordreduwololo-nx/wololo-challenge';
+import { WololoChallengeApp } from '@aoe4.fr/wololo-challenge';
 import { HomePage } from './home';
 
 export function App() {
