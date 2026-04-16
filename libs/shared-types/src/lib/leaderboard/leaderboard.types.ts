@@ -1,4 +1,4 @@
-export interface ILeaderboardEntry {
+export interface PLayerLeaderboard {
   id: number;
   name: string;
   rm_solo_rating: number | null;

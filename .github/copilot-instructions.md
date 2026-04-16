@@ -108,7 +108,7 @@ Self-contained React app/library for the ODW tournament. Static team/player data
 - **Leaderboards tracked**: `rm_solo` and `rm_team`. Defined as `LEADERBOARDS` in `player/player.types.ts`.
 - **Player sync**: hourly cron in `PlayerSyncScheduler` → `PlayerApiService.fetchAllPlayers()` iterates all leaderboards × countries, upserts into PostgreSQL, then refreshes `LeaderboardCacheService`.
 - **Current games**: `CurrentGamesSyncScheduler` runs every 3 min, calls `setCurrentGamesFromActivePlayers()` for players with `lastGameAt` within the last 7 days.
-- **Leaderboard cache**: `LeaderboardCacheService` holds a plain in-memory `LeaderboardDto[]` array. Populated lazily on first request, refreshed after each player sync.
+- **Leaderboard cache**: `LeaderboardCacheService` holds a plain in-memory `PLayerLeaderboard[]` array. Populated lazily on first request, refreshed after each player sync.
 
 ---
 

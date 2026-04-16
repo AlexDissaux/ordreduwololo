@@ -1,7 +1,7 @@
 import { Player } from '../player/entities';
-import { LeaderboardDto } from './leaderboard.dto';
+import { PLayerLeaderboard } from '@ordreduwololo-nx/shared-types';
 
-export function mapPlayersToLeaderboardDto(players: Player[]): LeaderboardDto[] {
+export function mapPlayersToPLayerLeaderboard(players: Player[]): PLayerLeaderboard[] {
   return players.map((player) => ({
     id: player.profileId,
     name: player.name,

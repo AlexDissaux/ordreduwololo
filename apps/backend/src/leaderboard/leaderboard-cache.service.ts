@@ -1,16 +1,16 @@
 import { Injectable } from "@nestjs/common";
-import { LeaderboardDto } from "./leaderboard.dto";
+import { PLayerLeaderboard } from "@ordreduwololo-nx/shared-types";
 
 @Injectable() 
 export class LeaderboardCacheService {
 
-    private leaderboard: LeaderboardDto[] = [];
+    private leaderboard: PLayerLeaderboard[] = [];
 
-    public setLeaderboard(leaderboard: LeaderboardDto[]): void {
+    public setLeaderboard(leaderboard: PLayerLeaderboard[]): void {
         this.leaderboard = leaderboard;
     }
     
-    public getLeaderboard(): LeaderboardDto[] {
+    public getLeaderboard(): PLayerLeaderboard[] {
         return this.leaderboard;
     }
 }

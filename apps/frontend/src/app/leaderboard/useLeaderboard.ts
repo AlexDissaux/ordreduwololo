@@ -1,15 +1,16 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchLeaderboard, LeaderboardEntry } from './leaderboard.api';
+import { fetchLeaderboard } from './leaderboard.api';
+import { PLayerLeaderboard } from '@ordreduwololo-nx/shared-types';
 
 interface UseLeaderboardResult {
-  players: LeaderboardEntry[];
+  players: PLayerLeaderboard[];
   isLoading: boolean;
   error: string | null;
   refetch: () => void;
 }
 
 export function useLeaderboard(): UseLeaderboardResult {
-  const [players, setPlayers] = useState<LeaderboardEntry[]>([]);
+  const [players, setPlayers] = useState<PLayerLeaderboard[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
