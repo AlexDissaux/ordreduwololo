@@ -4,17 +4,17 @@ import { map } from "rxjs/operators";
 import { CurrentGamesService } from "./current-games.services";
 
 
-@Controller('games')
-export class GamesController {
+@Controller('current-games')
+export class CurrentGamesController {
 
     constructor(private readonly currentGamesService: CurrentGamesService) {}
 
-    @Get('current-games')
+    @Get('')
     async getCurrentPlaying() {
             return await this.currentGamesService.getCurrentGames();
     }
 
-    @Sse('current-games/stream')
+    @Sse('stream')
     streamCurrentGames(): Observable<MessageEvent> {
         return this.currentGamesService.games$.pipe(
             map(games => ({ data: games }) as MessageEvent),
