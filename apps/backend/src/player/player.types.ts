@@ -1,11 +1,3 @@
-export interface SyncResult {
-  added: number;
-  updated: number;
-  unchanged: number;
-  total: number;
-  syncedAt: string;
-}
-
 export interface LeaderboardPlayerStats {
   rating: number;
   rank: number;

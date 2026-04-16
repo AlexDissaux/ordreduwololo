@@ -7,7 +7,6 @@ import {
   LeaderboardType,
   MergedPlayer,
 } from './player.types';
-import { Player } from './entities';
 import { delay } from '../common/utils/delay.service';
 
 @Injectable()
@@ -29,11 +28,6 @@ export class PlayerApiService {
           const existing = playerMap.get(player.profile_id);
           if (existing) {
             existing[leaderboard] = this.extractStats(player);
-            if (player.last_game_at > existing.last_game_at) {
-              existing.last_game_at = player.last_game_at;
-              existing.name = player.name;
-              existing.social = player.social;
-            }
           } else {
             playerMap.set(player.profile_id, {
               profile_id: player.profile_id,
@@ -52,10 +46,7 @@ export class PlayerApiService {
     return Array.from(playerMap.values());
   }
 
-  private async fetchLeaderboard(
-    leaderboard: LeaderboardType,
-    country: string,
-  ): Promise<Aoe4WorldLeaderboardPlayer[]> {
+  private async fetchLeaderboard(leaderboard: LeaderboardType, country: string): Promise<Aoe4WorldLeaderboardPlayer[]> {
     const allPlayers: Aoe4WorldLeaderboardPlayer[] = [];
     const MAX_PAGES = 1000; // Safety limit to prevent infinite loops
     let page = 1;
