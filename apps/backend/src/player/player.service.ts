@@ -14,9 +14,9 @@ export class PlayerService {
   async syncPlayers(): Promise<void> {
     const allPlayers = await this.playerApiService.fetchAllPlayers();
 
-    allPlayers.map(apiPlayer => mapPlayerToEntity(apiPlayer));
+    const entities = allPlayers.map(apiPlayer => mapPlayerToEntity(apiPlayer));
 
-    await this.playerRepository.upsert(allPlayers);
+    await this.playerRepository.upsert(entities);
   }
 
 }

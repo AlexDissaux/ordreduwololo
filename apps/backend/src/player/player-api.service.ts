@@ -25,6 +25,10 @@ export class PlayerApiService {
         );
 
         for (const player of players) {
+          if (!player.profile_id) {
+            this.logger.warn(`Skipping player "${player.name}" with null profile_id`);
+            continue;
+          }
           const existing = playerMap.get(player.profile_id);
           if (existing) {
             existing[leaderboard] = this.extractStats(player);
@@ -53,6 +57,7 @@ export class PlayerApiService {
     let hasMore = true;
     this.logger.debug(`Starting to fetch leaderboard ${leaderboard} for country ${country}`);
     while (hasMore && page <= MAX_PAGES) {
+      this.logger.debug(`Fetching page ${page} for leaderboard ${leaderboard} and country ${country}`);
       const url = `${this.API_BASE_URL}/leaderboards/${leaderboard}?country=${encodeURIComponent(country)}&page=${page}`;
       // this.logger.debug(`Fetching page ${page}: ${url}`);
 

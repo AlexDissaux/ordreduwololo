@@ -53,6 +53,9 @@ export class PlayerRepository {
   }
 
   async upsert(players: Partial<Player>[]): Promise<void> {
-    await this.repo.upsert(players, ['profileId']);
+    const BATCH_SIZE = 100;
+    for (let i = 0; i < players.length; i += BATCH_SIZE) {
+      await this.repo.upsert(players.slice(i, i + BATCH_SIZE), ['profileId']);
+    }
   }
 }

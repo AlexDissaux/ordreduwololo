@@ -16,47 +16,6 @@
   margin-bottom: 0.5rem;
 }
 
-.subtitle {
-  font-size: 1.25rem;
-  margin-bottom: 2rem;
-  opacity: 0.85;
-}
-
-.actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.challengeLink {
-  background: #eab308;
-  color: black;
-  font-weight: 700;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  text-decoration: none;
-  transition: background 0.2s;
-}
-
-.challengeLink:hover {
-  background: #ca8a04;
-}
-
-.refreshButton {
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  background: transparent;
-  color: white;
-  font-weight: 600;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.refreshButton:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
 
 .tableWrapper {
   overflow: hidden;
