@@ -24,6 +24,14 @@ export class PlayerRepository {
     });
   }
 
+  async findLeaderboardTeam(): Promise<Player[]> {
+    return this.repo.find({
+      select: ['profileId', 'name', 'rmTeamRating', 'rmTeamRankLevel', 'rmTeamGamesCount', 'rmTeamWinsCount', 'rmTeamLossesCount'],
+      where: { rmTeamRating: Not(IsNull()) },
+      order: { rmTeamRating: 'DESC' },
+    });
+  }
+
   async findAllProfileIdsFromActivePlayers(): Promise<number[]> {
     const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
     const players = await this.repo.find({

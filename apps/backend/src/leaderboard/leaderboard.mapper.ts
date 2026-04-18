@@ -12,3 +12,15 @@ export function mapPlayersToPLayerLeaderboard(players: Player[]): PLayerLeaderbo
     rm_solo_losses_count: player.rmSoloLossesCount,
   }));
 }
+
+export function mapPlayersToTeamLeaderboard(players: Player[]): PLayerLeaderboard[] {
+  return players.map((player) => ({
+    id: player.profileId,
+    name: player.name,
+    rm_solo_rating: player.rmTeamRating,
+    rm_solo_rank_level: player.rmTeamRankLevel,
+    rm_solo_games_count: player.rmTeamGamesCount,
+    rm_solo_wins_count: player.rmTeamWinsCount,
+    rm_solo_losses_count: player.rmTeamLossesCount,
+  }));
+}

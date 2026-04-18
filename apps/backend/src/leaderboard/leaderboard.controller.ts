@@ -9,6 +9,11 @@ export class LeaderboardController {
     
     @Get()
     async getLeaderboard(): Promise<PLayerLeaderboard[]> {
-        return await this.leaderboardService.getLeaderboard()
+        return await this.leaderboardService.getLeaderboard();
+    }
+
+    @Get('team')
+    async getLeaderboardTeam(): Promise<PLayerLeaderboard[]> {
+        return await this.leaderboardService.getLeaderboardTeam();
     }
 }

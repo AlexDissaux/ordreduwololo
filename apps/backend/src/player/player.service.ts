@@ -20,6 +20,7 @@ export class PlayerService {
 
     await this.playerRepository.upsert(entities);
     this.leaderboardCacheService.setLeaderboard([]);
+    this.leaderboardCacheService.setLeaderboardTeam([]);
   }
 
 }

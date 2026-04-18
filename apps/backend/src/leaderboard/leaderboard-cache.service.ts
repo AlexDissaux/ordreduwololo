@@ -5,12 +5,21 @@ import { PLayerLeaderboard } from "@aoe4.fr/shared-types";
 export class LeaderboardCacheService {
 
     private leaderboard: PLayerLeaderboard[] = [];
+    private leaderboardTeam: PLayerLeaderboard[] = [];
 
-    public setLeaderboard(leaderboard: PLayerLeaderboard[]): void {
+    setLeaderboard(leaderboard: PLayerLeaderboard[]): void {
         this.leaderboard = leaderboard;
     }
     
-    public getLeaderboard(): PLayerLeaderboard[] {
+    getLeaderboard(): PLayerLeaderboard[] {
         return this.leaderboard;
+    }
+
+    setLeaderboardTeam(leaderboard: PLayerLeaderboard[]): void {
+        this.leaderboardTeam = leaderboard;
+    }
+
+    getLeaderboardTeam(): PLayerLeaderboard[] {
+        return this.leaderboardTeam;
     }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { LeaderboardCacheService } from "./leaderboard-cache.service";
 import { PLayerLeaderboard } from "@aoe4.fr/shared-types";
-import { mapPlayersToPLayerLeaderboard } from "./leaderboard.mapper";
+import { mapPlayersToPLayerLeaderboard, mapPlayersToTeamLeaderboard } from "./leaderboard.mapper";
 import { PlayerRepository } from "src/player/player.repository";
 
 
@@ -19,9 +19,23 @@ export class LeaderboardService {
     }
 
     public async getLeaderboard(): Promise<PLayerLeaderboard[]> {
-        let leaderboard = this.leaderboardCacheService.getLeaderboard();
-        if (leaderboard.length == 0) {
+        const leaderboard = this.leaderboardCacheService.getLeaderboard();
+        if (leaderboard.length === 0) {
             return await this.updateLeaderboard();
+        }
+        return leaderboard;
+    }
+
+    public async updateLeaderboardTeam(): Promise<PLayerLeaderboard[]> {
+        const leaderboard = mapPlayersToTeamLeaderboard(await this.playerRepository.findLeaderboardTeam());
+        this.leaderboardCacheService.setLeaderboardTeam(leaderboard);
+        return leaderboard;
+    }
+
+    public async getLeaderboardTeam(): Promise<PLayerLeaderboard[]> {
+        const leaderboard = this.leaderboardCacheService.getLeaderboardTeam();
+        if (leaderboard.length === 0) {
+            return await this.updateLeaderboardTeam();
         }
         return leaderboard;
     }

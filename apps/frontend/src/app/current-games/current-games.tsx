@@ -1,7 +1,8 @@
 import { ICurrentGame, ICurrentGamePlayer } from '@aoe4.fr/shared-types';
 import { useCurrentGames } from './useCurrentGames';
-import styles from './current-games.module.css';
 import { CIV_FLAG_URLS } from './civ-flags';
+
+type Filter = 'all' | 'solo' | 'team';
 
 function formatLeaderboard(leaderboard: string): string {
   return leaderboard.replace(/_/g, ' ').toUpperCase();
@@ -12,7 +13,7 @@ function CivFlag({ civilization }: { civilization: string }) {
   if (!src) return null;
   return (
     <img
-      className={styles.civFlag}
+      className="w-5 h-auto rounded-sm flex-shrink-0"
       src={src}
       alt={civilization}
       title={civilization}
@@ -25,7 +26,7 @@ function CountryFlag({ country }: { country: string }) {
   if (!country) return null;
   return (
     <img
-      className={styles.countryFlag}
+      className="w-5 h-auto flex-shrink-0"
       src={`https://flagcdn.com/w40/${country.toLowerCase()}.png`}
       alt={country}
       title={country}
@@ -35,109 +36,110 @@ function CountryFlag({ country }: { country: string }) {
 }
 
 function RatingCell({ player }: { player: ICurrentGamePlayer | undefined }) {
-  if (!player) return <td className={styles.ratingCell} />;
+  if (!player) return <td className="px-3 py-3 text-center font-mono text-sm w-16" />;
   return (
-    <td className={styles.ratingCell}>
+    <td className="px-3 py-3 text-center font-mono text-sm w-16">
       {player.rating != null ? (
-        player.rating
+        <span className="text-amber-400">{player.rating}</span>
       ) : (
-        <span className={styles.ratingEmpty}>—</span>
+        <span className="text-zinc-600">—</span>
       )}
     </td>
   );
 }
 
-export function CurrentGames() {
+interface Props {
+  filter?: Filter;
+}
+
+export function CurrentGames({ filter = 'all' }: Props) {
   const { games, isLoading } = useCurrentGames();
 
+  const filteredGames =
+    filter === 'all'
+      ? games
+      : games.filter((g) => g.leaderboard === (filter === 'solo' ? 'rm_solo' : 'rm_team'));
+
   if (isLoading) {
-    return (
-      <div className={styles.section}>
-        <div className={styles.container}>
-          <p className={styles.loading}>Chargement des parties en cours...</p>
-        </div>
-      </div>
-    );
+    return <div className="py-16 text-center text-zinc-500">Chargement des parties en cours…</div>;
+  }
+
+  if (filteredGames.length === 0) {
+    return <div className="py-16 text-center text-zinc-500 italic">Aucune partie en cours…</div>;
   }
 
   return (
-    <div className={styles.section}>
-      <div className={styles.container}>
-        <p className={styles.title}>Parties en cours</p>
+    <div className="overflow-x-auto overflow-hidden rounded-lg border border-zinc-800">
+      <table className="w-full border-collapse text-sm">
+        <thead>
+          <tr className="bg-zinc-900 text-xs uppercase tracking-widest text-zinc-400">
+            <th className="px-4 py-3 text-left min-w-[9rem]">Map / Mode</th>
+            <th className="px-4 py-3 text-left">Joueur(s)</th>
+            <th className="px-3 py-3 text-center w-16">Rating</th>
+            <th className="px-3 py-3 text-center w-10">vs</th>
+            <th className="px-3 py-3 text-center w-16">Rating</th>
+            <th className="px-4 py-3 text-right">Adversaire(s)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredGames.map((game: ICurrentGame, gi) => {
+            const team1 = game.teams[0] ?? [];
+            const team2 = game.teams[1] ?? [];
+            const rowCount = Math.max(team1.length, team2.length);
 
-        {games.length === 0 ? (
-          <p className={styles.empty}>Aucune partie en cours pour le moment...</p>
-        ) : (
-          <div className={styles.tableWrapper}>
-            <table className={styles.table}>
-              <thead className={styles.tableHead}>
-                <tr>
-                  <th>Map / Mode</th>
-                  <th>Joueur(s)</th>
-                  <th className={styles.thRating}>Rating</th>
-                  <th className={styles.thVs}>vs</th>
-                  <th className={styles.thRating}>Rating</th>
-                  <th style={{ textAlign: 'right' }}>Adversaire(s)</th>
+            return Array.from({ length: rowCount }).map((_, pi) => {
+              const p1: ICurrentGamePlayer | undefined = team1[pi];
+              const p2: ICurrentGamePlayer | undefined = team2[pi];
+
+              return (
+                <tr
+                  key={`${gi}-${pi}`}
+                  className={`bg-zinc-900 hover:bg-zinc-800 transition-colors ${
+                    pi === 0 ? 'border-t-2 border-amber-900/30' : 'border-t border-zinc-800'
+                  }`}
+                >
+                  {pi === 0 && (
+                    <td rowSpan={rowCount} className="px-4 py-3 align-middle border-r border-zinc-800">
+                      <div className="font-semibold text-amber-300 truncate">{game.map}</div>
+                      <div className="text-xs text-zinc-500 mt-0.5">{formatLeaderboard(game.leaderboard)}</div>
+                    </td>
+                  )}
+
+                  <td className="px-4 py-3">
+                    {p1 && (
+                      <div className="flex items-center gap-1.5">
+                        <CivFlag civilization={p1.civilization} />
+                        <CountryFlag country={p1.country} />
+                        <span className="font-medium truncate">{p1.name}</span>
+                      </div>
+                    )}
+                  </td>
+
+                  <RatingCell player={p1} />
+
+                  {pi === 0 && (
+                    <td rowSpan={rowCount} className="px-3 py-3 text-center font-bold text-zinc-600 align-middle">
+                      vs
+                    </td>
+                  )}
+
+                  <RatingCell player={p2} />
+
+                  <td className="px-4 py-3">
+                    {p2 && (
+                      <div className="flex items-center gap-1.5 justify-end">
+                        <span className="font-medium truncate">{p2.name}</span>
+                        <CountryFlag country={p2.country} />
+                        <CivFlag civilization={p2.civilization} />
+                      </div>
+                    )}
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {games.map((game: ICurrentGame, gi) => {
-                  const team1 = game.teams[0] ?? [];
-                  const team2 = game.teams[1] ?? [];
-                  const rowCount = Math.max(team1.length, team2.length);
-
-                  return Array.from({ length: rowCount }).map((_, pi) => {
-                    const p1: ICurrentGamePlayer | undefined = team1[pi];
-                    const p2: ICurrentGamePlayer | undefined = team2[pi];
-
-                    return (
-                      <tr
-                        key={`${gi}-${pi}`}
-                        className={pi === 0 ? styles.gameFirstRow : styles.gameRow}
-                      >
-                        {pi === 0 && (
-                          <td rowSpan={rowCount} className={styles.mapCell}>
-                            <div className={styles.mapName}>{game.map}</div>
-                            <div className={styles.mapMode}>{formatLeaderboard(game.leaderboard)}</div>
-                          </td>
-                        )}
-
-                        <td className={styles.playerCell}>
-                          {p1 && (
-                            <div className={styles.playerInner}>
-                              <CivFlag civilization={p1.civilization} />
-                              <CountryFlag country={p1.country} />
-                              <span className={styles.playerName}>{p1.name}</span>
-                            </div>
-                          )}
-                        </td>
-
-                        <RatingCell player={p1} />
-
-                        {pi === 0 && (
-                          <td rowSpan={rowCount} className={styles.vsCell}>vs</td>
-                        )}
-
-                        <RatingCell player={p2} />
-
-                        <td className={styles.opponentCell}>
-                          {p2 && (
-                            <div className={styles.opponentInner}>
-                              <span className={styles.opponentName}>{p2.name}</span>
-                              <CountryFlag country={p2.country} />
-                              <CivFlag civilization={p2.civilization} />
-                            </div>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  });
-                })}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+              );
+            });
+          })}
+        </tbody>
+      </table>
     </div>
   );
 }
