@@ -7,7 +7,7 @@ export function Leaderboard() {
   const { players, isLoading } = useLeaderboard();
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
+    <div className="">
       <div className="mb-8">
         <h1 className="text-2xl font-bold tracking-tight uppercase">Classement Solo</h1>
         <div className="mt-2 h-px bg-gradient-to-r from-amber-500 to-transparent" />
