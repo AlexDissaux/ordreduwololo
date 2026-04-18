@@ -18,7 +18,7 @@ export async function fetchCurrentGames(profileIds: number[]): Promise<{ game: a
         const batch = profileIds.slice(i, i + PROFILE_IDS_BATCH_SIZE);
         const batchSet = new Set(batch);
         const url = `${API_BASE_URL}/games?since=${since}&profile_ids=${batch.join(',')}`;
-        Logger.debug('fetch url: ' + url);
+        // Logger.debug('fetch url: ' + url);
         const response = await (await fetch(url)).json() as GamesResponse;
         for (const game of (response.games ?? []).filter((game: any) => game?.ongoing && Array.isArray(game.teams))) {
             const profileId = (game.teams as any[][])

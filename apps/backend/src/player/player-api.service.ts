@@ -57,7 +57,7 @@ export class PlayerApiService {
     let hasMore = true;
     this.logger.debug(`Starting to fetch leaderboard ${leaderboard} for country ${country}`);
     while (hasMore && page <= MAX_PAGES) {
-      this.logger.debug(`Fetching page ${page} for leaderboard ${leaderboard} and country ${country}`);
+      // this.logger.debug(`Fetching page ${page} for leaderboard ${leaderboard} and country ${country}`);
       const url = `${this.API_BASE_URL}/leaderboards/${leaderboard}?country=${encodeURIComponent(country)}&page=${page}`;
       // this.logger.debug(`Fetching page ${page}: ${url}`);
 

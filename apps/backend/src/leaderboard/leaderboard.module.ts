@@ -1,12 +1,12 @@
 import { Module } from "@nestjs/common";
 import { LeaderboardController } from "./leaderboard.controller";
 import { LeaderboardService } from "./leaderboard.service";
-import { LeaderboardCacheService } from "./leaderboard-cache.service";
+import { LeaderboardCacheModule } from "./leaderboard-cache.module";
 import { PlayerModule } from "../player/player.module";
 
 @Module({
-    imports: [PlayerModule],
+    imports: [PlayerModule, LeaderboardCacheModule],
     controllers: [LeaderboardController],
-    providers: [LeaderboardService, LeaderboardCacheService],
+    providers: [LeaderboardService],
 })
 export class LeaderboardModule {}

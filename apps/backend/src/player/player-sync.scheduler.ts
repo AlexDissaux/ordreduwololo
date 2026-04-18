@@ -14,10 +14,7 @@ export class PlayerSyncScheduler implements OnApplicationBootstrap {
     this.logger.log('Starting scheduled player sync...');
 
     try {
-      const result = await this.playerService.syncPlayers();
-      this.logger.log(
-        `Scheduled sync complete: ${result.added} added, ${result.updated} updated, ${result.unchanged} unchanged`,
-      );
+      await this.playerService.syncPlayers();
     } catch (error) {
       this.logger.error('Scheduled player sync failed:', error);
     }

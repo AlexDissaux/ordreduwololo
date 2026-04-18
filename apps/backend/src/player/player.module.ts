@@ -6,9 +6,10 @@ import { PlayerService } from './player.service';
 import { PlayerController } from './player.controller';
 import { PlayerSyncScheduler } from './player-sync.scheduler';
 import { Player } from './entities/player.entity';
+import { LeaderboardCacheModule } from '../leaderboard/leaderboard-cache.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Player])],
+  imports: [TypeOrmModule.forFeature([Player]), LeaderboardCacheModule],
   controllers: [PlayerController],
   providers: [PlayerApiService, PlayerRepository, PlayerService, PlayerSyncScheduler],
   exports: [PlayerService, PlayerRepository],
