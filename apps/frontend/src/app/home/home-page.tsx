@@ -1,5 +1,5 @@
-import { LeaderboardPreview } from './leaderboard-preview';
-import { CurrentGamesPreview } from './current-games-preview';
+import { LeaderboardPreview } from '../leaderboard/leaderboard-preview';
+import { CurrentGamesPreview } from '../current-games/current-games-preview';
 
 export function HomePage() {
   return (

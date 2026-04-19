@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { RankIcon } from '@aoe4.fr/ui';
-import { useLeaderboard } from '../leaderboard/useLeaderboard';
+import { useLeaderboard } from './useLeaderboard';
 
 export function LeaderboardPreview() {
   const { players, isLoading } = useLeaderboard();

@@ -81,11 +81,13 @@ Each feature has its own folder (`player/`, `leaderboard/`, `current-games/`) wi
 - **Do NOT add general-purpose components to `wololo-challenge`.**
 
 ### Current exports
-- `RankIcon` — renders the AoE4 rank icon SVG for a given `rm_solo_rank_level` string (e.g. `"diamond_2"`, `"conqueror_3"`). Assets live in `libs/ui/src/assets/rank_icon/` as `solo_<rank>_<level>.svg`.
+- `RankIcon` — renders the AoE4 rank icon SVG for a given rank level string (e.g. `"diamond_2"`, `"conqueror_3"`). Assets live in `libs/ui/src/assets/rank_icon/` as `solo_<rank>_<level>.svg`. Accepts `rankLevel: string | null | undefined` — returns `null` when no rank is set.
 
 ```tsx
 import { RankIcon } from '@aoe4.fr/ui';
 <RankIcon rankLevel={player.rm_solo_rank_level} size={28} />
+// Also works with ICurrentGamePlayer.rank_level:
+<RankIcon rankLevel={player.rank_level} size={16} />
 ```
 
 ---
@@ -93,6 +95,20 @@ import { RankIcon } from '@aoe4.fr/ui';
 ## Shared Types (`libs/shared-types`)
 
 Interfaces: `IPlayer`, `IRankedStats`, `IPlayerAvatars`, `IPlayerSocial`, `ICurrentGame`, `ICurrentGamePlayer`. Imported on both frontend and backend via the `@aoe4.fr/shared-types` alias. **Never add runtime logic here.**
+
+### `ICurrentGamePlayer`
+```ts
+interface ICurrentGamePlayer {
+  name: string;
+  civilization: string;
+  civilization_randomized: boolean;
+  country: string;
+  rating: number | null;
+  rank_level: string | null;  // cross-referenced from leaderboard cache — NOT from aoe4world API
+}
+```
+
+> **Important:** the aoe4world `/games` endpoint does **not** return `rank_level`. It must be resolved by cross-referencing the player's `profile_id` against the `LeaderboardCacheService` (solo then team). This is done in `CurrentGamesService.buildRankMap()` which produces a `Map<profileId, rank_level>` passed down to the mapper.
 
 ---
 
@@ -108,7 +124,7 @@ Self-contained React app/library for the ODW tournament. Static team/player data
 - **Leaderboards tracked**: `rm_solo` and `rm_team`. Defined as `LEADERBOARDS` in `player/player.types.ts`.
 - **Player sync**: hourly cron in `PlayerSyncScheduler` → `PlayerApiService.fetchAllPlayers()` iterates all leaderboards × countries, upserts into PostgreSQL, then refreshes `LeaderboardCacheService`.
 - **Current games**: `CurrentGamesSyncScheduler` runs every 3 min, calls `setCurrentGamesFromActivePlayers()` for players with `lastGameAt` within the last 7 days.
-- **Leaderboard cache**: `LeaderboardCacheService` holds a plain in-memory `PLayerLeaderboard[]` array. Populated lazily on first request, refreshed after each player sync.
+- **Leaderboard cache**: `LeaderboardCacheService` holds two in-memory arrays: `PLayerLeaderboard[]` for solo and `PLayerLeaderboard[]` for team. Populated lazily on first request, invalidated (set to `[]`) after each player sync so the next request rehydrates from DB. Extracted into its own `LeaderboardCacheModule` (standalone) to avoid circular dependency between `PlayerModule` and `LeaderboardModule`. Can be imported by any module that needs rank data (e.g. `CurrentGamesModule`).
 
 ---
 
@@ -123,6 +139,7 @@ Self-contained React app/library for the ODW tournament. Static team/player data
 ### Current Games & SSE
 - `CurrentGamesService` holds a `BehaviorSubject<CurrentGameDto[]>` as in-memory store
 - Sync runs every 3 min: active players fetched, then `fetchCurrentGames(profileIds)` called in batches of 50 with `delay(1000ms)` between batches
+- Before mapping, `buildRankMap()` builds a `Map<profileId, rank_level>` from the leaderboard cache (solo first, team as fallback) and passes it to `toCurrentGameDto()`
 - `games$` observable exposed via `@Sse('stream')`, pushing each `BehaviorSubject.next()` to clients
 - `GET /current-games` returns current value, triggering a fresh fetch if subject is empty
 

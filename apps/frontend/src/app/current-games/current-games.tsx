@@ -1,25 +1,11 @@
+import { CivFlag } from '@aoe4.fr/ui';
 import { ICurrentGame, ICurrentGamePlayer } from '@aoe4.fr/shared-types';
 import { useCurrentGames } from './useCurrentGames';
-import { CIV_FLAG_URLS } from './civ-flags';
 
 type Filter = 'all' | 'solo' | 'team';
 
 function formatLeaderboard(leaderboard: string): string {
   return leaderboard.replace(/_/g, ' ').toUpperCase();
-}
-
-function CivFlag({ civilization }: { civilization: string }) {
-  const src = CIV_FLAG_URLS[civilization];
-  if (!src) return null;
-  return (
-    <img
-      className="w-5 h-auto rounded-sm flex-shrink-0"
-      src={src}
-      alt={civilization}
-      title={civilization}
-      onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-    />
-  );
 }
 
 function CountryFlag({ country }: { country: string }) {
@@ -35,15 +21,24 @@ function CountryFlag({ country }: { country: string }) {
   );
 }
 
-function RatingCell({ player }: { player: ICurrentGamePlayer | undefined }) {
-  if (!player) return <td className="px-3 py-3 text-center font-mono text-sm w-16" />;
+function RatingCell({ player, civSide = 'left' }: { player: ICurrentGamePlayer | undefined; civSide?: 'left' | 'right' }) {
+  if (!player) return <td className="py-3 text-center font-mono text-sm w-24" />;
+  const rating = (
+    <span className={`inline-block w-12 font-mono text-sm ${civSide === 'left' ? 'text-right' : 'text-left'} ${player.rating != null ? 'text-amber-400' : 'text-zinc-600'}`}>
+      {player.rating ?? '—'}
+    </span>
+  );
   return (
-    <td className="px-3 py-3 text-center font-mono text-sm w-16">
-      {player.rating != null ? (
-        <span className="text-amber-400">{player.rating}</span>
-      ) : (
-        <span className="text-zinc-600">—</span>
-      )}
+    <td className="py-3 w-24">
+      <div className="flex items-center justify-center gap-1.5">
+        {civSide === 'left' && (
+          <CivFlag civilization={player.civilization} className="w-7 h-auto rounded-sm flex-shrink-0 object-cover" />
+        )}
+        {rating}
+        {civSide === 'right' && (
+          <CivFlag civilization={player.civilization} className="w-7 h-auto rounded-sm flex-shrink-0 object-cover" />
+        )}
+      </div>
     </td>
   );
 }
@@ -75,9 +70,9 @@ export function CurrentGames({ filter = 'all' }: Props) {
           <tr className="bg-zinc-900 text-xs uppercase tracking-widest text-zinc-400">
             <th className="px-4 py-3 text-left min-w-[9rem]">Map / Mode</th>
             <th className="px-4 py-3 text-left">Joueur(s)</th>
-            <th className="px-3 py-3 text-center w-16">Rating</th>
+            <th className="py-3 text-center w-24">Rating</th>
             <th className="px-3 py-3 text-center w-10">vs</th>
-            <th className="px-3 py-3 text-center w-16">Rating</th>
+            <th className="py-3 text-center w-24">Rating</th>
             <th className="px-4 py-3 text-right">Adversaire(s)</th>
           </tr>
         </thead>
@@ -108,14 +103,13 @@ export function CurrentGames({ filter = 'all' }: Props) {
                   <td className="px-4 py-3">
                     {p1 && (
                       <div className="flex items-center gap-1.5">
-                        <CivFlag civilization={p1.civilization} />
                         <CountryFlag country={p1.country} />
                         <span className="font-medium truncate">{p1.name}</span>
                       </div>
                     )}
                   </td>
 
-                  <RatingCell player={p1} />
+                  <RatingCell player={p1} civSide="left" />
 
                   {pi === 0 && (
                     <td rowSpan={rowCount} className="px-3 py-3 text-center font-bold text-zinc-600 align-middle">
@@ -123,14 +117,13 @@ export function CurrentGames({ filter = 'all' }: Props) {
                     </td>
                   )}
 
-                  <RatingCell player={p2} />
+                  <RatingCell player={p2} civSide="right" />
 
                   <td className="px-4 py-3">
                     {p2 && (
                       <div className="flex items-center gap-1.5 justify-end">
                         <span className="font-medium truncate">{p2.name}</span>
                         <CountryFlag country={p2.country} />
-                        <CivFlag civilization={p2.civilization} />
                       </div>
                     )}
                   </td>

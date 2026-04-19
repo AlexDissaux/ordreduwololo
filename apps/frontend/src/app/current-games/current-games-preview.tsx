@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useCurrentGames } from '../current-games/useCurrentGames';
+import { useCurrentGames } from './useCurrentGames';
 
 export function CurrentGamesPreview() {
   const { games, isLoading } = useCurrentGames();
