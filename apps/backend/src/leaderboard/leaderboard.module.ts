@@ -8,5 +8,6 @@ import { PlayerModule } from "../player/player.module";
     imports: [PlayerModule, LeaderboardCacheModule],
     controllers: [LeaderboardController],
     providers: [LeaderboardService],
+    exports: [LeaderboardService],
 })
 export class LeaderboardModule {}

@@ -1,13 +1,14 @@
-export interface ICurrentGamePlayer {
+export interface CurrentGamePlayer {
   name: string;
   civilization: string;
   civilization_randomized: boolean;
   country: string;
   rating: number | null;
+  rank_level: string | null;
 }
 
-export interface ICurrentGame {
+export interface CurrentGame {
   map: string;
   leaderboard: string;
-  teams: ICurrentGamePlayer[][];
+  teams: CurrentGamePlayer[][];
 }

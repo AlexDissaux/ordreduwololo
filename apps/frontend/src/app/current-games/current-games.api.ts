@@ -1,8 +1,7 @@
-import { ICurrentGame } from '@aoe4.fr/shared-types';
+import { CurrentGame } from '@aoe4.fr/shared-types';
 
 const API_BASE = 'http://localhost:3000';
 
-export type CurrentGame = ICurrentGame;
 
 export async function fetchCurrentGames(): Promise<CurrentGame[]> {
   const response = await fetch(`${API_BASE}/current-games`);

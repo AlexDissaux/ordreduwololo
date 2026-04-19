@@ -1,5 +1,10 @@
 import { Link } from 'react-router-dom';
+import { RankIcon } from '@aoe4.fr/ui';
 import { useCurrentGames } from './useCurrentGames';
+
+function formatLeaderboard(leaderboard: string): string {
+  return leaderboard.replace(/_/g, ' ').toUpperCase();
+}
 
 export function CurrentGamesPreview() {
   const { games, isLoading } = useCurrentGames();
@@ -15,18 +20,32 @@ export function CurrentGamesPreview() {
       ) : games.length === 0 ? (
         <div className="px-4 py-6 text-sm text-zinc-500 italic">Aucune partie en cours…</div>
       ) : (
-        <ul>
-          {games.slice(0, 4).map((game, i) => {
-            const team1 = game.teams[0]?.map((p) => p.name).join(' & ') ?? '—';
-            const team2 = game.teams[1]?.map((p) => p.name).join(' & ') ?? '—';
+        <ul className="overflow-y-auto max-h-[280px]">
+          {games.slice(0, 25).map((game, i) => {
+            const team1 = game.teams[0] ?? [];
             return (
               <li key={i} className="px-4 py-2.5 border-t border-zinc-800 hover:bg-zinc-800 transition-colors">
-                <div className="flex items-center gap-2 text-sm">
-                  <span className="flex-1 truncate font-medium">{team1}</span>
-                  <span className="text-xs text-zinc-600 shrink-0">vs</span>
-                  <span className="flex-1 truncate font-medium text-right">{team2}</span>
+                <div className="space-y-0.5">
+                  {team1.map((p, pi) => (
+                    <div key={pi} className="flex items-center gap-1.5 text-sm min-w-0">
+                      {p.country && (
+                        <img
+                          className="w-4 h-auto flex-shrink-0"
+                          src={`https://flagcdn.com/w40/${p.country.toLowerCase()}.png`}
+                          alt={p.country}
+                          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                        />
+                      )}
+                      <span className="font-medium truncate">{p.name}</span>
+                      <RankIcon rankLevel={p.rank_level} size={16} className="ml-auto flex-shrink-0" />
+                    </div>
+                  ))}
                 </div>
-                <div className="text-xs text-zinc-500 mt-0.5">{game.map}</div>
+                <div className="text-xs text-zinc-600 mt-0.5">
+                  <span>{formatLeaderboard(game.leaderboard)}</span>
+                  <span className="mx-1">·</span>
+                  <span>{game.map}</span>
+                </div>
               </li>
             );
           })}
@@ -35,3 +54,4 @@ export function CurrentGamesPreview() {
     </div>
   );
 }
+

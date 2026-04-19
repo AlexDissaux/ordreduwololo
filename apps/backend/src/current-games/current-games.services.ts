@@ -5,12 +5,14 @@ import { fetchCurrentGames } from "./current-games.api";
 import { CurrentGameDto } from "./dto/current-games.dto";
 import { toCurrentGameDto } from "./current-games.mapper";
 import { PlayerRepository } from "src/player/player.repository";
+import { LeaderboardService } from "../leaderboard/leaderboard.service";
 
 
 @Injectable()
 export class CurrentGamesService {
     constructor(private readonly playerService: PlayerService,
-        private readonly playerRepository: PlayerRepository
+        private readonly playerRepository: PlayerRepository,
+        private readonly leaderboardService: LeaderboardService,
     ) {}
 
     private readonly gamesSubject = new BehaviorSubject<CurrentGameDto[]>([]);
@@ -26,11 +28,25 @@ export class CurrentGamesService {
         return this.gamesSubject.value;
     }
 
+    private async buildRankMap(): Promise<Map<number, string | null>> {
+        const map = new Map<number, string | null>();
+        for (const p of await this.leaderboardService.getLeaderboard()) {
+            map.set(p.id, p.rm_solo_rank_level);
+        }
+        for (const p of await this.leaderboardService.getLeaderboardTeam()) {
+            if (!map.has(p.id)) {
+                map.set(p.id, p.rm_solo_rank_level);
+            }
+        }
+        return map;
+    }
+
     public async setCurrentGamesFromActivePlayers(): Promise<void> {
         const profileIds = await this.playerRepository.findAllProfileIdsFromActivePlayers();
+        const rankMap = await this.buildRankMap();
 
         const games = (await fetchCurrentGames(profileIds))
-            .map(({ game, profileId }) => toCurrentGameDto(game, profileId));
+            .map(({ game, profileId }) => toCurrentGameDto(game, profileId, rankMap));
         this.gamesSubject.next(games);
     }
 

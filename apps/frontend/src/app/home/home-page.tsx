@@ -10,7 +10,8 @@ export function HomePage() {
         </p>
         <h1 className="text-4xl font-black uppercase tracking-tight">Age of Empires IV</h1>
         <p className="mt-2 text-zinc-400 text-sm max-w-lg">
-          Classement et parties en cours des meilleurs joueurs francophones — France, Belgique, Luxembourg.
+          Parties en cours et classements des joueurs francophones — France et Belgique.
+          Twitch et Youtube francophones !
         </p>
       </section>
 

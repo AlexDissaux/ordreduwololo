@@ -14,8 +14,8 @@ export function LeaderboardPreview() {
       {isLoading ? (
         <div className="px-4 py-6 text-sm text-zinc-500">Chargement…</div>
       ) : (
-        <ul>
-          {players.slice(0, 5).map((player, i) => (
+        <ul className="overflow-y-auto max-h-[280px]">
+          {players.slice(0, 25).map((player, i) => (
             <li key={player.id} className="flex items-center gap-3 px-4 py-2.5 border-t border-zinc-800 text-sm hover:bg-zinc-800 transition-colors">
               <span className="w-5 text-center font-mono text-xs text-zinc-500">{i + 1}</span>
               <RankIcon rankLevel={player.rm_solo_rank_level} size={20} />
