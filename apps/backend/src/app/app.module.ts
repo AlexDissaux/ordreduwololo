@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { PlayerModule } from '../player';
 import { LeaderboardModule } from '../leaderboard';
 import { CurrentGamesModule } from '../current-games';
+import { TwitchModule } from '../twitch';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { CurrentGamesModule } from '../current-games';
     PlayerModule,
     LeaderboardModule,
     CurrentGamesModule,
+    TwitchModule,
   ],
   controllers: [AppController],
   providers: [AppService],

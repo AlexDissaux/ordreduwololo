@@ -7,10 +7,8 @@ import * as dotenv from 'dotenv';
 import * as path from 'path';
 
 // Load environment variables FIRST, before any other imports
-if (process.env.NODE_ENV !== 'production') {
-  const envPath = path.resolve(__dirname, '../.env.local');
-  dotenv.config({ path: envPath });
-}
+// __dirname at runtime = apps/backend/dist — go 3 levels up to reach monorepo root
+dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
 
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';

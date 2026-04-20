@@ -1,5 +1,6 @@
 import { LeaderboardPreview } from '../leaderboard/leaderboard-preview';
 import { CurrentGamesPreview } from '../current-games/current-games-preview';
+import { TwitchPreview } from '../twitch/twitch-preview';
 
 export function HomePage() {
   return (
@@ -16,6 +17,7 @@ export function HomePage() {
       </section>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <TwitchPreview />
         <LeaderboardPreview />
         <CurrentGamesPreview />
       </div>
