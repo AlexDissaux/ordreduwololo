@@ -4,6 +4,7 @@ import { HomePage } from './home';
 import { Header } from './layout/header';
 import { LeaderboardPage } from './leaderboard/leaderboard-page';
 import { CurrentGamesPage } from './current-games/current-games-page';
+import { TwitchPage } from './twitch/twitch-page';
 
 function Layout() {
   return (
@@ -21,6 +22,7 @@ export function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/classement" element={<LeaderboardPage />} />
         <Route path="/en-jeu" element={<CurrentGamesPage />} />
+        <Route path="/twitch" element={<TwitchPage />} />
       </Route>
       <Route path="/event/*" element={<WololoChallengeApp />} />
     </Routes>
