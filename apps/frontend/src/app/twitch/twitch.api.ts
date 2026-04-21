@@ -1,6 +1,6 @@
 import { ITwitchStream, ITwitchVod } from '@aoe4.fr/shared-types';
 
-const API_BASE = 'http://localhost:3000';
+const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
 
 export async function fetchTwitchStreams(): Promise<ITwitchStream[]> {
   const response = await fetch(`${API_BASE}/twitch/streams`);

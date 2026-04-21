@@ -1,5 +1,16 @@
 {
   "name": "@aoe4.fr/frontend",
   "version": "0.0.1",
-  "private": true
+  "private": true,
+  "nx": {
+    "targets": {
+      "build": {
+        "dependsOn": [],
+        "inputs": [
+          "production",
+          "^production"
+        ]
+      }
+    }
+  }
 }
