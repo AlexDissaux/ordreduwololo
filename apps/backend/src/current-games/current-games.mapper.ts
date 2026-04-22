@@ -1,12 +1,10 @@
-import { CurrentGameDto, CurrentGamePlayerDto } from "./dto/current-games.dto";
+import { CurrentGame } from "@aoe4.fr/shared-types";
+import { CurrentGamePlayerDto } from "./dto/current-games.dto";
 
-export function toCurrentGameDto(game: any, profileId?: number, rankMap: Map<number, string | null> = new Map()): CurrentGameDto {
+export function toCurrentGameDto(game: any, profileId?: number, rankMap: Map<number, string | null> = new Map()): CurrentGame {
     const teams: any[][] = game?.teams ?? [];
-    const orderedTeams = profileId
-        ? [...teams].sort((a) =>
-            a.some(({ player }: any) => player.profile_id === profileId) ? -1 : 1
-            )
-        : teams;
+    const orderedTeams = [...teams].sort((a) =>
+            a.some(({ player }: any) => player.profile_id === profileId) ? -1 : 1);
     return {
         map: game.map,
         leaderboard: game.leaderboard,

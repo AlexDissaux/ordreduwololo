@@ -13,6 +13,8 @@ export async function fetchCurrentGames(profileIds: number[]): Promise<{ game: a
     const since = new Date(Date.now() - 90 * 60 * 1000).toISOString();
     const allGames: { game: any; profileId: number }[] = [];
 
+    const seenGameIds = new Set<number>();
+
     for (let i = 0; i < profileIds.length; i += PROFILE_IDS_BATCH_SIZE) {
         await delay(1000); // Add a delay between requests to avoid hitting rate limits
         const batch = profileIds.slice(i, i + PROFILE_IDS_BATCH_SIZE);
@@ -21,6 +23,8 @@ export async function fetchCurrentGames(profileIds: number[]): Promise<{ game: a
         // Logger.debug('fetch url: ' + url);
         const response = await (await fetch(url)).json() as GamesResponse;
         for (const game of (response.games ?? []).filter((game: any) => game?.ongoing && Array.isArray(game.teams))) {
+            if (seenGameIds.has(game.id)) continue;
+            seenGameIds.add(game.id);
             const profileId = (game.teams as any[][])
                 .flat()
                 .map((entry: any) => entry.player?.profile_id as number)

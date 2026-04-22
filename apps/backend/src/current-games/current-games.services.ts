@@ -2,26 +2,26 @@ import { Injectable } from "@nestjs/common";
 import { BehaviorSubject, Observable } from "rxjs";
 import { PlayerService } from "../player";
 import { fetchCurrentGames } from "./current-games.api";
-import { CurrentGameDto } from "./dto/current-games.dto";
-import { toCurrentGameDto } from "./current-games.mapper";
 import { PlayerRepository } from "src/player/player.repository";
 import { LeaderboardService } from "../leaderboard/leaderboard.service";
+import { CurrentGame } from "@aoe4.fr/shared-types";
+import { toCurrentGameDto } from "./current-games.mapper";
 
 
 @Injectable()
 export class CurrentGamesService {
-    constructor(private readonly playerService: PlayerService,
+    constructor(
         private readonly playerRepository: PlayerRepository,
         private readonly leaderboardService: LeaderboardService,
     ) {}
 
-    private readonly gamesSubject = new BehaviorSubject<CurrentGameDto[]>([]);
+    private readonly gamesSubject = new BehaviorSubject<CurrentGame[]>([]);
 
-    public get games$(): Observable<CurrentGameDto[]> {
+    public get games$(): Observable<CurrentGame[]> {
         return this.gamesSubject.asObservable();
     }
 
-    public async getCurrentGames(): Promise<CurrentGameDto[]> {
+    public async getCurrentGames(): Promise<CurrentGame[]> {
         if (this.gamesSubject.value.length === 0) {
             await this.setCurrentGamesFromActivePlayers();
         }
