@@ -23,8 +23,8 @@ export async function fetchCurrentGames(profileIds: number[]): Promise<{ game: a
         // Logger.debug('fetch url: ' + url);
         const response = await (await fetch(url)).json() as GamesResponse;
         for (const game of (response.games ?? []).filter((game: any) => game?.ongoing && Array.isArray(game.teams))) {
-            if (seenGameIds.has(game.id)) continue;
-            seenGameIds.add(game.id);
+            if (seenGameIds.has(game.game_id)) continue;
+            seenGameIds.add(game.game_id);
             const profileId = (game.teams as any[][])
                 .flat()
                 .map((entry: any) => entry.player?.profile_id as number)
