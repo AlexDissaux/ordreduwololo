@@ -7,6 +7,7 @@ import { PlayerModule } from '../player';
 import { LeaderboardModule } from '../leaderboard';
 import { CurrentGamesModule } from '../current-games';
 import { TwitchModule } from '../twitch';
+import { YouTubeModule } from '../youtube';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { TwitchModule } from '../twitch';
     LeaderboardModule,
     CurrentGamesModule,
     TwitchModule,
+    YouTubeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

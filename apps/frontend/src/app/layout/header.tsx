@@ -17,6 +17,7 @@ export function Header() {
           <NavLink to="/classement" className={navLinkClass}>Classement</NavLink>
           <NavLink to="/en-jeu" className={navLinkClass}>Qui joue ?</NavLink>
           <NavLink to="/twitch" className={navLinkClass}>Twitch</NavLink>
+          <NavLink to="/youtube" className={navLinkClass}>YouTube</NavLink>
         </nav>
       </div>
     </header>
