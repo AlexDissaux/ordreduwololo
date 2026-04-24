@@ -1,6 +1,6 @@
 import { useTwitchStreams } from './useTwitchStreams';
 import { useTwitchVods } from './useTwitchVods';
-import { FRENCH_AOE4_CHANNELS } from './twitch-channels';
+import { useTwitchChannels } from './useTwitchChannels';
 import { ITwitchStream, ITwitchVod } from '@aoe4.fr/shared-types';
 
 function formatViewerCount(count: number): string {
@@ -127,12 +127,9 @@ function ChannelRow({
 export function TwitchPage() {
   const { streams, isLoading: streamsLoading } = useTwitchStreams();
   const { vods, isLoading: vodsLoading } = useTwitchVods();
+  const { channels, isLoading: channelsLoading } = useTwitchChannels();
 
   const liveByLogin = new Map(streams.map((s) => [s.user_login.toLowerCase(), s]));
-
-  // Extra live streams not in the static list
-  const knownLogins = new Set(FRENCH_AOE4_CHANNELS.map((c) => c.login.toLowerCase()));
-  const extraStreams = streams.filter((s) => !knownLogins.has(s.user_login.toLowerCase()));
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12 space-y-12">
@@ -168,25 +165,22 @@ export function TwitchPage() {
         <h2 className="text-base font-semibold uppercase tracking-widest text-purple-400 mb-4">
           Chaînes
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-          {FRENCH_AOE4_CHANNELS.map((ch) => (
-            <ChannelRow
-              key={ch.login}
-              login={ch.login}
-              displayName={ch.displayName}
-              liveStream={liveByLogin.get(ch.login.toLowerCase())}
-            />
-          ))}
-          {/* Extra live channels not in the static list */}
-          {extraStreams.map((s) => (
-            <ChannelRow
-              key={s.user_login}
-              login={s.user_login}
-              displayName={s.user_name}
-              liveStream={s}
-            />
-          ))}
-        </div>
+        {channelsLoading ? (
+          <div className="text-sm text-zinc-500">Chargement…</div>
+        ) : channels.length === 0 ? (
+          <div className="text-sm text-zinc-500 italic">Aucune chaîne connue pour l'instant.</div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+            {channels.map((ch) => (
+              <ChannelRow
+                key={ch.login}
+                login={ch.login}
+                displayName={ch.displayName}
+                liveStream={liveByLogin.get(ch.login.toLowerCase())}
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* VODs section */}

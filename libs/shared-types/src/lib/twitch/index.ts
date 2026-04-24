@@ -23,3 +23,9 @@ export interface ITwitchVod {
   view_count: number;
   duration: string;
 }
+
+export interface ITwitchChannel {
+  login: string;
+  displayName: string;
+  lastSeenLiveAt: string; // ISO date string
+}

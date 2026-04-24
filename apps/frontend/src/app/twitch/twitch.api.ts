@@ -1,4 +1,4 @@
-import { ITwitchStream, ITwitchVod } from '@aoe4.fr/shared-types';
+import { ITwitchChannel, ITwitchStream, ITwitchVod } from '@aoe4.fr/shared-types';
 
 const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
 
@@ -12,4 +12,10 @@ export async function fetchTwitchVods(): Promise<ITwitchVod[]> {
   const response = await fetch(`${API_BASE}/twitch/vods`);
   if (!response.ok) throw new Error('Failed to fetch Twitch VODs');
   return response.json() as Promise<ITwitchVod[]>;
+}
+
+export async function fetchTwitchChannels(): Promise<ITwitchChannel[]> {
+  const response = await fetch(`${API_BASE}/twitch/channels`);
+  if (!response.ok) throw new Error('Failed to fetch Twitch channels');
+  return response.json() as Promise<ITwitchChannel[]>;
 }

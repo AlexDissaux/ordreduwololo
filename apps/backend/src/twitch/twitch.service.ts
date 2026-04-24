@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ITwitchStream, ITwitchVod } from '@aoe4.fr/shared-types';
+import { ITwitchChannel, ITwitchStream, ITwitchVod } from '@aoe4.fr/shared-types';
 import { TwitchApiService } from './twitch-api.service';
+import { TwitchChannelRepository } from './twitch-channel.repository';
 
 const STREAMS_TTL = 2 * 60 * 1000;  // 2 minutes
 const VODS_TTL    = 15 * 60 * 1000; // 15 minutes
@@ -15,7 +16,10 @@ export class TwitchService {
     private cachedVods: ITwitchVod[] = [];
     private vodsLastFetched = 0;
 
-    constructor(private readonly twitchApiService: TwitchApiService) {}
+    constructor(
+        private readonly twitchApiService: TwitchApiService,
+        private readonly twitchChannelRepository: TwitchChannelRepository,
+    ) {}
 
     async getStreams(): Promise<ITwitchStream[]> {
         if (Date.now() - this.streamsLastFetched < STREAMS_TTL) {
@@ -41,5 +45,14 @@ export class TwitchService {
             this.logger.error('Failed to fetch Twitch VODs', err);
         }
         return this.cachedVods;
+    }
+
+    async getChannels(): Promise<ITwitchChannel[]> {
+        const channels = await this.twitchChannelRepository.findAll();
+        return channels.map((c) => ({
+            login: c.login,
+            displayName: c.displayName,
+            lastSeenLiveAt: c.lastSeenLiveAt.toISOString(),
+        }));
     }
 }

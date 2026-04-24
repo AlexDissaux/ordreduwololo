@@ -14,4 +14,9 @@ export class TwitchController {
     async getVods() {
         return this.twitchService.getVods();
     }
+
+    @Get('channels')
+    async getChannels() {
+        return this.twitchService.getChannels();
+    }
 }
