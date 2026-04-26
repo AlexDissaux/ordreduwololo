@@ -1,4 +1,5 @@
 export * from './lib/common';
+export * from './lib/discord';
 export * from './lib/games';
 export * from './lib/leaderboard';
 export * from './lib/player';
